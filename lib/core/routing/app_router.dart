@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ibm_flutter_final_project/core/routing/routes.dart';
+import 'package:ibm_flutter_final_project/features/home/ui/home_screen.dart';
 
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
@@ -12,6 +14,11 @@ class AppRouter {
       //   return MaterialPageRoute(
       //     builder: (_) => const OnboardingScreen(),
       //   );
+
+      case Routes.homeScreen:
+        return MaterialPageRoute(
+           builder: (_) => const HomeScreen(),
+         );
 
       default:
         return MaterialPageRoute(
