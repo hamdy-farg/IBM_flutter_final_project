@@ -1,5 +1,7 @@
 class Routes {
   //! add you route like this
   // static const String onBoardingScreen = '/onBoardingScreen';
-  
+  static const String loginScreen = '/loginScreen';
+  static const String signUp = '/signUp';
+  static const String resetPassword = '/resetPassword';
 }
