@@ -32,7 +32,10 @@ class SinglePhoto extends StatelessWidget {
                         Navigator.pop(context);
                       },
                       child: Icon(Icons.arrow_back_outlined,color: ColorsManager.mainwhite,)),
-                    Text("Titen Office",style: TextStyles.font20whitebold,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("Titen Office",style: TextStyles.font20whitebold,
+                      ),
                     ),
                   ],
                 ),
@@ -44,7 +47,7 @@ class SinglePhoto extends StatelessWidget {
                   width: 38,
                   height: 48,
                   decoration: BoxDecoration(
-                    color: Colors.grey[800],
+                    color: Colors.black87.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(12),
                   ),
                  child: Center(child: ColorChangingIcon()),
@@ -62,13 +65,13 @@ class SinglePhoto extends StatelessWidget {
                   
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    color: Colors.black,
+                    color: Colors.black87.withOpacity(0.5),
                     
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.location_on_sharp,color: Colors.grey,),
+                      Icon(Icons.location_on_sharp,color: Colors.white,),
                       Text("Cairo,Nasr City",style: TextStyle(
                         fontSize: 15,
                         color: ColorsManager.mainwhite,

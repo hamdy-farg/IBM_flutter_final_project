@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/calender.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/time_hours.dart';
+
 
 class DateFeatures extends StatelessWidget {
   const DateFeatures({super.key});
@@ -18,7 +21,7 @@ class DateFeatures extends StatelessWidget {
           children: [
             SizedBox(
              height: 150,
-             width: 300,
+             width: 500,
              child: DatePickerScreen(),
             ),
 
@@ -31,15 +34,15 @@ class DateFeatures extends StatelessWidget {
             
             Center(
                 child: Container(
-                  height: 50,
-                  width: 300,
+                  height: 58.h,
+                  width: 271.w,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    color: Colors.blue,
+                    color: Colors.blue[700],
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text("Review Booking - EGP 2000",style: TextStyles.font20whitebold,),
+                    child: Center(child: Text("Review Booking - EGP 2000",style: TextStyles.font20whitebold,)),
                   ),
                 ),
               )

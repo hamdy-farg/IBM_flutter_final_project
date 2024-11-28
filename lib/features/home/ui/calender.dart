@@ -6,21 +6,28 @@ class DatePickerScreen extends StatefulWidget {
 }
 
 class _DatePickerScreenState extends State<DatePickerScreen> {
-  // Variable to store the selected date
-  DateTime? _selectedDate;
+  String selectedDate = DateFormat('d - M - yyyy').format(DateTime.now());
+  bool isTodaySelected = true;
 
-  // Function to open date picker dialog
-  Future<void> _selectDate(BuildContext context) async {
+  void _selectToday() {
+    setState(() {
+      selectedDate = 'Today';
+      isTodaySelected = true;
+    });
+  }
+
+  Future<void> _openCalendar(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: _selectedDate ?? DateTime.now(), // Default to current date
-      firstDate: DateTime(2020), // Start date range
-      lastDate: DateTime(2101), // End date range
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000, 1, 1),
+      lastDate: DateTime(2100, 12, 31),
     );
 
-    if (pickedDate != null && pickedDate != _selectedDate) {
+    if (pickedDate != null) {
       setState(() {
-        _selectedDate = pickedDate;
+        selectedDate = DateFormat('d - M - yyyy').format(pickedDate);
+        isTodaySelected = false;
       });
     }
   }
@@ -30,20 +37,54 @@ class _DatePickerScreenState extends State<DatePickerScreen> {
     return Scaffold(
       
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          // Button to open date picker
-          ElevatedButton(
-            onPressed: () => _selectDate(context),
-            child: Text('Pick a Date'),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'DATE',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
           ),
           SizedBox(height: 10),
-          // Display the selected date without time
           Text(
-            _selectedDate == null
-                ? 'No date selected'
-                : 'Selected date: ${DateFormat('yyyy-MM-dd').format(_selectedDate!)}', // Format date to exclude time
+            selectedDate,
             style: TextStyle(fontSize: 20),
+          ),
+          SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: _selectToday,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: isTodaySelected ? Colors.blue : Colors.grey,
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Today',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+              SizedBox(width: 16),
+              OutlinedButton(
+                onPressed: () => _openCalendar(context),
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(color: Colors.blue, width: 2),
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.calendar_today, color: Colors.blue),
+                    SizedBox(width: 8),
+                    Text(
+                      'Choose from Calendar',
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),

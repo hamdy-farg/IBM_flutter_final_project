@@ -38,11 +38,12 @@ class _RoomsCardsState extends State<RoomsCards> {
             ],
           ),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Image Section
               Container(
-                width: 80,
-                height: 80,
+                width: 140,
+                height: 110,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   image: DecorationImage(
@@ -68,17 +69,24 @@ class _RoomsCardsState extends State<RoomsCards> {
                     SizedBox(height: 8),
                     Row(
                       children: [
-                        Icon(
-                          Icons.location_on,
-                          color: Colors.grey,
-                          size: 16,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 25),
+                          child: Icon(
+                            Icons.location_on,
+                            color: Colors.grey[600],
+                            size: 16,
+                          ),
                         ),
                         SizedBox(width: 4),
-                        Text(
-                          "Cairo, Elshourouk city",
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 25),
+                          child: Text(
+                            "Cairo, Elshourouk city",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey[600],
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ],
@@ -90,20 +98,28 @@ class _RoomsCardsState extends State<RoomsCards> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                    ColorChangingIcon(),
-                  Text(
-                    "3.0",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 30),
+                      child: ColorChangingIcon(),
+                    ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 25),
+                    child: Text(
+                      "3.0",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue[700],
+                      ),
                     ),
                   ),
                   Text(
                     "EGP/Hour",
                     style: TextStyle(
                       fontSize: 14,
-                      color: Colors.grey,
+                      color: Colors.grey[600]
+                      ,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],

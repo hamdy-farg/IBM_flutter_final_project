@@ -25,7 +25,7 @@ class _TimeSelectionScreenState extends State<TimeSelectionScreen> {
             const SizedBox(height: 8),
             Wrap(
               spacing: 8,
-              children: List.generate(10, (index) {
+              children: List.generate(6, (index) {
                 return GestureDetector(
                   onTap: () {
                     setState(() {
@@ -43,7 +43,7 @@ class _TimeSelectionScreenState extends State<TimeSelectionScreen> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
-                      '${index + 1} PM',
+                      '${index + 1}:00 PM',
                       style: TextStyle(
                         color: selectedCheckInIndex == index
                             ? Colors.white
@@ -62,7 +62,7 @@ class _TimeSelectionScreenState extends State<TimeSelectionScreen> {
             const SizedBox(height: 8),
             Wrap(
               spacing: 8,
-              children: List.generate(10, (index) {
+              children: List.generate(6, (index) {
                 return GestureDetector(
                   onTap: () {
                     setState(() {
@@ -80,7 +80,7 @@ class _TimeSelectionScreenState extends State<TimeSelectionScreen> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
-                      '${index + 1} PM',
+                      '${index + 1}:00 PM',
                       style: TextStyle(
                         color: selectedCheckOutIndex == index
                             ? Colors.white

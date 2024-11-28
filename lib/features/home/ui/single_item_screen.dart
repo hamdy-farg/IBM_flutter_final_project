@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/comfortable_place_items.dart';
-import 'package:ibm_flutter_final_project/features/home/ui/location_display.dart';
+
 import 'package:ibm_flutter_final_project/features/home/ui/single_photo.dart';
 
 class SingleItemScreen extends StatefulWidget {
@@ -47,7 +47,7 @@ class _SingleItemScreenState extends State<SingleItemScreen> {
               SizedBox(
                 height: 300,
                 width: double.infinity,
-                child: LocationScreen(),
+                
               ),
               Center(
                 child: Container(

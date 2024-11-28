@@ -16,11 +16,9 @@ class _ColorChangingIconState extends State<ColorChangingIcon> {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.bookmark),
-      color: _iconColor, // Change icon color based on state
-      onPressed: _changeColor, // Change color on tap
-      iconSize: 26, // Optional: Set icon size
+    return GestureDetector(
+      onTap: _changeColor,
+      child: Icon(Icons.bookmark_rounded,color: _iconColor,),
     );
   }
 }

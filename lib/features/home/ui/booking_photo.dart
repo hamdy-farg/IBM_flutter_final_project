@@ -32,7 +32,10 @@ class BookingPhoto extends StatelessWidget {
                         Navigator.pop(context);
                       },
                       child: Icon(Icons.arrow_back_outlined,color: ColorsManager.mainwhite,)),
-                    Text("Titen Room",style: TextStyles.font20whitebold,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("Titen Room",style: TextStyles.font20whitebold,
+                      ),
                     ),
                   ],
                 ),

@@ -17,15 +17,28 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-          
-          items: [
-          
-            BottomNavigationBarItem(icon: Icon(Icons.person_rounded),label: "Profile"),
-            BottomNavigationBarItem(icon: Icon(Icons.explore,color: Colors.blue,),label: "Explore",),
+       bottomNavigationBar: BottomNavigationBar(
+       iconSize: 35,
+        
+        selectedItemColor: Colors.blue, // Highlight color for selected tab
+        unselectedItemColor: Colors.grey, // Color for unselected tabs
+        items: [
+         
+          BottomNavigationBarItem(
+            icon: Icon(Icons.explore),
+            label: 'Explore',
+          ),
+           BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
             
-            BottomNavigationBarItem(icon: Icon(Icons.bookmarks_rounded),label: "Booked"),
-        ]),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today),
+            label: 'Booked',
+          ),
+        ],
+      ),
         body: SafeArea(
           child: SingleChildScrollView(
               child: Padding(
@@ -49,8 +62,8 @@ class HomeScreen extends StatelessWidget {
                      // that is the listview photos for workspaces
 
                      SizedBox(
-                        height: 250,
-                        width: double.infinity,
+                        height: 210,
+                       
                         child: WorkSpaces(),
                     ),
 
