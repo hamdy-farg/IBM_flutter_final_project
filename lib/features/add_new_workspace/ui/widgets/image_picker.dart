@@ -1,8 +1,10 @@
-import 'dart:io';  // Required to use File
+import 'dart:io'; // Required to use File
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ibm_flutter_final_project/features/add_new_workspace/data/cubit/image_picker_cubit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/AddNewWorkSpaceCubit/add_new_work_space_cubit.dart';
+import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/AddNewWorkSpaceCubit/add_new_work_space_cubit_state.dart';
 
 class ImagePicker extends StatelessWidget {
   final Function(File?) onImagePicked;
@@ -12,12 +14,12 @@ class ImagePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ImagePickerCubit(),
-      child: BlocBuilder<ImagePickerCubit, File?>(
+      create: (_) => AddNewWorkSpaceCubit(),
+      child: BlocBuilder<AddNewWorkSpaceCubit, AddNewWorkSpaceState>(
         builder: (context, image) {
           return Column(
             children: [
-              Center(
+              const Center(
                 child: Text(
                   "Image",
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
@@ -35,10 +37,10 @@ class ImagePicker extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () async {
                       // Trigger the image picker logic in the cubit
-                      await context.read<ImagePickerCubit>().pickImage();
+                      await context.read<AddNewWorkSpaceCubit>().pickImage();
                     },
                     child: image == null
-                        ? Icon(
+                        ? const Icon(
                             size: 55,
                             Icons.add,
                             color: Colors.blue,
@@ -49,7 +51,7 @@ class ImagePicker extends StatelessWidget {
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
                                 child: Image.file(
-                                  image!,
+                                  image,
                                   fit: BoxFit.cover,
                                   width: double.infinity.w,
                                   height: double.infinity.h,
@@ -61,8 +63,11 @@ class ImagePicker extends StatelessWidget {
                                 child: IconButton(
                                   onPressed: () {
                                     // Reset image when the icon is pressed
-                                    context.read<ImagePickerCubit>().resetImage();
-                                    onImagePicked(null);  // Reset the image in the parent
+                                    context
+                                        .read<ImagePickerCubit>()
+                                        .resetImage();
+                                    onImagePicked(
+                                        null); // Reset the image in the parent
                                   },
                                   icon: CircleAvatar(
                                     radius: 15.sp,

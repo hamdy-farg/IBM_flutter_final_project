@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
-import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
+import 'package:latlong2/latlong.dart';
 
 class LocationPickerWidget extends StatefulWidget {
   final LatLng? initialLocation;
   final void Function(LatLng) onLocationPicked;
 
   const LocationPickerWidget({
-    Key? key,
+    super.key,
     this.initialLocation,
     required this.onLocationPicked,
-  }) : super(key: key);
+  });
 
   @override
   State<LocationPickerWidget> createState() => _LocationPickerWidgetState();
@@ -28,7 +28,8 @@ class _LocationPickerWidgetState extends State<LocationPickerWidget> {
       context,
       MaterialPageRoute(
         builder: (context) => LocationPickerScreen(
-          initialLocation: _pickedLocation ?? LatLng(51.509364, -0.128928), // Default location
+          initialLocation: _pickedLocation ??
+              const LatLng(51.509364, -0.128928), // Default location
         ),
       ),
     );
@@ -63,8 +64,9 @@ class _LocationPickerWidgetState extends State<LocationPickerWidget> {
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: ColorsManager.lightGrey),
                 image: _pickedLocation != null
-                    ? DecorationImage(
-                        image: AssetImage("assets/location_image.png"), // Placeholder image
+                    ? const DecorationImage(
+                        image: AssetImage(
+                            "assets/location_image.png"), // Placeholder image
                         fit: BoxFit.cover,
                       )
                     : null,
@@ -95,7 +97,8 @@ class _LocationPickerWidgetState extends State<LocationPickerWidget> {
                           ),
                           children: [
                             TileLayer(
-                              urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                              urlTemplate:
+                                  'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                               userAgentPackageName: 'com.example.app',
                             ),
                             MarkerLayer(
@@ -112,7 +115,6 @@ class _LocationPickerWidgetState extends State<LocationPickerWidget> {
                             ),
                           ],
                         ),
-                        
                       ],
                     ),
             ),
@@ -160,7 +162,8 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
           Expanded(
             child: FlutterMap(
               options: MapOptions(
-                initialCenter: _currentLocation, // Correct property for setting the center
+                initialCenter:
+                    _currentLocation, // Correct property for setting the center
                 initialZoom: 15, // Use a reasonable zoom level
                 onTap: (tapPosition, point) {
                   setState(() {
@@ -177,7 +180,7 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
                   markers: [
                     Marker(
                       point: _currentLocation,
-                      child: Icon(
+                      child: const Icon(
                         Icons.location_pin,
                         size: 40,
                         color: ColorsManager.mainBlue,

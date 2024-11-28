@@ -1,12 +1,14 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
-import 'package:ibm_flutter_final_project/features/add_new_workspace/ui/widgets/image_picker.dart';
-import '../../../../core/helpers/spacing.dart';
 import 'package:ibm_flutter_final_project/core/widgets/app_text_button.dart';
+import 'package:ibm_flutter_final_project/features/add_new_workspace/ui/widgets/image_picker.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/ui/widgets/location_picker.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/ui/widgets/textfield_with_label.dart';
+
+import '../../../../core/helpers/spacing.dart';
 
 class AddNewWorkspace extends StatefulWidget {
   const AddNewWorkspace({super.key});
@@ -111,7 +113,8 @@ class _AddNewWorkspaceState extends State<AddNewWorkspace> {
                           if (!_isImagePicked) {
                             // If no image is picked, show a warning
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Please pick an image')),
+                              const SnackBar(
+                                  content: Text('Please pick an image')),
                             );
                             return;
                           }
@@ -122,7 +125,9 @@ class _AddNewWorkspaceState extends State<AddNewWorkspace> {
                           print('Workspace created: $title, $description');
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Please fill out all fields correctly')),
+                            const SnackBar(
+                                content: Text(
+                                    'Please fill out all fields correctly')),
                           );
                         }
                       },
