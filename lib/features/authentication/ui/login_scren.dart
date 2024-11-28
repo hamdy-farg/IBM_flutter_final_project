@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/helpers/extensions.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
+import 'package:ibm_flutter_final_project/core/helpers/string_extensions.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
-import 'package:ibm_flutter_final_project/features/authentication/authentication_util/authentication_extensions.dart';
-import 'package:ibm_flutter_final_project/features/authentication/ui/sign_up_screen.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/custem_button_authentication.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/custem_text_widget.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/custem_textfield.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/hyper_text.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/logo_widget.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -32,7 +31,7 @@ class _LoginScrenState extends State<LoginScren> {
             child: ListView(
               children: [
                 verticalSpace(40),
-                LogoWidget(),
+                const LogoWidget(),
                 verticalSpace(20),
                 CustemText(
                   text: 'Sign in',
@@ -51,7 +50,7 @@ class _LoginScrenState extends State<LoginScren> {
                 CustemTextfield(
                   text: 'Password',
                   obscuredText: true,
-                  icon: Icon(Icons.lock),
+                  icon: const Icon(Icons.lock),
                   Validator: (val) {
                     if (!val!.isValidPassword) {
                       return "Enter a valid Password";

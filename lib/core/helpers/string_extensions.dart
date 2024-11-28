@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 extension ExString on String {
   bool get isValidEmail {
     final emailRegExp =
