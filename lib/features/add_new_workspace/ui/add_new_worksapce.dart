@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
@@ -22,13 +20,7 @@ class AddNewWorkspace extends StatefulWidget {
 class _AddNewWorkspaceState extends State<AddNewWorkspace> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  // Controllers to capture the form values
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-
   // Variables to track if image and location are picked
-  File? _pickedImage;
-  final bool _isImagePicked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +42,6 @@ class _AddNewWorkspaceState extends State<AddNewWorkspace> {
                 children: [
                   // Title Field
                   TextFormFieldWithLabel(
-                    controller: _titleController,
                     label: "Title",
                     hintText: "Title",
                     func: (value) {
@@ -70,7 +61,6 @@ class _AddNewWorkspaceState extends State<AddNewWorkspace> {
 
                   // Description Field
                   TextFormFieldWithLabel(
-                    controller: _descriptionController,
                     label: "Description",
                     hintText: "Enter workspace description",
                     func: (value) {
@@ -104,7 +94,7 @@ class _AddNewWorkspaceState extends State<AddNewWorkspace> {
                       buttonStyle: TextStyles.font16WhiteBold,
                       onPress: () {
                         if (_formKey.currentState?.validate() ?? false) {
-                          if (!_isImagePicked) {
+                          if (cubit.state.imageFile == null) {
                             // If no image is picked, show a warning
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
@@ -114,9 +104,6 @@ class _AddNewWorkspaceState extends State<AddNewWorkspace> {
                           }
 
                           // If form is valid and image is picked, submit data
-                          String title = _titleController.text;
-                          String description = _descriptionController.text;
-                          print('Workspace created: $title, $description');
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(

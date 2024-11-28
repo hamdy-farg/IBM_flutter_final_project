@@ -20,7 +20,9 @@ class ImagePickerWidget extends StatelessWidget {
       child: BlocBuilder<AddNewWorkSpaceCubit, AddNewWorkSpaceState>(
         bloc: cubit,
         builder: (context, state) {
-          log("${cubit.state.imageFile}");
+
+          log("image is  in screen ${state.imageFile}");
+          
           return Column(
             children: [
               const Center(

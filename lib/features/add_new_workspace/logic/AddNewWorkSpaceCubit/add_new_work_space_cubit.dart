@@ -17,6 +17,7 @@ class AddNewWorkSpaceCubit extends Cubit<AddNewWorkSpaceState> {
   }
 
   void imageChange(XFile? imageFile) {
+    state.imageFile = imageFile;
     emit(state.copyWith(imageFile: imageFile));
   }
 
