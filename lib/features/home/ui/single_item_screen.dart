@@ -58,6 +58,7 @@ class _SingleItemScreenState extends State<SingleItemScreen> {
                     color: ColorsManager.mainblue,
                     
                   ),
+                  
                   child: Row(
                     children: [
                       Padding(
