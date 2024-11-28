@@ -29,7 +29,7 @@ class _AddNewWorkspaceState extends State<AddNewWorkspace> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text("New  "),
+        title: const Text("New "),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
