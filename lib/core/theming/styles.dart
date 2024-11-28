@@ -55,4 +55,25 @@ class TextStyles {
       fontSize: 24.sp,
       fontWeight: FontWeightHelper.bold,
       color: ColorsManager.mainBlack);
+
+  static TextStyle font24BlackSemiBold = TextStyle(
+      fontSize: 24.sp,
+      color: Colors.black,
+      fontWeight: FontWightHelper.semiBold);
+  static TextStyle font10WhiteRegular = TextStyle(
+      fontSize: 10.sp,
+      color: Colors.white,
+      fontWeight: FontWightHelper.regular);
+  static TextStyle font16WhiteBold = TextStyle(
+      fontSize: 16.sp, color: Colors.white, fontWeight: FontWeightHelper.bold);
+  static TextStyle font10BlueRegular = TextStyle(
+      fontSize: 10.sp,
+      color: ColorsManager.mainBlue,
+      fontWeight: FontWightHelper.regular);
+  static TextStyle font18WhiteBold = TextStyle(
+      fontSize: 18.sp, color: Colors.white, fontWeight: FontWeight.bold);
+  static TextStyle font14GreyRegular = TextStyle(
+      fontSize: 14.sp, color: Colors.grey, fontWeight: FontWightHelper.regular);
+  static TextStyle fonst18BlackBold = TextStyle(
+      fontSize: 18.sp, color: Colors.black, fontWeight: FontWightHelper.bold);
 }

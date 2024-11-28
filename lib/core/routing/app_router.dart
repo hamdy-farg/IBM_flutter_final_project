@@ -34,6 +34,11 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => const ResetPassword(),
         );
+      case Routes.workspaceStatus:
+        return MaterialPageRoute(
+          builder: (_) => const WorkspaceStatus(),
+        );
+
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
