@@ -18,7 +18,8 @@ class TextFormFieldWithLabel extends StatelessWidget {
   final Widget? prefixIcon;
   final int? minLines;
   final int? maxLines;
-  final TextEditingController? controller;  // Added controller
+  final void Function(String)? func;
+  final TextEditingController? controller; // Added controller
   final String? Function(String?)? validator; // Added validator
 
   const TextFormFieldWithLabel({
@@ -36,8 +37,9 @@ class TextFormFieldWithLabel extends StatelessWidget {
     this.label,
     this.minLines,
     this.maxLines,
-    this.controller,    // Added controller
-    this.validator,     // Added validator
+    this.func,
+    this.controller, // Added controller
+    this.validator, // Added validator
   });
 
   @override
@@ -54,7 +56,8 @@ class TextFormFieldWithLabel extends StatelessWidget {
           ),
           verticalSpace(5.h),
           TextFormField(
-            controller: controller,  // Assign controller to TextFormField
+            onChanged: (value) => func!(value),
+            controller: controller, // Assign controller to TextFormField
             minLines: minLines,
             maxLines: maxLines,
             obscureText: obscureText ?? false,
@@ -67,17 +70,22 @@ class TextFormFieldWithLabel extends StatelessWidget {
               hintText: hintText,
               hintStyle: hintStyle ?? TextStyles.font15GreyBold,
               isDense: true,
-              contentPadding: contentPadding ?? EdgeInsets.symmetric(horizontal: 20.w, vertical: 18.h),
-              focusedBorder: focusedBorder ?? OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16),
-                borderSide: BorderSide(color: ColorsManager.mainBlue, width: 1.3),
-              ),
-              enabledBorder: enabledBorder ?? OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16),
-                borderSide: BorderSide(color: ColorsManager.semiWhite, width: 1.3),
-              ),
+              contentPadding: contentPadding ??
+                  EdgeInsets.symmetric(horizontal: 20.w, vertical: 18.h),
+              focusedBorder: focusedBorder ??
+                  OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: const BorderSide(
+                        color: ColorsManager.mainBlue, width: 1.3),
+                  ),
+              enabledBorder: enabledBorder ??
+                  OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: const BorderSide(
+                        color: ColorsManager.semiWhite, width: 1.3),
+                  ),
             ),
-            validator: validator,  // Assign validator to TextFormField
+            validator: validator, // Assign validator to TextFormField
           ),
         ],
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/routing/routes.dart';
+import 'package:ibm_flutter_final_project/features/add_new_workspace/ui/add_new_worksapce.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/logic/cubit/get_admin_work_spaces_cubit.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/ui/workspace_status.dart';
 
@@ -17,16 +18,16 @@ class AppRouter {
       //   return MaterialPageRoute(
       //     builder: (_) => const OnboardingScreen(),
       //   );
-      case Routes.addNewWorkSpace:
+      case Routes.workspaceStatus:
         return MaterialPageRoute(
           builder: (_) => const WorkspaceStatus(),
         );
 
-      case Routes.workspaceStatus:
+      case Routes.addNewWorkSpace:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                   create: (context) => getIt<GetAdminWorkSpacesCubit>(),
-                  child: const WorkspaceStatus(),
+                  child: const AddNewWorkspace(),
                 ));
 
       default:

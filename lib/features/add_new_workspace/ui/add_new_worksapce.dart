@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 import 'package:ibm_flutter_final_project/core/widgets/app_text_button.dart';
+import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/AddNewWorkSpaceCubit/add_new_work_space_cubit.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/ui/widgets/image_picker.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/ui/widgets/location_picker.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/ui/widgets/textfield_with_label.dart';
@@ -26,10 +28,12 @@ class _AddNewWorkspaceState extends State<AddNewWorkspace> {
 
   // Variables to track if image and location are picked
   File? _pickedImage;
-  bool _isImagePicked = false;
+  final bool _isImagePicked = false;
 
   @override
   Widget build(BuildContext context) {
+    final cubit = getIt<AddNewWorkSpaceCubit>();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -49,6 +53,9 @@ class _AddNewWorkspaceState extends State<AddNewWorkspace> {
                     controller: _titleController,
                     label: "Title",
                     hintText: "Title",
+                    func: (value) {
+                      cubit.titleChange(value);
+                    },
                     hintStyle: TextStyles.font14GreyRegular,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -66,6 +73,9 @@ class _AddNewWorkspaceState extends State<AddNewWorkspace> {
                     controller: _descriptionController,
                     label: "Description",
                     hintText: "Enter workspace description",
+                    func: (value) {
+                      cubit.descriptionChange(value);
+                    },
                     hintStyle: TextStyles.font14GreyRegular,
                     minLines: 3,
                     maxLines: 5,
@@ -79,23 +89,7 @@ class _AddNewWorkspaceState extends State<AddNewWorkspace> {
                     },
                   ),
                   verticalSpace(10.h),
-
-                  // Image Picker Widget (Use the custom widget)
-                  ImagePicker(
-                    onImagePicked: (File? image) {
-                      if (image == null) {
-                        print("No image was selected.");
-                      } else {
-                        print("Image picked: ${image.path}");
-                      }
-                      setState(() {
-                        _pickedImage = image;
-                        _isImagePicked = image != null;
-                      });
-                    },
-                  ),
-                  verticalSpace(8.h),
-
+                  const ImagePickerWidget(),
                   // Location Picker Widget
                   LocationPickerWidget(onLocationPicked: (location) {
                     // Handle location picked

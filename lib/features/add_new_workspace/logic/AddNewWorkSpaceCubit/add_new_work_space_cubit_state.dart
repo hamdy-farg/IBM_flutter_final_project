@@ -8,24 +8,24 @@ class AddNewWorkSpaceState {
   String? imageLink;
   String? locaiton;
   AddNewWorkSpaceState({
-    this.title = "",
-    this.description = "",
-    this.imageLink = "",
+    this.title,
+    this.description,
+    this.imageLink,
     this.imageFile,
-    this.locaiton = "",
+    this.locaiton,
   });
 
-  static AddNewWorkSpaceState copyWith({
+  AddNewWorkSpaceState copyWith({
     String? title,
     String? description,
     XFile? imageFile,
     String? locaiton,
   }) {
     return AddNewWorkSpaceState(
-      title: title ?? "",
-      description: description ?? "",
-      imageFile: imageFile,
-      locaiton: locaiton ?? "",
+      title: title ?? this.title,
+      description: description ?? this.description,
+      imageFile: imageFile ?? this.imageFile,
+      locaiton: locaiton ?? this.locaiton,
     );
   }
 
