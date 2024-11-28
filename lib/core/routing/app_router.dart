@@ -3,6 +3,7 @@ import 'package:ibm_flutter_final_project/core/routing/routes.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/reset_password.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/sign_up_screen.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/login_scren.dart';
+import 'package:ibm_flutter_final_project/features/workspace_status/ui/workspace_status.dart';
 
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
@@ -28,6 +29,11 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => ResetPassword(),
         );
+      case Routes.workspaceStatus:
+        return MaterialPageRoute(
+          builder: (_) => WorkspaceStatus(),
+        );
+
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
