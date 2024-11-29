@@ -8,7 +8,6 @@ import 'package:ibm_flutter_final_project/features/User/ui/widgets/imge_picker_w
 import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/custem_button_authentication.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/custem_text_widget.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/custem_textfield.dart';
-import 'package:image_picker/image_picker.dart';
 
 class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({super.key});
@@ -38,28 +37,37 @@ class EditProfileScreen extends StatelessWidget {
               ),
             ),
             verticalSpace(20),
-            ImgePickerWidget(),
+            const ImgePickerWidget(),
             verticalSpace(40),
             CustemTextfield(
-              Validator: (p0) {},
+              Validator: (p0) {
+                return null;
+              },
               text: 'First name',
-              icon: Icon(Icons.person),
+              icon: const Icon(Icons.person),
             ),
             verticalSpace(20),
             CustemTextfield(
-              Validator: (p0) {},
+              
+              Validator: (p0) {
+                return null;
+              },
               text: 'Last name',
-              icon: Icon(Icons.person),
+              icon: const Icon(Icons.person),
             ),
             verticalSpace(20),
             CustemTextfield(
-              Validator: (p0) {},
+              Validator: (p0) {
+                return null;
+              },
             ),
             verticalSpace(20),
             CustemTextfield(
-              Validator: (p0) {},
+              Validator: (p0) {
+                return null;
+              },
               text: 'Your phone number',
-              icon: Icon(Icons.phone),
+              icon: const Icon(Icons.phone),
             ),
             verticalSpace(30),
             CustemButtonAuthentication(

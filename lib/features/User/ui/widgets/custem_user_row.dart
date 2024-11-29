@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/custem_text_widget.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustemUserRow extends StatelessWidget {
   final String? text;

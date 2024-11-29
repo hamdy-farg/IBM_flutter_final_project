@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
-import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/features/User/ui/widgets/custem_user_row.dart';
 
 class CustemContainerWidget extends StatelessWidget {
@@ -13,7 +12,7 @@ class CustemContainerWidget extends StatelessWidget {
       width: 375.w,
       height: 420.h,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(40)),
         color: ColorsManager.mainWhite,
         border: Border.all(
           color: ColorsManager.mainGrey,
@@ -25,19 +24,19 @@ class CustemContainerWidget extends StatelessWidget {
             horizontal: 20.w, vertical: 16.h), // Adjust padding
         child: Column(
           children: [
-            CustemUserRow(), // Default row
+            const CustemUserRow(), // Default row
             SizedBox(height: 25.h), // Vertical space
-            CustemUserRow(
+            const CustemUserRow(
               text: 'Settings',
               image: 'assets/images/settings.png',
             ),
             SizedBox(height: 25.h),
-            CustemUserRow(
+            const CustemUserRow(
               text: 'Change password',
               image: 'assets/images/loack.png',
             ),
             SizedBox(height: 25.h),
-            CustemUserRow(
+            const CustemUserRow(
               text: 'About',
               image: 'assets/images/about.png',
             ),

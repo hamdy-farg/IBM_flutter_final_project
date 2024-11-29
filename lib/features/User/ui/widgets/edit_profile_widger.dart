@@ -22,7 +22,7 @@ class EditProfileWidger extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
             border: Border.all(color: ColorsManager.mainGrey),
-            borderRadius: BorderRadius.all(Radius.circular(10))),
+            borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: CustemText(
           text: 'Edit profile',
           textStyle: TextStyles.font15BlackRegular,

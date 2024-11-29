@@ -53,6 +53,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   email_validator: ^3.0.0
   image_picker: ^1.1.2
+  flutter_map: ^7.0.2
 
 dev_dependencies:
   flutter_test:

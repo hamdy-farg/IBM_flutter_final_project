@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UserImage extends StatelessWidget {
@@ -10,8 +9,8 @@ class UserImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.all(Radius.circular(26)),
-      child: Container(
+      borderRadius: const BorderRadius.all(Radius.circular(26)),
+      child: SizedBox(
           height: 132.h,
           width: 132.w,
           child: Image.asset(

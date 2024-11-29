@@ -4,10 +4,8 @@ import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 import 'package:ibm_flutter_final_project/features/User/ui/widgets/custem_container_widget.dart';
 import 'package:ibm_flutter_final_project/features/User/ui/widgets/edit_profile_widger.dart';
-import 'package:ibm_flutter_final_project/features/User/ui/widgets/icon_button_widget.dart';
 import 'package:ibm_flutter_final_project/features/User/ui/widgets/user_image.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/custem_text_widget.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UserScreen extends StatelessWidget {
   const UserScreen({super.key});
@@ -25,13 +23,13 @@ class UserScreen extends StatelessWidget {
           ListView(
             children: [
               verticalSpace(10),
-              Row(
+              const Row(
                 children: [],
               ),
               verticalSpace(20),
               Column(
                 children: [
-                  UserImage(),
+                  const UserImage(),
                   verticalSpace(20),
                   CustemText(
                     text: 'David Silbia',
@@ -43,9 +41,9 @@ class UserScreen extends StatelessWidget {
                     textStyle: TextStyles.font14GreyRegular,
                   ),
                   verticalSpace(10),
-                  EditProfileWidger(),
+                  const EditProfileWidger(),
                   verticalSpace(20),
-                  CustemContainerWidget()
+                  const CustemContainerWidget()
                 ],
               )
             ],

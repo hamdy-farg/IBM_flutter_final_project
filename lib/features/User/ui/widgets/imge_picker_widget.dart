@@ -13,14 +13,14 @@ class ImgePickerWidget extends StatelessWidget {
       onPressed: () {},
       child: Stack(
         children: [
-          UserImage(),
+          const UserImage(),
           Positioned(
             top: 80.sp,
             left: 80.sp,
             child: Container(
               width: 47.w,
               height: 47.h,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: ColorsManager.userGrey2,
                   borderRadius: BorderRadius.all(Radius.circular(11))),
               child: Image.asset('assets/images/photo-camera.png'),
