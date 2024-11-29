@@ -3,24 +3,26 @@ import 'package:ibm_flutter_final_project/core/networks/api_consumer.dart';
 import 'package:ibm_flutter_final_project/core/networks/dio_exceptions.dart';
 import 'package:ibm_flutter_final_project/core/networks/end_point.dart';
 import 'package:ibm_flutter_final_project/features/authentication/data/models/user_auth_model.dart';
-import 'package:ibm_flutter_final_project/features/authentication/logic/singupCubit/sign_up_state.dart';
+import 'package:ibm_flutter_final_project/features/authentication/logic/sign_in_bloc/sign_in_state.dart';
 
-class SignupRepo {
+class SignInRepo {
   final ApiConsumer api;
-  const SignupRepo(this.api);
-  Future<UserAuthModel> singUp(SignUpState register) async {
-    /* Sign in function to register user into db
+  const SignInRepo(this.api);
+
+  Future<UserAuthModel> signIn(SignInState signIn) async {
+    /* Sign in function to get user from db
 
       ARGUMENTS:
-        - SingUpState : email and password and fName , lName
+        - signInState : email and password
+
       RETURN:
         - UserAuthModel if success
         - threw serverException error  if fial
     */
     try {
-      // get user after create it in db
-      final responce = await api.post(EndPoint.register, null,
-          data: register.toMap(), isFormData: true);
+      // get uesr from db by email and password
+      final responce = await api.post(EndPoint.login, null,
+          data: signIn.toMap(), isFormData: true);
 
       UserAuthModel user = UserAuthModel.fromMap(responce);
       // save user data in shared if delete the user must login  again
@@ -52,7 +54,6 @@ class cacheHelperString {
   static const fName = "fName";
   static const lName = "lName";
   static const email = "email";
-
   static const accessToken = "accessToken";
   static const refreshToken = "refreshToken";
 }

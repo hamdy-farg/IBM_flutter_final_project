@@ -4,9 +4,10 @@ import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/routing/routes.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/AddNewWorkSpaceCubit/add_new_work_space_cubit.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/ui/add_new_worksapce.dart';
-import 'package:ibm_flutter_final_project/features/authentication/logic/cubit/sign_up_cubit.dart';
-import 'package:ibm_flutter_final_project/features/authentication/ui/login_scren.dart';
+import 'package:ibm_flutter_final_project/features/authentication/logic/sign_in_bloc/sign_in_bloc.dart';
+import 'package:ibm_flutter_final_project/features/authentication/logic/singupCubit/sign_up_cubit.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/reset_password.dart';
+import 'package:ibm_flutter_final_project/features/authentication/ui/sign_in_screen.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/sign_up_screen.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/logic/cubit/get_admin_work_spaces_cubit.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/ui/workspace_status.dart';
@@ -30,13 +31,16 @@ class AppRouter {
 
       case Routes.loginScreen:
         return MaterialPageRoute(
-          builder: (_) => const LoginScren(),
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<SignInCubit>(),
+            child: const SingInScreen(),
+          ),
         );
       case Routes.signUp:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => getIt<SignUpCubit>(),
-            child: SignUpScreen(),
+            child: const SignUpScreen(),
           ),
         );
       case Routes.resetPassword:
@@ -45,9 +49,7 @@ class AppRouter {
         );
       case Routes.workspaceStatus:
         return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-              create: (context) => getIt<GetAdminWorkSpacesCubit>(),
-              child: const WorkspaceStatus()),
+          builder: (_) => const WorkspaceStatus(),
         );
 
       case Routes.addNewWorkSpace:
