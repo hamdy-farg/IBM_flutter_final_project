@@ -9,4 +9,6 @@ class ColorsManager {
   static const Color mainPurble = Color(0xFF5669FF);
   static const Color mainPurbleGradient = Color.fromARGB(225, 128, 140, 231);
   static const Color mainWhite = Color(0xFFFFFFFF);
+  static const Color userGrey = Color(0xFFf3f2f5);
+  static const Color userGrey2 = Color(0xFFF3F2F5);
 }
