@@ -7,10 +7,11 @@ import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/helpers/extensions.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:ibm_flutter_final_project/core/helpers/string_extensions.dart';
+import 'package:ibm_flutter_final_project/core/routing/routes.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
-import 'package:ibm_flutter_final_project/features/authentication/logic/cubit/sign_up_cubit.dart';
-import 'package:ibm_flutter_final_project/features/authentication/logic/cubit/sign_up_state.dart';
+import 'package:ibm_flutter_final_project/features/authentication/logic/singupCubit/sign_up_cubit.dart';
+import 'package:ibm_flutter_final_project/features/authentication/logic/singupCubit/sign_up_state.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/custem_button_authentication.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/custem_text_widget.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/custem_textfield.dart';
@@ -25,11 +26,18 @@ class SignUpScreen extends StatelessWidget {
     final formKey = GlobalKey<FormState>();
 
     final cubit = getIt<SignUpCubit>();
+    cubit.clearState();
     return Form(
       key: formKey,
       child: Scaffold(
         body: SafeArea(
-          child: BlocBuilder<SignUpCubit, SignUpState>(
+          child: BlocConsumer<SignUpCubit, SignUpState>(
+            bloc: cubit,
+            listener: (context, state) {
+              if (state.user != null) {
+                context.pushReplacementNamed(Routes.addNewWorkSpace);
+              }
+            },
             builder: (context, state) {
               return Stack(
                 children: [
@@ -131,7 +139,8 @@ class SignUpScreen extends StatelessWidget {
                               text: 'Sign In',
                               textStyle: TextStyles.font15PurbleRegular,
                               onPressed: () {
-                                context.pushNamed('/loginScreen');
+                                context
+                                    .pushReplacementNamed(Routes.loginScreen);
                               },
                             )
                           ],
@@ -169,6 +178,3 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 }
-
-TextEditingController _password = TextEditingController();
-TextEditingController _confirmpassword = TextEditingController();

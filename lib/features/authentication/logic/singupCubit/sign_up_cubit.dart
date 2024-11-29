@@ -1,20 +1,17 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:ibm_flutter_final_project/core/networks/api_consumer.dart';
 import 'package:ibm_flutter_final_project/core/networks/dio_exceptions.dart';
-import 'package:ibm_flutter_final_project/features/authentication/data/models/register_model.dart';
+import 'package:ibm_flutter_final_project/features/authentication/data/models/user_auth_model.dart';
 import 'package:ibm_flutter_final_project/features/authentication/data/repos/signup_repo.dart';
-import 'package:ibm_flutter_final_project/features/authentication/logic/cubit/sign_up_state.dart';
+import 'package:ibm_flutter_final_project/features/authentication/logic/singupCubit/sign_up_state.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {
   ApiConsumer dio;
   SignUpCubit(this.dio) : super(SignUpState());
 
   void fNameChange(String fName) {
-    log(fName);
     emit(state.copyWith(fName: fName));
   }
 
@@ -23,8 +20,6 @@ class SignUpCubit extends Cubit<SignUpState> {
   }
 
   void emailChange(String email) {
-    log(email);
-
     emit(state.copyWith(email: email));
   }
 
@@ -33,14 +28,13 @@ class SignUpCubit extends Cubit<SignUpState> {
   }
 
   void confirmPassword(String confirmPassword) {
-    log("${state.email}");
     emit(state.copyWith(confirmPassword: confirmPassword));
   }
 
   void signUp(SignUpState user, context) async {
     emit(state.copyWith(isLoading: true));
     try {
-      UserModel userResponce = await SignupRepo(dio).singUp(user);
+      UserAuthModel userResponce = await SignupRepo(dio).singUp(user);
       emit(state.copyWith(user: userResponce));
       state.isLoading = null;
       emit(state.copyWith(isLoading: null));
@@ -56,5 +50,13 @@ class SignUpCubit extends Cubit<SignUpState> {
         ),
       ).show(context);
     }
+  }
+
+  void clearState() {
+    state.fName = null;
+    state.lName = null;
+    state.email = null;
+    state.confirmPassword = null;
+    state.password = null;
   }
 }

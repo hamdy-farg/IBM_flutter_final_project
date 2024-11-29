@@ -10,26 +10,30 @@ void handleDioException(DioException e) {
   switch (e.type) {
     case DioExceptionType.connectionTimeout:
       throw ServerException(
-          errorModel: ErrorModel.fromMap(
-        e.response!.data,
+          errorModel: ErrorModel(
+        code: 401,
+        message: e.message!,
       ));
     // TODO: Handle this case.
     case DioExceptionType.sendTimeout:
       throw ServerException(
-          errorModel: ErrorModel.fromMap(
-        e.response!.data,
+          errorModel: ErrorModel(
+        code: 401,
+        message: e.message!,
       ));
     // TODO: Handle this case.
     case DioExceptionType.receiveTimeout:
       throw ServerException(
-          errorModel: ErrorModel.fromMap(
-        e.response!.data,
+          errorModel: ErrorModel(
+        code: 401,
+        message: e.message!,
       ));
     // TODO: Handle this case.
     case DioExceptionType.badCertificate:
       throw ServerException(
-          errorModel: ErrorModel.fromMap(
-        e.response!.data,
+          errorModel: ErrorModel(
+        code: 401,
+        message: e.message!,
       ));
     // TODO: Handle this case.
     case DioExceptionType.badResponse:
@@ -40,20 +44,23 @@ void handleDioException(DioException e) {
     // TODO: Handle this case.
     case DioExceptionType.cancel:
       throw ServerException(
-          errorModel: ErrorModel.fromMap(
-        e.response!.data,
+          errorModel: ErrorModel(
+        code: 401,
+        message: e.message!,
       ));
     // TODO: Handle this case.
     case DioExceptionType.unknown:
       throw ServerException(
-          errorModel: ErrorModel.fromMap(
-        e.response!.data,
+          errorModel: ErrorModel(
+        code: 401,
+        message: e.message!,
       ));
     // TODO: Handle this case.
     case DioExceptionType.connectionError:
       throw ServerException(
-          errorModel: ErrorModel.fromMap(
-        e.response!.data,
+          errorModel: ErrorModel(
+        code: 401,
+        message: e.message!,
       ));
     case DioExceptionType.badResponse:
       switch (e.response?.statusCode) {

@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:ibm_flutter_final_project/features/authentication/data/models/register_model.dart';
+import 'package:ibm_flutter_final_project/features/authentication/data/models/user_auth_model.dart';
 
 class SignUpState {
   String? fName;
@@ -9,7 +9,7 @@ class SignUpState {
   String? confirmPassword;
   String? message;
   bool? isLoading;
-  UserModel? user;
+  UserAuthModel? user;
   SignUpState(
       {this.fName,
       this.lName,
@@ -28,17 +28,18 @@ class SignUpState {
     String? confirmPassword,
     bool? isLoading,
     String? message,
-    UserModel? user,
+    UserAuthModel? user,
   }) {
     return SignUpState(
-        fName: fName ?? this.fName,
-        lName: lName ?? this.lName,
-        email: email ?? this.email,
-        password: password ?? this.password,
-        confirmPassword: confirmPassword ?? this.confirmPassword,
-        isLoading: isLoading ?? this.isLoading,
-        message: message ?? this.message,
-        user: user ?? this.user);
+      fName: fName ?? this.fName,
+      lName: lName ?? this.lName,
+      email: email ?? this.email,
+      password: password ?? this.password,
+      confirmPassword: confirmPassword ?? this.confirmPassword,
+      isLoading: isLoading ?? this.isLoading,
+      message: message ?? this.message,
+      user: user ?? this.user,
+    );
   }
 
   Map<String, dynamic> toMap() {
