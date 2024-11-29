@@ -26,13 +26,15 @@ class DioConsumer extends ApiConsumer {
   @override
   Future delete(
     String path,
-    String accessToken, {
+    String? accessToken, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     bool isFormData = false,
   }) async {
     try {
-      dio.interceptors.add(ApiInterceptor(access_token: accessToken));
+      if (accessToken != null) {
+        dio.interceptors.add(ApiInterceptor(access_token: accessToken));
+      }
       final responce = await dio.delete(
         path,
         data: isFormData ? FormData.fromMap(data) : data,
@@ -48,11 +50,13 @@ class DioConsumer extends ApiConsumer {
   @override
   Future get(
     String path,
-    String accessToken, {
+    String? accessToken, {
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
-      dio.interceptors.add(ApiInterceptor(access_token: accessToken));
+      if (accessToken != null) {
+        dio.interceptors.add(ApiInterceptor(access_token: accessToken));
+      }
       final responce = await dio.get(
         path,
         queryParameters: queryParameters,
@@ -67,12 +71,14 @@ class DioConsumer extends ApiConsumer {
   @override
   Future post(
     String path,
-    String accessToken, {
+    String? accessToken, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     bool isFormData = false,
   }) async {
-    dio.interceptors.add(ApiInterceptor(access_token: accessToken));
+    if (accessToken != null) {
+      dio.interceptors.add(ApiInterceptor(access_token: accessToken));
+    }
     try {
       final response = await dio.post(
         path,
@@ -89,14 +95,15 @@ class DioConsumer extends ApiConsumer {
   @override
   Future put(
     String path,
-    String accessToken, {
+    String? accessToken, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     bool isFormData = false,
   }) async {
     try {
-      dio.interceptors.add(ApiInterceptor(access_token: accessToken));
-
+      if (accessToken != null) {
+        dio.interceptors.add(ApiInterceptor(access_token: accessToken));
+      }
       final response = await dio.put(path,
           data: isFormData ? FormData.fromMap(data) : data,
           queryParameters: queryParameters);

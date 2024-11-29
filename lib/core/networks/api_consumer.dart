@@ -5,7 +5,7 @@ abstract class ApiConsumer {
   // post method
   Future<dynamic> post(
     String path,
-    String accessToken, {
+    String? accessToken, {
     Object? data,
     Map<String, dynamic>? queryParameters,
     bool isFormData = false,

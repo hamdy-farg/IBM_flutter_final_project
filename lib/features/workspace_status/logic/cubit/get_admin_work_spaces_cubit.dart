@@ -14,12 +14,10 @@ class GetAdminWorkSpacesCubit extends Cubit<GetAdminWorkSpacesInitState> {
 
   Future<void> fetchData() async {
     emit(GetAdminWorkSpacesLoudingState());
-    log("message0");
 
     try {
       List<WorkSpaceModel> workSpaces =
           await AdminWorkSpacesRepo(dio).fetchWorkSpaces();
-      log("message00");
 
       emit(GetAdminWorkSpacesSuccessState(workSpaceModeList: workSpaces));
     } on ServerException catch (e) {
