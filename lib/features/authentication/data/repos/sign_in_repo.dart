@@ -3,7 +3,7 @@ import 'package:ibm_flutter_final_project/core/networks/api_consumer.dart';
 import 'package:ibm_flutter_final_project/core/networks/dio_exceptions.dart';
 import 'package:ibm_flutter_final_project/core/networks/end_point.dart';
 import 'package:ibm_flutter_final_project/features/authentication/data/models/user_auth_model.dart';
-import 'package:ibm_flutter_final_project/features/authentication/logic/sign_in_bloc/sign_in_state.dart';
+import 'package:ibm_flutter_final_project/features/authentication/logic/sign_in_bloc/sign_in_cubit.dart';
 
 class SignInRepo {
   final ApiConsumer api;
