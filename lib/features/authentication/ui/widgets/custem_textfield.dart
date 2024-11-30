@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 
 class CustemTextfield extends StatelessWidget {
@@ -10,6 +9,7 @@ class CustemTextfield extends StatelessWidget {
   final bool? obscuredText;
   final TextEditingController? textEditingController;
   final String? Function(String?) Validator;
+  final Function(String)? func;
 
   const CustemTextfield(
       {super.key,
@@ -19,11 +19,13 @@ class CustemTextfield extends StatelessWidget {
       this.suffixIcon,
       this.obscuredText,
       required this.Validator,
+      this.func,
       this.textEditingController});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: (value) => func!(value),
       controller: textEditingController,
       obscureText: obscuredText ?? false,
       keyboardType: textInputType ?? TextInputType.emailAddress,
@@ -31,9 +33,9 @@ class CustemTextfield extends StatelessWidget {
       decoration: InputDecoration(
           fillColor: ColorsManager.mainGrey,
           hintText: text ?? 'abc@email.com',
-          prefixIcon: icon ?? Icon(Icons.mail_outlined),
-          suffixIcon: suffixIcon ?? null,
-          border: OutlineInputBorder(
+          prefixIcon: icon ?? const Icon(Icons.mail_outlined),
+          suffixIcon: suffixIcon,
+          border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(12)))),
     );
   }
