@@ -3,7 +3,12 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+<<<<<<< HEAD
   url_launcher_windows
+=======
+  file_selector_windows
+  geolocator_windows
+>>>>>>> origin/features/User
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

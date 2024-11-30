@@ -1,6 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ibm_flutter_final_project/core/helpers/cach_helper.dart';
 import 'package:ibm_flutter_final_project/core/routing/app_router.dart';
 import 'package:ibm_flutter_final_project/core/routing/routes.dart';
+import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DeskApp extends StatelessWidget {
@@ -18,8 +23,7 @@ class DeskApp extends StatelessWidget {
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.white,
         ),
-         initialRoute: Routes.homeScreen,
-         //! set your initial route
+        // initialRoute: ,//! set your initial route
         onGenerateRoute: appRouter.generateRoute,
       ),
     );
