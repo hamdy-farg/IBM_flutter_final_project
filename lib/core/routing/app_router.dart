@@ -1,19 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:ibm_flutter_final_project/core/routing/routes.dart';
+<<<<<<< HEAD
 import 'package:ibm_flutter_final_project/features/home/ui/home_screen.dart';
+=======
+import 'package:ibm_flutter_final_project/features/authentication/ui/login_scren.dart';
+import 'package:ibm_flutter_final_project/features/authentication/ui/reset_password.dart';
+import 'package:ibm_flutter_final_project/features/authentication/ui/sign_up_screen.dart';
+import 'package:ibm_flutter_final_project/features/workspace_status/ui/workspace_status.dart';
+>>>>>>> development
 
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
     // this arguments to be passed in any screen like this (arguments as ClassName)
     final arguments = settings.arguments;
     switch (settings.name) {
-      //! this is how to add route and navigate by 
+      //! this is how to add route and navigate by
       //! first added your route in routes.dart
       //! context.pushNamed()
       // case Routes.onBoardingScreen:
       //   return MaterialPageRoute(
       //     builder: (_) => const OnboardingScreen(),
       //   );
+      case Routes.workspaceStatus:
+        return MaterialPageRoute(
+          builder: (_) => const WorkspaceStatus(),
+        );
+
+      case Routes.loginScreen:
+        return MaterialPageRoute(
+          builder: (_) => const LoginScren(),
+        );
+      case Routes.signUp:
+        return MaterialPageRoute(
+          builder: (_) => SignUpScreen(),
+        );
+      case Routes.resetPassword:
+        return MaterialPageRoute(
+          builder: (_) => const ResetPassword(),
+        );
+      case Routes.workspaceStatus:
+        return MaterialPageRoute(
+          builder: (_) => const WorkspaceStatus(),
+        );
 
       case Routes.homeScreen:
         return MaterialPageRoute(
