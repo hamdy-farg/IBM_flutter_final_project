@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
+import 'package:ibm_flutter_final_project/core/helpers/utils.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 import 'package:ibm_flutter_final_project/core/widgets/app_text_button.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/logic/cubit/get_admin_work_spaces_cubit.dart';
@@ -20,7 +21,12 @@ class WorkspaceStatus extends StatelessWidget {
     final cubit = getIt<GetAdminWorkSpacesCubit>();
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(Icons.arrow_back_rounded),
+        leading: IconButton(
+          onPressed: () {
+            logout(context);
+          },
+          icon: const Icon(Icons.arrow_back_rounded),
+        ),
         backgroundColor: Colors.white,
         title: const Text("Search", style: TextStyle(color: Colors.black)),
       ),

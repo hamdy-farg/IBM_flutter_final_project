@@ -58,5 +58,18 @@ class SignUpCubit extends Cubit<SignUpState> {
     state.email = null;
     state.confirmPassword = null;
     state.password = null;
+    state.user = null;
+    state.isLoading = null;
+    state.message = null;
+    emit(state.copyWith(message: null));
+
+    emit(state.copyWith(fName: null));
+    emit(state.copyWith(lName: null));
+    emit(state.copyWith(email: null));
+    emit(state.copyWith(confirmPassword: null));
+    emit(state.copyWith(user: null));
+    emit(state.copyWith(isLoading: null));
+
+    emit(state.copyWith(password: null));
   }
 }

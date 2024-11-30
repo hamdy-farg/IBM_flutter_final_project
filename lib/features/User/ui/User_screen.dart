@@ -21,7 +21,7 @@ class UserScreen extends StatelessWidget {
             color: ColorsManager.userGrey,
           )),
           ListView(
-            children: [
+             children: [
               verticalSpace(10),
               const Row(
                 children: [],

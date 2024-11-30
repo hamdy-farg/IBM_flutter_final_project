@@ -1,19 +1,15 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
-import 'package:ibm_flutter_final_project/core/helpers/cach_helper.dart';
-import 'package:ibm_flutter_final_project/core/helpers/extensions.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
-import 'package:ibm_flutter_final_project/core/routing/routes.dart';
+import 'package:ibm_flutter_final_project/core/helpers/string_extensions.dart';
+import 'package:ibm_flutter_final_project/core/helpers/utils.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 import 'package:ibm_flutter_final_project/features/User/logic/edit_profile/edit_profile_cubit.dart';
 import 'package:ibm_flutter_final_project/features/User/logic/edit_profile/edit_profile_state.dart';
 import 'package:ibm_flutter_final_project/features/User/ui/widgets/imge_picker_widget.dart';
-import 'package:ibm_flutter_final_project/features/authentication/data/repos/signup_repo.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/custem_button_authentication.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/custem_text_widget.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/custem_textfield.dart';
@@ -46,19 +42,14 @@ class EditProfileScreen extends StatelessWidget {
                   key: formKey,
                   child: ListView(
                     children: [
-                      GestureDetector(
-                          child: const Icon(Icons.arrow_back),
-                          onTap: () {
-                            context.pushReplacementNamed(Routes.loginScreen);
-                            log("${CacheHelper.sharedPreferences.remove(cacheHelperString.role)}");
-                            log("${CacheHelper.sharedPreferences.remove(cacheHelperString.image)}");
-
-                            log("${CacheHelper.sharedPreferences.remove(cacheHelperString.fName)}");
-
-                            log("${CacheHelper.sharedPreferences.remove(cacheHelperString.lName)}");
-
-                            log("${CacheHelper.sharedPreferences.remove(cacheHelperString.email)}");
-                          }),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: GestureDetector(
+                            child: const Icon(Icons.arrow_back),
+                            onTap: () {
+                              logout(context);
+                            }),
+                      ),
                       Center(
                         child: CustemText(
                           text: 'Edit profile',
@@ -75,7 +66,10 @@ class EditProfileScreen extends StatelessWidget {
                           cubit.fNameChange(value);
                         },
                         textEditingController: cubit.fNameController,
-                        Validator: (p0) {
+                        Validator: (value) {
+                          if (value!.length <= 3) {
+                            return "first name must be more than 3 charcter";
+                          }
                           return null;
                         },
                         text: 'First name',
@@ -87,7 +81,11 @@ class EditProfileScreen extends StatelessWidget {
                           cubit.lNameChange(value);
                         },
                         textEditingController: cubit.lNameController,
-                        Validator: (p0) {
+                        Validator: (value) {
+                          if (value!.length <= 3) {
+                            return "last name must be more than 3 charcter";
+                          }
+
                           return null;
                         },
                         text: 'Last name',
@@ -98,30 +96,40 @@ class EditProfileScreen extends StatelessWidget {
                         func: (value) {
                           cubit.emailChange(value);
                         },
-                        textEditingController: cubit.emailController,
-                        Validator: (p0) {
+                        Validator: (val) {
+                          if (!val!.isValidEmail) {
+                            return "Enter a valid email";
+                          }
                           return null;
                         },
+                        textEditingController: cubit.emailController,
                       ),
                       verticalSpace(20),
                       CustemTextfield(
-                        func: (value) {
-                          cubit.phoneChange(value);
-                        },
-                        textEditingController: cubit.phoneController,
-                        Validator: (p0) {
-                          return null;
-                        },
-                        text: 'Your phone number',
-                        icon: const Icon(Icons.phone),
-                      ),
+                          func: (value) {
+                            cubit.phoneChange(value);
+                          },
+                          textEditingController: cubit.phoneController,
+                          Validator: (value) {
+                            String egyptianPhonePattern = r'^01[0125][0-9]{8}$';
+                            RegExp regExp = RegExp(egyptianPhonePattern);
+
+                            if (!regExp.hasMatch(value ?? "")) {
+                              return ("Enter valid Egyptian phone number");
+                            }
+                            return null;
+                          },
+                          text: 'Your phone number',
+                          icon: const Icon(Icons.phone)),
                       verticalSpace(30),
                       CustemButtonAuthentication(
                         text: 'Upadte',
                         onPressed: () async {
                           if (state.isLoading == true) {
                           } else {
-                            cubit.fetchApiData(cubit.state, context);
+                            if (formKey.currentState!.validate()) {
+                              cubit.fetchApiData(cubit.state, context);
+                            }
                           }
 
                           // context.pushNamed(Routes.userScreen);
