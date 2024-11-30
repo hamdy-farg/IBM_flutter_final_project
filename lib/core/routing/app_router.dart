@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ibm_flutter_final_project/core/routing/routes.dart';
-<<<<<<< HEAD
-import 'package:ibm_flutter_final_project/features/home/ui/home_screen.dart';
-=======
 import 'package:ibm_flutter_final_project/features/authentication/ui/login_scren.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/reset_password.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/sign_up_screen.dart';
+import 'package:ibm_flutter_final_project/features/home/ui/home_screen.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/ui/workspace_status.dart';
->>>>>>> development
 
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
@@ -45,8 +42,8 @@ class AppRouter {
 
       case Routes.homeScreen:
         return MaterialPageRoute(
-           builder: (_) => const HomeScreen(),
-         );
+          builder: (_) => const HomeScreen(),
+        );
 
       default:
         return MaterialPageRoute(
