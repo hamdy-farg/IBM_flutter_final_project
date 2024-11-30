@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
-import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
+ import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
-import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/AddNewWorkSpaceCubit/add_new_work_space_cubit.dart';
-import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/AddNewWorkSpaceCubit/add_new_work_space_cubit_state.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
+  import 'package:latlong2/latlong.dart';
+ 
 class LocationPickerWidget extends StatefulWidget {
   final LatLng? initialLocation;
   final void Function(LatLng) onLocationPicked;
@@ -102,7 +98,7 @@ class _LocationPickerWidgetState extends State<LocationPickerWidget> {
                           children: [
                             TileLayer(
                               urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                              userAgentPackageName: 'com.example.app',
+                              userAgentPackageName: 'com.example.ibm_flutter_final_project',
                             ),
                             MarkerLayer(
                               markers: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
@@ -19,11 +20,14 @@ class TextFormFieldWithLabel extends StatelessWidget {
   final int? minLines;
   final int? maxLines;
   final void Function(String)? func;
-  final TextEditingController? controller; // Added controller
-  final String? Function(String?)? validator; // Added validator
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
+  final TextInputType? inputType;
+  final List<TextInputFormatter>? textFormater;
 
   const TextFormFieldWithLabel({
     super.key,
+    this.inputType,
     this.backgroundColor,
     this.contentPadding,
     this.focusedBorder,
@@ -38,8 +42,9 @@ class TextFormFieldWithLabel extends StatelessWidget {
     this.minLines,
     this.maxLines,
     this.func,
-    this.controller, // Added controller
-    this.validator, // Added validator
+    this.controller,
+    this.validator,
+    this.textFormater,
   });
 
   @override
@@ -48,16 +53,18 @@ class TextFormFieldWithLabel extends StatelessWidget {
       padding: const EdgeInsets.all(12.0),
       child: Column(
         children: [
-          Center(
-            child: Text(
-              label ?? "Enter text",
-              style: TextStyles.font22blackMeduim,
+          if (label != null)
+            Center(
+              child: Text(
+                label!,
+                style: TextStyles.font22blackMeduim,
+              ),
             ),
-          ),
           verticalSpace(5.h),
           TextFormField(
-            onChanged: (value) => func!(value),
-            controller: controller, // Assign controller to TextFormField
+            controller: controller,
+            keyboardType: inputType,
+            inputFormatters: textFormater ?? [],
             minLines: minLines,
             maxLines: maxLines,
             obscureText: obscureText ?? false,
@@ -85,10 +92,12 @@ class TextFormFieldWithLabel extends StatelessWidget {
                         color: ColorsManager.semiWhite, width: 1.3),
                   ),
             ),
-            validator: validator, // Assign validator to TextFormField
+            onChanged: (value) => func?.call(value),
+            validator: validator ?? (_) => null,
           ),
         ],
       ),
     );
   }
 }
+  

@@ -58,6 +58,7 @@ dependencies:
   # to get current location
   geolocator: ^10.0.1
   latlong2: ^0.9.1
+  
 
   email_validator: ^3.0.0
   cherry_toast: ^1.11.0

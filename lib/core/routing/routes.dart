@@ -6,5 +6,8 @@ class Routes {
   static const String resetPassword = '/resetPassword';
   static const String workspaceStatus = '/WorkspaceStatus';
   static const String addNewWorkSpace = '/AddNewWorksapce';
+  static const String addNewRoom = '/AddNewRoom';
+
+  
   
 }

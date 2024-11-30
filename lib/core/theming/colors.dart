@@ -13,3 +13,4 @@ class ColorsManager {
   static const Color mainPurbleGradient = Color.fromARGB(225, 128, 140, 231);
   static const Color mainWhite = Color(0xFFFFFFFF);
 }
+ 
