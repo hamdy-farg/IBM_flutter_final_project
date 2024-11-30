@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/helpers/cach_helper.dart';
@@ -6,9 +9,10 @@ import 'package:ibm_flutter_final_project/core/helpers/extensions.dart';
 import 'package:ibm_flutter_final_project/core/routing/routes.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 import 'package:ibm_flutter_final_project/core/widgets/app_text_button.dart';
+import 'package:ibm_flutter_final_project/core/widgets/image_picker.dart';
+import 'package:ibm_flutter_final_project/core/widgets/location_picker.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/AddNewWorkSpaceCubit/add_new_work_space_cubit.dart';
-import 'package:ibm_flutter_final_project/features/add_new_workspace/ui/widgets/image_picker.dart';
-import 'package:ibm_flutter_final_project/features/add_new_workspace/ui/widgets/location_picker.dart';
+import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/AddNewWorkSpaceCubit/add_new_work_space_cubit_state.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/ui/widgets/textfield_with_label.dart';
 import 'package:ibm_flutter_final_project/features/authentication/data/repos/signup_repo.dart';
 
@@ -97,11 +101,48 @@ class _AddNewWorkspaceState extends State<AddNewWorkspace> {
                     },
                   ),
                   verticalSpace(10.h),
-                  const ImagePickerWidget(),
+                  BlocProvider(
+                    create: (_) => AddNewWorkSpaceCubit(),
+                    child:
+                        BlocBuilder<AddNewWorkSpaceCubit, AddNewWorkSpaceState>(
+                      builder: (context, state) {
+                        log("image is  in screen ${state.imageFile}");
+
+                        final cubit = context.read<AddNewWorkSpaceCubit>();
+                        return CustomImagePicker(
+                          title: "Image",
+                          onImagePicked: (image) {
+                            // Call the cubit's imageChange method with the picked image
+                            cubit.imageChange(image);
+                          },
+                          selectedImage: state
+                              .imageFile, // Use the current image from the cubit's state
+                        );
+                      },
+                    ),
+                  ),
+
                   // Location Picker Widget
-                  LocationPickerWidget(onLocationPicked: (location) {
-                    // Handle location picked
-                  }),
+                  BlocProvider(
+                    create: (_) => AddNewWorkSpaceCubit(),
+                    child:
+                        BlocBuilder<AddNewWorkSpaceCubit, AddNewWorkSpaceState>(
+                      builder: (context, state) {
+                        final cubit = context.read<AddNewWorkSpaceCubit>();
+
+                        return LocationPickerWidget(
+                          onLocationPicked: (pickedLocation) {
+                            final googleMapUrl =
+                                'https://www.google.com/maps?q=${pickedLocation?.latitude},${pickedLocation?.longitude}';
+                            cubit.locationChange(
+                                googleMapUrl); // Use cubit to save the location
+                            print(googleMapUrl); // Debugging log
+                          },
+                        );
+                      },
+                    ),
+                  ),
+
                   verticalSpace(20.h),
 
                   // Create New Workspace Button

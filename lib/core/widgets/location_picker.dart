@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
+ import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
-import 'package:latlong2/latlong.dart';
-
+  import 'package:latlong2/latlong.dart';
+ 
 class LocationPickerWidget extends StatefulWidget {
   final LatLng? initialLocation;
   final void Function(LatLng) onLocationPicked;
@@ -23,13 +23,13 @@ class LocationPickerWidget extends StatefulWidget {
 class _LocationPickerWidgetState extends State<LocationPickerWidget> {
   LatLng? _pickedLocation;
 
+  // Method to open the map picker screen when the user wants to pick a location
   Future<void> _openLocationPicker() async {
     final LatLng? pickedLocation = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => LocationPickerScreen(
-          initialLocation: _pickedLocation ??
-              const LatLng(51.509364, -0.128928), // Default location
+          initialLocation: _pickedLocation ?? const LatLng(30.06263, 31.24967), // Default fallback location (Cairo)
         ),
       ),
     );
@@ -38,7 +38,8 @@ class _LocationPickerWidgetState extends State<LocationPickerWidget> {
       setState(() {
         _pickedLocation = pickedLocation;
       });
-      widget.onLocationPicked(pickedLocation);
+
+      widget.onLocationPicked(pickedLocation); // Trigger the callback
     }
   }
 
@@ -51,12 +52,12 @@ class _LocationPickerWidgetState extends State<LocationPickerWidget> {
           Center(
             child: Text(
               "Pick a Location",
-              style: TextStyles.font22blackMeduim,
+              style: TextStyles.font22blackMeduim, // Text style for the heading
             ),
           ),
-          verticalSpace(12.h),
+          verticalSpace(12.h), // Spacer between widgets
           GestureDetector(
-            onTap: _openLocationPicker,
+            onTap: _openLocationPicker, // Open the map picker when tapped
             child: Container(
               width: 317.w,
               height: 170.h,
@@ -65,8 +66,7 @@ class _LocationPickerWidgetState extends State<LocationPickerWidget> {
                 border: Border.all(color: ColorsManager.lightGrey),
                 image: _pickedLocation != null
                     ? const DecorationImage(
-                        image: AssetImage(
-                            "assets/location_image.png"), // Placeholder image
+                        image: AssetImage("assets/images/splash2.png"),
                         fit: BoxFit.cover,
                       )
                     : null,
@@ -93,13 +93,12 @@ class _LocationPickerWidgetState extends State<LocationPickerWidget> {
                         FlutterMap(
                           options: MapOptions(
                             initialCenter: _pickedLocation!,
-                            initialZoom: 15, // Use a reasonable zoom level
+                            initialZoom: 20,
                           ),
                           children: [
                             TileLayer(
-                              urlTemplate:
-                                  'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                              userAgentPackageName: 'com.example.app',
+                              urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                              userAgentPackageName: 'com.example.ibm_flutter_final_project',
                             ),
                             MarkerLayer(
                               markers: [
@@ -125,6 +124,7 @@ class _LocationPickerWidgetState extends State<LocationPickerWidget> {
   }
 }
 
+// LocationPickerScreen to let user select location from the map
 class LocationPickerScreen extends StatefulWidget {
   final LatLng initialLocation;
 
@@ -152,9 +152,9 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
           IconButton(
             icon: const Icon(Icons.my_location),
             onPressed: () {
-              // Implement current location fetching if needed
+              // Implement fetching current location if needed
             },
-          )
+          ),
         ],
       ),
       body: Column(
@@ -162,9 +162,8 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
           Expanded(
             child: FlutterMap(
               options: MapOptions(
-                initialCenter:
-                    _currentLocation, // Correct property for setting the center
-                initialZoom: 15, // Use a reasonable zoom level
+                initialCenter: _currentLocation,
+                initialZoom: 15,
                 onTap: (tapPosition, point) {
                   setState(() {
                     _currentLocation = point;
@@ -195,6 +194,7 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
             padding: const EdgeInsets.all(16),
             child: ElevatedButton(
               onPressed: () {
+                // Call the callback with the current location and pop back
                 Navigator.pop(context, _currentLocation);
               },
               style: ElevatedButton.styleFrom(

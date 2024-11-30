@@ -7,7 +7,7 @@ import 'package:ibm_flutter_final_project/features/workspace_status/data/model/w
 import 'package:ibm_flutter_final_project/features/workspace_status/data/repo/admin_work_space_repo.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/logic/cubit/get_admin_work_spaces_state.dart';
 
-class GetAdminWorkSpacesCubit extends Cubit<GetAdminWorkSpacesInitState> {
+class   GetAdminWorkSpacesCubit extends Cubit<GetAdminWorkSpacesInitState> {
   DioConsumer dio;
   GetAdminWorkSpacesCubit(this.dio)
       : super(const GetAdminWorkSpacesInitState());
