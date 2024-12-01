@@ -44,10 +44,11 @@ class _WorkspaceItemState extends State<WorkspaceItem> {
               width: 100.w,
               height: 120.h,
               decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: NetworkImage(
-                          widget.workspace.image))), // just an example
+                image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: NetworkImage(widget.workspace.image),
+                ),
+              ), // just an example
             ),
             horizantalSpace(16.w),
             Expanded(
