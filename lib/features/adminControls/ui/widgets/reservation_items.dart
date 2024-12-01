@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/data/model/add_new_workspace.dart';
 import 'package:ibm_flutter_final_project/features/adminControls/ui/widgets/custem_reservation_item.dart';
 
@@ -46,13 +47,17 @@ class ReservationItems extends StatelessWidget {
       physics: const AlwaysScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         final entry = addNewWorkspace[index];
-        return CustemReservationItem(
-          itemName: entry.itemName,
-          date: entry.date,
-          startTime: entry.startTime,
-          endTime: entry.endTime,
-          price: entry.price,
-          statues: entry.statues,
+        return Column(
+          children: [
+            CustemReservationItem(
+              itemName: entry.itemName,
+              date: entry.date,
+              startTime: entry.startTime,
+              endTime: entry.endTime,
+              price: entry.price,
+              statues: entry.statues,
+            ),
+          ],
         );
       },
     );

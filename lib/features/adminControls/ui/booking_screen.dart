@@ -38,6 +38,7 @@ class BookingScreen extends StatelessWidget {
           Expanded(
             child: ReservationItems(), // Scrollable content
           ),
+          verticalSpace(50)
         ],
       ),
     );
