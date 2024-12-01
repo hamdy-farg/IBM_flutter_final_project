@@ -1,7 +1,8 @@
 class AddNewWorkspaces {
   final String? itemName;
   final String? date;
-  final String? hours;
+  final String? startTime;
+  final String? endTime;
   final String? imagePath;
   final String? price;
   final String? statues;
@@ -9,7 +10,8 @@ class AddNewWorkspaces {
   AddNewWorkspaces(
       {this.itemName,
       this.date,
-      this.hours,
+      this.startTime,
+      this.endTime,
       this.imagePath,
       this.price,
       this.statues});
@@ -19,17 +21,17 @@ class BookedDetails {
   final String? itemName;
   final String? itemDescription;
   final String? date;
-  final String? startHours;
-  final String? endHours;
+  final String? startTime;
+  final String? endTime;
   final String? imagePath;
-  final String? ptice;
+  final String? price;
 
   BookedDetails(
-      {required this.itemName,
-      required this.itemDescription,
-      required this.date,
-      required this.startHours,
-      required this.endHours,
-      required this.imagePath,
-      required this.ptice});
+      {this.itemName,
+      this.itemDescription,
+      this.date,
+      this.startTime,
+      this.endTime,
+      this.imagePath,
+      this.price});
 }

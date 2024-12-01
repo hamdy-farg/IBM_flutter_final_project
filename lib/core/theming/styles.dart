@@ -98,29 +98,36 @@ class TextStyles {
       fontSize: 24.sp,
       fontWeight: FontWeightHelper.bold,
       color: ColorsManager.mainBlack);
-      static TextStyle font18blackbold = TextStyle(
+  static TextStyle font18blackbold = TextStyle(
       fontSize: 18.sp,
       color: ColorsManager.mainBlack2,
       fontWeight: FontWeight.bold);
-      static TextStyle font14greybold = TextStyle(
-      fontSize: 14.sp,
-      color: ColorsManager.grey1,
-      fontWeight: FontWeight.bold);
-      static TextStyle font14bluebold = TextStyle(
+  static TextStyle font14greybold = TextStyle(
+      fontSize: 14.sp, color: ColorsManager.grey1, fontWeight: FontWeight.bold);
+  static TextStyle font14bluebold = TextStyle(
       fontSize: 14.sp,
       color: ColorsManager.mainblue2,
       fontWeight: FontWeight.bold);
-       static TextStyle font14blackbold = TextStyle(
+  static TextStyle font14blackbold = TextStyle(
       fontSize: 14.sp,
       color: ColorsManager.mainBlack2,
       fontWeight: FontWeight.bold);
-      static TextStyle font14WhiteBold = TextStyle(
+  static TextStyle font14WhiteBold = TextStyle(
       fontSize: 14.sp, color: Colors.white, fontWeight: FontWeight.bold);
-       static TextStyle font16blueRegular = TextStyle(
-      fontSize: 16.sp, color: ColorsManager.mainblue2, fontWeight: FontWeight.normal);
-       static TextStyle font14blacknormal = TextStyle(
-      fontSize: 14.sp, color: ColorsManager.mainBlack2, fontWeight: FontWeight.w400);
-      static TextStyle font14buenormal = TextStyle(
-      fontSize: 14.sp, color: ColorsManager.mainblue2, fontWeight: FontWeight.w400);
+  static TextStyle font16blueRegular = TextStyle(
+      fontSize: 16.sp,
+      color: ColorsManager.mainblue2,
+      fontWeight: FontWeight.normal);
+  static TextStyle font14blacknormal = TextStyle(
+      fontSize: 14.sp,
+      color: ColorsManager.mainBlack2,
+      fontWeight: FontWeight.w400);
+  static TextStyle font14buenormal = TextStyle(
+      fontSize: 14.sp,
+      color: ColorsManager.mainblue2,
+      fontWeight: FontWeight.w400);
+  static TextStyle font18blueBold = TextStyle(
+      fontSize: 18.sp,
+      color: ColorsManager.mainblue2,
+      fontWeight: FontWeightHelper.semiBold);
 }
-

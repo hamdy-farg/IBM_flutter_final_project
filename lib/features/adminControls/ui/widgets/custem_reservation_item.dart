@@ -8,19 +8,22 @@ import 'package:ibm_flutter_final_project/features/adminControls/ui/booked_detai
 class CustemReservationItem extends StatelessWidget {
   final String? itemName;
   final String? date;
-  final String? hours;
+  final String? startTime;
+  final String? endTime;
   final String? imagePath;
-  final String? ptice;
+  final String? price;
   final String? statues;
 
-  const CustemReservationItem(
-      {super.key,
-      this.itemName,
-      this.hours,
-      this.imagePath,
-      this.ptice,
-      this.statues,
-      this.date});
+  const CustemReservationItem({
+    super.key,
+    this.itemName,
+    this.imagePath,
+    this.price,
+    this.statues,
+    this.date,
+    this.startTime,
+    this.endTime,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -58,16 +61,17 @@ class CustemReservationItem extends StatelessWidget {
                             style: TextStyles.font18blackbold),
                         verticalSpace(3),
                         Text(
-                          date ?? 'Date: Jan 7, 2024',
+                          "Date: ${date}" ?? 'Date: Jan 7, 2024',
                           style: TextStyles.font14greybold,
                         ),
                         Text(
-                          hours ?? 'Hours: 5:00 pm to 7:00 pm',
+                          'Hours: ${startTime} to ${endTime}  ' ??
+                              'Hours: 5:00 pm to 7:00 pm',
                           style: TextStyles.font14greybold,
                         ),
                         SizedBox(height: 7),
                         Text(
-                          "Price: ${ptice} EGP" ?? 'Price: 500 EGP',
+                          "Price: ${price} EGP" ?? 'Price: 500 EGP',
                           style: TextStyles.font14bluebold,
                         ),
                       ],
