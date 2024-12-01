@@ -6,9 +6,12 @@ import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/cus
 
 class CustemButtonAuthentication extends StatelessWidget {
   final String? text;
+  final double? height;
+  final double? width;
   final VoidCallback? onPressed;
 
-  const CustemButtonAuthentication({super.key, this.text, this.onPressed});
+  const CustemButtonAuthentication(
+      {super.key, this.text, this.onPressed, this.height, this.width});
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +19,8 @@ class CustemButtonAuthentication extends StatelessWidget {
       splashColor: Colors.transparent,
       onPressed: onPressed,
       child: Container(
-        width: 271.w,
-        height: 58.h,
+        width: width ?? 271.w,
+        height: height ?? 58.h,
         decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
@@ -17,6 +18,17 @@ class _SingleItemScreenState extends State<SingleItemScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          horizantalSpace(25),
+          CustemButtonAuthentication(
+            text: 'Explore more',
+            width: 300.w,
+            height: 58.h,
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,15 +44,7 @@ class _SingleItemScreenState extends State<SingleItemScreen> {
                   ComfortablePlaceItems(),
                   verticalSpace(20),
                   Text("Location", style: TextStyles.font22BlackBold),
-                  const SizedBox(
-                    height: 300,
-                    width: double.infinity,
-                  ),
-                  Center(
-                    child: CustemButtonAuthentication(
-                      text: 'Explore more',
-                    ),
-                  ),
+                  verticalSpace(300)
                 ],
               ),
             )
