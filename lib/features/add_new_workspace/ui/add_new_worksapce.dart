@@ -22,13 +22,12 @@ class AddNewWorkspace extends StatelessWidget {
   AddNewWorkspace({super.key});
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  // Variables to track if image and location are picked
   @override
   Widget build(BuildContext context) {
     final cubit = getIt<AddNewWorkSpaceCubit>();
     cubit.clearAll();
     FocusNode titleNode = FocusNode();
+  
     FocusNode decriptionNode = FocusNode();
 
     return Scaffold(
@@ -60,7 +59,8 @@ class AddNewWorkspace extends StatelessWidget {
                             },
                             child: const SizedBox(),
                           ),
-                          
+
+//!!!!!!!
                           verticalSpace(10),
                           Row(
                             children: [
@@ -146,7 +146,7 @@ class AddNewWorkspace extends StatelessWidget {
                             onLocationPicked: (pickedLocation) {
                               final googleMapUrl =
                                   'https://www.google.com/maps?q=${pickedLocation.latitude},${pickedLocation.longitude}';
-                                  log(googleMapUrl);
+                              log(googleMapUrl);
 
                               cubit.locationChange(
                                   googleMapUrl); // Use cubit to save the location

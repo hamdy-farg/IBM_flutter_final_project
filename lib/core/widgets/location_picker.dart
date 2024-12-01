@@ -51,87 +51,91 @@ class _LocationPickerWidgetState extends State<LocationPickerWidget> {
             child: Center(
               child: Text(
                 "Pick a Location",
-                style: TextStyles.font22blackMeduim, // Text style for the heading
+                style:
+                    TextStyles.font22blackMeduim, // Text style for the heading
               ),
             ),
           ),
           verticalSpace(12.h),
           // Spacer between widgets
-          GestureDetector(
-            onTap: _openLocationPicker, // Open the map picker when tapped
-            child: Container(
-              width: 317.w,
-              height: 170.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: ColorsManager.semiWhite),
-              ),
-              child: _pickedLocation == null
-                  ? const Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.map,
-                            color: ColorsManager.mainBlue,
-                            size: 50,
-                          ),
-                          Text(
-                            "Pick a location",
-                            style: TextStyle(fontSize: 14),
-                          ),
-                        ],
-                      ),
-                    )
-                  : Stack(
-                      children: [
-                        FlutterMap(
-                          options: MapOptions(
-                            initialCenter: _pickedLocation!,
-                            initialZoom: 20,
-                          ),
+       
+             GestureDetector(
+              onTap: _openLocationPicker, // Open the map picker when tapped
+              child: Container(
+               
+                height: 170.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: ColorsManager.semiWhite),
+                ),
+                child: _pickedLocation == null
+                    ? const Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            TileLayer(
-                              urlTemplate:
-                                  'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                              userAgentPackageName:
-                                  'com.example.ibm_flutter_final_project',
+                            Icon(
+                              Icons.map,
+                              color: ColorsManager.mainBlue,
+                              size: 50,
                             ),
-                            MarkerLayer(
-                              markers: [
-                                Marker(
-                                  point: _pickedLocation!,
-                                  child: const Icon(
-                                    Icons.location_pin,
-                                    size: 40,
-                                    color: ColorsManager.mainBlue,
-                                  ),
-                                ),
-                              ],
+                            Text(
+                              "Pick a location",
+                              style: TextStyle(fontSize: 14),
                             ),
                           ],
                         ),
-                        // Add IconButton at the top-right corner
-                        Positioned(
-                          top: 10,
-                          right: 10,
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.close,
-                              color: ColorsManager.mainBlue,
-                              size: 30,
+                      )
+                    : Stack(
+                        children: [
+                          FlutterMap(
+                            options: MapOptions(
+                              initialCenter: _pickedLocation!,
+                              initialZoom: 20,
                             ),
-                            onPressed: () {
-                              setState(() {
-                                _pickedLocation = null; // Clear selected location
-                              });
-                            },
+                            children: [
+                              TileLayer(
+                                urlTemplate:
+                                    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                userAgentPackageName:
+                                    'com.example.ibm_flutter_final_project',
+                              ),
+                              MarkerLayer(
+                                markers: [
+                                  Marker(
+                                    point: _pickedLocation!,
+                                    child: const Icon(
+                                      Icons.location_pin,
+                                      size: 40,
+                                      color: ColorsManager.mainBlue,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
+                          // Add IconButton at the top-right corner
+                          Positioned(
+                            top: 10,
+                            right: 10,
+                            child: IconButton(
+                              icon: const Icon(
+                                Icons.close,
+                                color: ColorsManager.mainBlue,
+                                size: 30,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _pickedLocation =
+                                      null; // Clear selected location
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+              ),
             ),
-          ),
+    
         ],
       ),
     );
