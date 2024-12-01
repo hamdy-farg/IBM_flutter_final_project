@@ -22,12 +22,14 @@ class AppBarTop extends StatelessWidget {
           bottom: Radius.circular(33),
         ),
       ),
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+      padding: const EdgeInsets.symmetric(
+        vertical: 20,
+      ),
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SvgButton(),
               CustemLocationWidget(),
