@@ -15,3 +15,4 @@ class ColorsManager {
   static const Color userGrey = Color(0xFFf3f2f5);
   static const Color userGrey2 = Color(0xFFF3F2F5);
 }
+ 

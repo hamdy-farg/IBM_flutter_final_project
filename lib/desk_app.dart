@@ -14,7 +14,7 @@ String intiRoutes() {
   if (loginAs == "admin") {
     return Routes.workspaceStatus;
   } else if (loginAs == "client") {
-    return Routes.editProfile;
+    return Routes.workspaceStatus;
   } else {
     return Routes.loginScreen;
   }

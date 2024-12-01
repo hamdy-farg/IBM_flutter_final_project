@@ -8,4 +8,5 @@ class Routes {
   static const String addNewWorkSpace = '/AddNewWorkspace';
   static const String userScreen = '/userScreen';
   static const String editProfile = '/editProfile';
+  static const String addNewRoom = '/AddNewRoom';
 }

@@ -5,6 +5,10 @@ import 'package:ibm_flutter_final_project/core/routing/routes.dart';
 import 'package:ibm_flutter_final_project/features/User/logic/edit_profile/edit_profile_cubit.dart';
 import 'package:ibm_flutter_final_project/features/User/ui/User_screen.dart';
 import 'package:ibm_flutter_final_project/features/User/ui/edit_profile_screen.dart';
+import 'package:ibm_flutter_final_project/features/add-new-room/logic/cubit/add_new_room_cubit.dart';
+import 'package:ibm_flutter_final_project/features/add-new-room/ui/add_new_room.dart';
+import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/AddNewWorkSpaceCubit/add_new_work_space_cubit.dart';
+import 'package:ibm_flutter_final_project/features/add_new_workspace/ui/add_new_worksapce.dart';
 import 'package:ibm_flutter_final_project/features/authentication/logic/sign_in_bloc/sign_in_cubit.dart';
 import 'package:ibm_flutter_final_project/features/authentication/logic/singupCubit/sign_up_cubit.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/reset_password.dart';
@@ -25,10 +29,6 @@ class AppRouter {
       //   return MaterialPageRoute(
       //     builder: (_) => const OnboardingScreen(),
       //   );
-      case Routes.workspaceStatus:
-        return MaterialPageRoute(
-          builder: (_) => const WorkspaceStatus(),
-        );
 
       case Routes.loginScreen:
         return MaterialPageRoute(
@@ -48,8 +48,14 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => const ResetPassword(),
         );
-
       case Routes.addNewWorkSpace:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => getIt<AddNewWorkSpaceCubit>(),
+                  child: const AddNewWorkspace(),
+                ));
+
+      case Routes.workspaceStatus:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => getIt<GetAdminWorkSpacesCubit>(),
@@ -67,6 +73,13 @@ class AppRouter {
             child: const EditProfileScreen(),
           ),
         );
+
+      case Routes.addNewRoom:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => getIt<AddNewRoomCubit>(),
+                  child: AddNewRoom(),
+                ));
 
       default:
         return MaterialPageRoute(

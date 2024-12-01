@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
-import 'package:ibm_flutter_final_project/core/helpers/cach_helper.dart';
 import 'package:ibm_flutter_final_project/core/helpers/extensions.dart';
+import 'package:ibm_flutter_final_project/core/helpers/utils.dart';
 import 'package:ibm_flutter_final_project/core/routing/routes.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 import 'package:ibm_flutter_final_project/core/widgets/app_text_button.dart';
+import 'package:ibm_flutter_final_project/core/widgets/image_picker.dart';
+import 'package:ibm_flutter_final_project/core/widgets/location_picker.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/AddNewWorkSpaceCubit/add_new_work_space_cubit.dart';
-import 'package:ibm_flutter_final_project/features/add_new_workspace/ui/widgets/image_picker.dart';
+import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/AddNewWorkSpaceCubit/add_new_work_space_cubit_state.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/ui/widgets/textfield_with_label.dart';
-import 'package:ibm_flutter_final_project/features/authentication/data/repos/signup_repo.dart';
 
 import '../../../../core/helpers/spacing.dart';
 
@@ -30,24 +32,6 @@ class _AddNewWorkspaceState extends State<AddNewWorkspace> {
     final cubit = getIt<AddNewWorkSpaceCubit>();
 
     return Scaffold(
-      appBar: AppBar(
-        leading: GestureDetector(
-            onTap: () {
-              CacheHelper.sharedPreferences
-                  .remove(cacheHelperString.accessToken);
-              CacheHelper.sharedPreferences
-                  .remove(cacheHelperString.refreshToken);
-              CacheHelper.sharedPreferences.remove(cacheHelperString.email);
-              CacheHelper.sharedPreferences.remove(cacheHelperString.image);
-              CacheHelper.sharedPreferences.remove(cacheHelperString.fName);
-              CacheHelper.sharedPreferences.remove(cacheHelperString.lName);
-              CacheHelper.sharedPreferences.remove(cacheHelperString.role);
-              context.pushReplacementNamed(Routes.loginScreen);
-            },
-            child: const Icon(Icons.arrow_back)),
-        backgroundColor: Colors.white,
-        title: const Text("New "),
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -57,6 +41,26 @@ class _AddNewWorkspaceState extends State<AddNewWorkspace> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  verticalSpace(10),
+                  Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            logout(context);
+                            context.pushReplacementNamed(Routes.loginScreen);
+                          },
+                          child: const Icon(
+                            Icons.arrow_back,
+                            size: 30,
+                          )),
+                      horizantalSpace(20),
+                      Text(
+                        "New ",
+                        style: TextStyles.font22blackMeduim,
+                      ),
+                    ],
+                  ),
+
                   // Title Field
                   TextFormFieldWithLabel(
                     label: "Title",
@@ -74,7 +78,6 @@ class _AddNewWorkspaceState extends State<AddNewWorkspace> {
                       return null;
                     },
                   ),
-                  verticalSpace(10.h),
 
                   // Description Field
                   TextFormFieldWithLabel(
@@ -95,12 +98,45 @@ class _AddNewWorkspaceState extends State<AddNewWorkspace> {
                       return null;
                     },
                   ),
-                  verticalSpace(10.h),
-                  const ImagePickerWidget(),
+
+                  BlocBuilder<AddNewWorkSpaceCubit, AddNewWorkSpaceState>(
+                    builder: (context, state) {
+                      return CustomImagePicker(
+                        title: "Image",
+                        onImagePicked: (image) {
+                          // Call the cubit's imageChange method with the picked image
+                          cubit.imageChange(image);
+                        },
+                        selectedImage: state
+                            .imageFile, // Use the current image from the cubit's state
+                      );
+                    },
+                  ),
+
+                  verticalSpace(10),
                   // Location Picker Widget
                   // LocationPickerWidget(onLocationPicked: (location) {
                   // // Handle location picked
                   // }),
+                  BlocProvider(
+                    create: (_) => AddNewWorkSpaceCubit(),
+                    child:
+                        BlocBuilder<AddNewWorkSpaceCubit, AddNewWorkSpaceState>(
+                      builder: (context, state) {
+                        final cubit = context.read<AddNewWorkSpaceCubit>();
+
+                        return LocationPickerWidget(
+                          onLocationPicked: (pickedLocation) {
+                            final googleMapUrl =
+                                'https://www.google.com/maps?q=${pickedLocation.latitude},${pickedLocation.longitude}';
+                            cubit.locationChange(
+                                googleMapUrl); // Use cubit to save the location
+                          },
+                        );
+                      },
+                    ),
+                  ),
+
                   verticalSpace(20.h),
 
                   // Create New Workspace Button
@@ -119,18 +155,21 @@ class _AddNewWorkspaceState extends State<AddNewWorkspace> {
                             );
                             return;
                           }
+                          if (cubit.state.locaiton == null) {
+                            // If no image is picked, show a warning
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Please pick an location')),
+                            );
+                            return;
+                          }
 
                           // If form is valid and image is picked, submit data
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text(
-                                    'Please fill out all fields correctly')),
-                          );
                         }
                       },
                     ),
                   ),
+                  verticalSpace(20)
                 ],
               ),
             ),
