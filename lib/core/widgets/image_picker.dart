@@ -1,4 +1,4 @@
- 
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:image_picker/image_picker.dart';
 
-  class CustomImagePicker extends StatelessWidget {
+class CustomImagePicker extends StatelessWidget {
   final String title;
   final Color borderColor;
   final Color iconColor;
@@ -28,6 +28,7 @@ import 'package:image_picker/image_picker.dart';
 
   @override
   Widget build(BuildContext context) {
+    log("hi i'm image $selectedImage");
     return Column(
       children: [
         Center(
@@ -48,7 +49,8 @@ import 'package:image_picker/image_picker.dart';
             child: GestureDetector(
               onTap: () async {
                 // Trigger the image picker logic
-                final XFile? image = await ImagePicker().pickImage(source: imageSource);
+                final XFile? image =
+                    await ImagePicker().pickImage(source: imageSource);
 
                 // Pass the picked image to the callback
                 onImagePicked(image);

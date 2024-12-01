@@ -51,13 +51,18 @@ class _LocationPickerWidgetState extends State<LocationPickerWidget> {
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
         children: [
-          Center(
-            child: Text(
-              "Pick a Location",
-              style: TextStyles.font22blackMeduim, // Text style for the heading
+          GestureDetector(
+            onTap: _openLocationPicker,
+            child: Center(
+              child: Text(
+                "Pick a Location",
+                style:
+                    TextStyles.font22blackMeduim, // Text style for the heading
+              ),
             ),
           ),
-          verticalSpace(12.h), // Spacer between widgets
+          verticalSpace(12.h),
+          // Spacer between widgets
           GestureDetector(
             onTap: _openLocationPicker, // Open the map picker when tapped
             child: Container(
@@ -98,6 +103,7 @@ class _LocationPickerWidgetState extends State<LocationPickerWidget> {
                             initialZoom: 20,
                           ),
                           children: [
+                            
                             TileLayer(
                               urlTemplate:
                                   'https://tile.openstreetmap.org/{z}/{x}/{y}.png',

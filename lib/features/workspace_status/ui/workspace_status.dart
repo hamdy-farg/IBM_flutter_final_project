@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/helpers/extensions.dart';
-import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
-import 'package:ibm_flutter_final_project/core/helpers/utils.dart';
 import 'package:ibm_flutter_final_project/core/routing/routes.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
@@ -23,16 +21,6 @@ class WorkspaceStatus extends StatelessWidget {
     cubit.fetchData();
 
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            logout(context);
-          },
-          icon: const Icon(Icons.arrow_back_rounded),
-        ),
-        backgroundColor: Colors.white,
-        title: const Text("Search", style: TextStyle(color: Colors.black)),
-      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -73,22 +61,17 @@ class WorkspaceStatus extends StatelessWidget {
                   },
                 ),
               ),
-              verticalSpace(10),
-              Align(
-                alignment: AlignmentDirectional.centerEnd,
-                child: AppTextButton(
-                  buttonWidth: 120.w,
-                  buttonText: "Add New ",
-                  buttonStyle: TextStyles.font16WhiteBold,
-                  onPress: () async {
-                    context.pushNamed(Routes.addNewWorkSpace);
-                  },
-                ),
-              ),
-              verticalSpace(15)
-            ],
+             ],
           ),
         ),
+      ),
+      floatingActionButton: AppTextButton(
+        buttonWidth: 120.w,
+        buttonText: "Add New ",
+        buttonStyle: TextStyles.font16WhiteBold,
+        onPress: () async {
+          context.pushNamed(Routes.addNewWorkSpace);
+        },
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 1,

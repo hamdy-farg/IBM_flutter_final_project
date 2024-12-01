@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
@@ -24,6 +26,7 @@ class _WorkspaceItemState extends State<WorkspaceItem> {
 
   @override
   Widget build(BuildContext context) {
+    log(widget.workspace.image);
     return Card(
       color: Colors.white,
       shadowColor: ColorsManager.mainBlue,

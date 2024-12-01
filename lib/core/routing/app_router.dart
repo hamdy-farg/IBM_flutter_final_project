@@ -52,7 +52,7 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                   create: (context) => getIt<AddNewWorkSpaceCubit>(),
-                  child: const AddNewWorkspace(),
+                  child: AddNewWorkspace(),
                 ));
 
       case Routes.workspaceStatus:

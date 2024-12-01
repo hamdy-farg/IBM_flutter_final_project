@@ -13,7 +13,7 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton(() => DioConsumer(dio: Dio()));
   getIt.registerLazySingleton(
       () => GetAdminWorkSpacesCubit(getIt<DioConsumer>()));
-  getIt.registerLazySingleton(() => AddNewWorkSpaceCubit());
+  getIt.registerLazySingleton(() => AddNewWorkSpaceCubit(getIt<DioConsumer>()));
   getIt.registerLazySingleton(() => AddNewRoomCubit());
   getIt.registerLazySingleton(() => SignUpCubit(getIt<DioConsumer>()));
   getIt.registerLazySingleton(() => SignInCubit(getIt<DioConsumer>()));

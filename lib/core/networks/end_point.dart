@@ -6,4 +6,5 @@ class EndPoint {
   static const register = "register";
   static const editProfile = "user"; // with put request
   static const refresh = "refresh"; // with put request
+  static const addWorkSpace = "workspace"; // with post request
 }

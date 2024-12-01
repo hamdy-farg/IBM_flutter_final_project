@@ -19,7 +19,7 @@ void logout(BuildContext context) {
 
 Future<String> getAccessToken(DioConsumer dio) async {
   try {
-    final refreshToken =
+    String? refreshToken =
         CacheHelper.sharedPreferences.getString(cacheHelperString.refreshToken);
     if (refreshToken != null) {
       Map<String, dynamic> accessTokenResponce =

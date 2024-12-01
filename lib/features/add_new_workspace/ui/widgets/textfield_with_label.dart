@@ -24,28 +24,29 @@ class TextFormFieldWithLabel extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextInputType? inputType;
   final List<TextInputFormatter>? textFormater;
+  final FocusNode? focusNode;
 
-  const TextFormFieldWithLabel({
-    super.key,
-    this.inputType,
-    this.backgroundColor,
-    this.contentPadding,
-    this.focusedBorder,
-    this.enabledBorder,
-    this.inputTextStyle,
-    this.hintText,
-    this.obscureText,
-    this.suffixIcon,
-    this.prefixIcon,
-    this.hintStyle,
-    this.label,
-    this.minLines,
-    this.maxLines,
-    this.func,
-    this.controller,
-    this.validator,
-    this.textFormater,
-  });
+  const TextFormFieldWithLabel(
+      {super.key,
+      this.inputType,
+      this.backgroundColor,
+      this.contentPadding,
+      this.focusedBorder,
+      this.enabledBorder,
+      this.inputTextStyle,
+      this.hintText,
+      this.obscureText,
+      this.suffixIcon,
+      this.prefixIcon,
+      this.hintStyle,
+      this.label,
+      this.minLines,
+      this.maxLines,
+      this.func,
+      this.controller,
+      this.validator,
+      this.textFormater,
+      this.focusNode});
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +63,7 @@ class TextFormFieldWithLabel extends StatelessWidget {
             ),
           verticalSpace(5.h),
           TextFormField(
+            focusNode: focusNode,
             controller: controller,
             keyboardType: inputType,
             inputFormatters: textFormater ?? [],
@@ -100,4 +102,3 @@ class TextFormFieldWithLabel extends StatelessWidget {
     );
   }
 }
-  
