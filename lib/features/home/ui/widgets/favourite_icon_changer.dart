@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ColorChangingIcon extends StatefulWidget {
   _ColorChangingIconState createState() => _ColorChangingIconState();
+  final double? size;
+
+  const ColorChangingIcon({super.key, this.size});
 }
 
 class _ColorChangingIconState extends State<ColorChangingIcon> {
@@ -18,7 +22,11 @@ class _ColorChangingIconState extends State<ColorChangingIcon> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: _changeColor,
-      child: Icon(Icons.bookmark_rounded,color: _iconColor,),
+      child: Icon(
+        Icons.bookmark_rounded,
+        color: _iconColor,
+        size: widget.size ?? 27.sp,
+      ),
     );
   }
 }

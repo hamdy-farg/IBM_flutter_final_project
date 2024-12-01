@@ -8,6 +8,12 @@ class TextStyles {
       fontSize: 24.sp,
       color: Colors.black,
       fontWeight: FontWeightHelper.semiBold);
+  static TextStyle font22BlackSemiBold = TextStyle(
+      fontSize: 22.sp,
+      color: Colors.black,
+      fontWeight: FontWeightHelper.semiBold);
+  static TextStyle font22BlackBold = TextStyle(
+      fontSize: 22.sp, color: Colors.black, fontWeight: FontWeightHelper.bold);
   static TextStyle font10WhiteRegular = TextStyle(
       fontSize: 10.sp,
       color: Colors.white,
@@ -18,12 +24,28 @@ class TextStyles {
       fontWeight: FontWeightHelper.regular);
   static TextStyle font16WhiteBold = TextStyle(
       fontSize: 16.sp, color: Colors.white, fontWeight: FontWeightHelper.bold);
+  static TextStyle font16BlackBold = TextStyle(
+      fontSize: 16.sp,
+      color: ColorsManager.mainBlack,
+      fontWeight: FontWeightHelper.bold);
   static TextStyle font10BlueRegular = TextStyle(
       fontSize: 10.sp,
       color: ColorsManager.mainBlue,
       fontWeight: FontWeightHelper.regular);
   static TextStyle font18WhiteBold = TextStyle(
       fontSize: 18.sp, color: Colors.white, fontWeight: FontWeight.bold);
+  static TextStyle font18GreyMeduim = TextStyle(
+      fontSize: 18.sp,
+      color: ColorsManager.lightGrey,
+      fontWeight: FontWeightHelper.meduim);
+  static TextStyle font12WhiteReagualer = TextStyle(
+      fontSize: 12.sp,
+      color: Colors.white,
+      fontWeight: FontWeightHelper.meduim);
+  static TextStyle font13WhiteReagualer = TextStyle(
+      fontSize: 13.sp,
+      color: Colors.white,
+      fontWeight: FontWeightHelper.meduim);
   static TextStyle font14GreyRegular = TextStyle(
       fontSize: 14.sp,
       color: Colors.grey,
@@ -60,8 +82,16 @@ class TextStyles {
       fontSize: 15.sp,
       fontWeight: FontWeightHelper.regular,
       color: ColorsManager.mainPurble);
+  static TextStyle font13PurbleSemiBold = TextStyle(
+      fontSize: 13.sp,
+      fontWeight: FontWeightHelper.semiBold,
+      color: ColorsManager.mainPurble);
   static TextStyle font20WhiteBold = TextStyle(
       fontSize: 20.sp,
+      fontWeight: FontWeightHelper.bold,
+      color: ColorsManager.mainWhite);
+  static TextStyle font15WhiteBold = TextStyle(
+      fontSize: 15.sp,
       fontWeight: FontWeightHelper.bold,
       color: ColorsManager.mainWhite);
   static TextStyle font24BlackBold = TextStyle(

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
-import 'package:ibm_flutter_final_project/features/home/ui/comfortable_place_items.dart';
-import 'package:ibm_flutter_final_project/features/home/ui/single_photo.dart';
+import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/custem_button_authentication.dart';
+import 'package:ibm_flutter_final_project/features/home/ui/widgets/comfortable_place_items.dart';
+import 'package:ibm_flutter_final_project/features/home/ui/widgets/single_photo.dart';
 
 class SingleItemScreen extends StatefulWidget {
   const SingleItemScreen({super.key});
@@ -19,68 +21,27 @@ class _SingleItemScreenState extends State<SingleItemScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
-                height: 250, width: double.infinity, child: SinglePhoto()),
-            const Padding(
-              padding: EdgeInsets.all(4.0),
-              child: Text(
-                "Most Comfortable \n Place",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const SizedBox(
-                height: 300,
-                width: double.infinity,
-                child: ComfortablePlaceItems()),
-            const Padding(
-              padding: EdgeInsets.all(4.0),
-              child: Text(
-                "Location",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 300,
-              width: double.infinity,
-            ),
-            Center(
-              child: Container(
-                width: 230,
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: ColorsManager.mainBlue,
-                ),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 40),
-                      child: Text(
-                        "Explore More",
-                        style: TextStyles.font20WhiteBold,
-                      ),
+            const SinglePhoto(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Most Comfortable \n Place",
+                      style: TextStyles.font22BlackBold),
+                  ComfortablePlaceItems(),
+                  verticalSpace(20),
+                  Text("Location", style: TextStyles.font22BlackBold),
+                  const SizedBox(
+                    height: 300,
+                    width: double.infinity,
+                  ),
+                  Center(
+                    child: CustemButtonAuthentication(
+                      text: 'Explore more',
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircleAvatar(
-                        backgroundColor: Colors.blue[900],
-                        radius: 15,
-                        child: const Icon(
-                          Icons.arrow_forward,
-                          color: ColorsManager.mainWhite,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                  ),
+                ],
               ),
             )
           ],

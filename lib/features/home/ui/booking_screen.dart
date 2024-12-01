@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
-import 'package:ibm_flutter_final_project/features/home/ui/booking_photo.dart';
-import 'package:ibm_flutter_final_project/features/home/ui/date_features.dart';
+import 'package:ibm_flutter_final_project/features/home/ui/widgets/booking_photo.dart';
+import 'package:ibm_flutter_final_project/features/home/ui/widgets/date_features.dart';
 
 class BookingScreen extends StatelessWidget {
   const BookingScreen({super.key});

@@ -11,6 +11,7 @@ import 'package:ibm_flutter_final_project/features/authentication/ui/reset_passw
 import 'package:ibm_flutter_final_project/features/authentication/ui/sign_in_screen.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/sign_up_screen.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/home_screen.dart';
+import 'package:ibm_flutter_final_project/features/home/ui/single_item_screen.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/logic/cubit/get_admin_work_spaces_cubit.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/ui/workspace_status.dart';
 
@@ -71,6 +72,10 @@ class AppRouter {
             create: (context) => getIt<EditProfileCubit>(),
             child: const EditProfileScreen(),
           ),
+        );
+      case Routes.singleItemScreen:
+        return MaterialPageRoute(
+          builder: (_) => const SingleItemScreen(),
         );
 
       default:
