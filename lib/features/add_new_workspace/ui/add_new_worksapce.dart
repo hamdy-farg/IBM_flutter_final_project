@@ -16,7 +16,6 @@ import 'package:ibm_flutter_final_project/core/widgets/location_picker.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/AddNewWorkSpaceCubit/add_new_work_space_cubit.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/AddNewWorkSpaceCubit/add_new_work_space_cubit_state.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/ui/widgets/textfield_with_label.dart';
-
 import '../../../../core/helpers/spacing.dart';
 
 class AddNewWorkspace extends StatelessWidget {
@@ -61,7 +60,7 @@ class AddNewWorkspace extends StatelessWidget {
                             },
                             child: const SizedBox(),
                           ),
-                          const SizedBox(),
+                          
                           verticalSpace(10),
                           Row(
                             children: [
@@ -147,6 +146,7 @@ class AddNewWorkspace extends StatelessWidget {
                             onLocationPicked: (pickedLocation) {
                               final googleMapUrl =
                                   'https://www.google.com/maps?q=${pickedLocation.latitude},${pickedLocation.longitude}';
+                                  log(googleMapUrl);
 
                               cubit.locationChange(
                                   googleMapUrl); // Use cubit to save the location
