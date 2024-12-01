@@ -14,4 +14,10 @@ class ColorsManager {
   static const Color mainWhite = Color(0xFFFFFFFF);
   static const Color userGrey = Color(0xFFf3f2f5);
   static const Color userGrey2 = Color(0xFFF3F2F5);
+  static const Color mainBlack2 = Color(0xFFF121417);
+ static const Color grey1 = Color(0xFFF61758A);
+ static const Color mainblue2 = Color(0xFFF5669FF);
+
+ 
+  
 }

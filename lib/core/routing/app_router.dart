@@ -5,6 +5,7 @@ import 'package:ibm_flutter_final_project/core/routing/routes.dart';
 import 'package:ibm_flutter_final_project/features/User/logic/edit_profile/edit_profile_cubit.dart';
 import 'package:ibm_flutter_final_project/features/User/ui/User_screen.dart';
 import 'package:ibm_flutter_final_project/features/User/ui/edit_profile_screen.dart';
+import 'package:ibm_flutter_final_project/features/adminControls/ui/booking_screen.dart';
 import 'package:ibm_flutter_final_project/features/authentication/logic/sign_in_bloc/sign_in_cubit.dart';
 import 'package:ibm_flutter_final_project/features/authentication/logic/singupCubit/sign_up_cubit.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/reset_password.dart';
@@ -30,6 +31,10 @@ class AppRouter {
       case Routes.homeScreen:
         return MaterialPageRoute(
           builder: (_) => const HomeScreen(),
+        );
+        case Routes.bookingScreen:
+        return MaterialPageRoute(
+          builder: (_) => const BookingScreen(),
         );
       case Routes.workspaceStatus:
         return MaterialPageRoute(
