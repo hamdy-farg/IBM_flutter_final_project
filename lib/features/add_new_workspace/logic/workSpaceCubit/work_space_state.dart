@@ -1,8 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dio/dio.dart';
+import 'package:ibm_flutter_final_project/features/workspace_status/data/model/work_space_model.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddNewWorkSpaceState {
+enum WorkSpaceStatus {
+  edit,
+  addNew,
+}
+
+class WorkSpaceState {
   String? title;
   String? description;
   XFile? imageFile;
@@ -10,9 +16,10 @@ class AddNewWorkSpaceState {
   String? locaiton;
   bool? isLoading;
   String? errorMessage;
-  AddNewWorkSpaceState? workSpace;
-
-  AddNewWorkSpaceState({
+  WorkSpaceState? workSpace;
+  WorkSpaceStatus? workSpaceStatus;
+  WorkSpaceModel? workSpaceModel;
+  WorkSpaceState({
     this.title,
     this.description,
     this.imageLink,
@@ -21,18 +28,22 @@ class AddNewWorkSpaceState {
     this.isLoading,
     this.errorMessage,
     this.workSpace,
+    this.workSpaceStatus,
+    this.workSpaceModel,
   });
 
-  AddNewWorkSpaceState copyWith({
+  WorkSpaceState copyWith({
     String? title,
     String? description,
     XFile? imageFile,
     String? locaiton,
     bool? isLoading,
     String? errorMessage,
-    AddNewWorkSpaceState? workSpace,
+    WorkSpaceState? workSpace,
+    WorkSpaceStatus? workSpaceStatus,
+    WorkSpaceModel? workSpaceModel,
   }) {
-    return AddNewWorkSpaceState(
+    return WorkSpaceState(
       title: title ?? this.title,
       description: description ?? this.description,
       imageFile: imageFile ?? this.imageFile,
@@ -40,6 +51,8 @@ class AddNewWorkSpaceState {
       isLoading: isLoading ?? this.isLoading,
       errorMessage: errorMessage ?? this.errorMessage,
       workSpace: workSpace ?? this.workSpace,
+      workSpaceStatus: workSpaceStatus ?? this.workSpaceStatus,
+      workSpaceModel: workSpaceModel ?? this.workSpaceModel,
     );
   }
 
@@ -52,8 +65,8 @@ class AddNewWorkSpaceState {
     };
   }
 
-  factory AddNewWorkSpaceState.fromMap(Map<String, dynamic> map) {
-    return AddNewWorkSpaceState(
+  factory WorkSpaceState.fromMap(Map<String, dynamic> map) {
+    return WorkSpaceState(
       title: map['title'],
       description: map['description'],
       imageLink: map["image"],

@@ -4,16 +4,30 @@ import 'package:ibm_flutter_final_project/core/helpers/utils.dart';
 import 'package:ibm_flutter_final_project/core/networks/dio_consumer.dart';
 import 'package:ibm_flutter_final_project/core/networks/dio_exceptions.dart';
 import 'package:ibm_flutter_final_project/core/networks/end_point.dart';
-import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/AddNewWorkSpaceCubit/add_new_work_space_cubit_state.dart';
+import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/workSpaceCubit/work_space_state.dart';
 
-class AddNewWorkSpaceRepo {
+class WorkSpaceRepo {
   DioConsumer dio;
-  AddNewWorkSpaceRepo({
+  WorkSpaceRepo({
     required this.dio,
   });
 
-  Future<AddNewWorkSpaceState> addNewWorkSpace(
-      AddNewWorkSpaceState workSpace) async {
+  Future<WorkSpaceState> getNewWorkSpace(String workSpaceId) async {
+    try {
+      String accessToken = await getAccessToken(dio);
+
+      final addNewWorkspaceResponce = await dio.put(
+          EndPoint.addWorkSpace, accessToken,
+          data: {"work_space_id": workSpaceId}, isFormData: true);
+      WorkSpaceState workSpaceData =
+          WorkSpaceState.fromMap(addNewWorkspaceResponce);
+      return workSpaceData;
+    } on ServerException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<WorkSpaceState> editNewWorkSpace(WorkSpaceState workSpace) async {
     try {
       MultipartFile? multipartFile;
       if (workSpace.imageFile != null) {
@@ -24,12 +38,33 @@ class AddNewWorkSpaceRepo {
       }
       String accessToken = await getAccessToken(dio);
 
-      
+      final addNewWorkspaceResponce = await dio.put(
+          EndPoint.addWorkSpace, accessToken,
+          data: workSpace.toMap(multipartFile), isFormData: true);
+      WorkSpaceState workSpaceData =
+          WorkSpaceState.fromMap(addNewWorkspaceResponce);
+      return workSpaceData;
+    } on ServerException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<WorkSpaceState> addNewWorkSpace(WorkSpaceState workSpace) async {
+    try {
+      MultipartFile? multipartFile;
+      if (workSpace.imageFile != null) {
+        multipartFile = await MultipartFile.fromFile(
+          workSpace.imageFile!.path,
+          filename: workSpace.imageFile!.name,
+        );
+      }
+      String accessToken = await getAccessToken(dio);
+
       final addNewWorkspaceResponce = await dio.post(
           EndPoint.addWorkSpace, accessToken,
           data: workSpace.toMap(multipartFile), isFormData: true);
-      AddNewWorkSpaceState workSpaceData =
-          AddNewWorkSpaceState.fromMap(addNewWorkspaceResponce);
+      WorkSpaceState workSpaceData =
+          WorkSpaceState.fromMap(addNewWorkspaceResponce);
       return workSpaceData;
     } on ServerException catch (e) {
       rethrow;

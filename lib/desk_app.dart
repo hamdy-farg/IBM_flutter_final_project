@@ -35,7 +35,7 @@ class DeskApp extends StatelessWidget {
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.white,
         ),
-        initialRoute: Routes.addNewRoom, //! set your initial route
+        initialRoute: intiRoutes(), //! set your initial route
         onGenerateRoute: appRouter.generateRoute,
       ),
     );

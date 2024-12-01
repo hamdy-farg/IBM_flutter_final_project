@@ -3,7 +3,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
+import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/workSpaceCubit/work_space_cubit.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CustomImagePicker extends StatelessWidget {
@@ -13,7 +15,7 @@ class CustomImagePicker extends StatelessWidget {
   final double iconSize;
   final Function(XFile?) onImagePicked;
   final ImageSource imageSource;
-  final XFile? selectedImage;
+  final Object? selectedImage;
 
   const CustomImagePicker({
     super.key,
@@ -28,6 +30,7 @@ class CustomImagePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = getIt<WorkSpaceCubit>();
     log("hi i'm image $selectedImage");
     return Column(
       children: [
@@ -61,17 +64,23 @@ class CustomImagePicker extends StatelessWidget {
                       Icons.add,
                       color: iconColor,
                     )
+                  // : Image(
+                  //     image: NetworkImage(
+                  //         "${cubit.state.workSpace?.workSpaceModel?.image}"),
+                  //   )
                   : Stack(
                       fit: StackFit.expand,
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(12),
-                          child: Image.file(
-                            File(selectedImage!.path),
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                            height: double.infinity,
-                          ),
+                          child: (selectedImage is XFile)
+                              ? Image.file(
+                                  File((selectedImage as XFile).path),
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                )
+                              : Image.network((selectedImage as String)),
                         ),
                         Positioned(
                           top: 8.h,

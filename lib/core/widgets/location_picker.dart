@@ -1,17 +1,23 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 import 'package:ibm_flutter_final_project/core/widgets/open_map.dart';
+import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/workSpaceCubit/work_space_cubit.dart';
 import 'package:latlong2/latlong.dart';
 
 class LocationPickerWidget extends StatefulWidget {
   final void Function(LatLng) onLocationPicked;
+  Map<String, double>? locationLatLong;
 
-  const LocationPickerWidget({
+  LocationPickerWidget({
     super.key,
+    this.locationLatLong,
     required this.onLocationPicked,
   });
 
@@ -21,13 +27,13 @@ class LocationPickerWidget extends StatefulWidget {
 
 class _LocationPickerWidgetState extends State<LocationPickerWidget> {
   LatLng? _pickedLocation;
-
+  final cubit = getIt<WorkSpaceCubit>();
   // Method to open the map picker screen when the user wants to pick a location
   Future<void> _openLocationPicker() async {
     final LatLng? pickedLocation = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => MapScreen(),
+        builder: (context) => const MapScreen(),
       ),
     );
 
@@ -42,6 +48,7 @@ class _LocationPickerWidgetState extends State<LocationPickerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    log("location is  ${widget.locationLatLong}");
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
@@ -58,17 +65,16 @@ class _LocationPickerWidgetState extends State<LocationPickerWidget> {
           ),
           verticalSpace(12.h),
           // Spacer between widgets
-       
-             GestureDetector(
+
+          GestureDetector(
               onTap: _openLocationPicker, // Open the map picker when tapped
               child: Container(
-               
                 height: 170.h,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: ColorsManager.semiWhite),
                 ),
-                child: _pickedLocation == null
+                child: _pickedLocation == null && widget.locationLatLong == null
                     ? const Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -89,7 +95,14 @@ class _LocationPickerWidgetState extends State<LocationPickerWidget> {
                         children: [
                           FlutterMap(
                             options: MapOptions(
-                              initialCenter: _pickedLocation!,
+                              initialCenter: LatLng(
+                                          widget.locationLatLong?["lat"] ?? 1,
+                                          widget.locationLatLong?["long"] ??
+                                              1) ==
+                                      const LatLng(1, 1)
+                                  ? _pickedLocation!
+                                  : LatLng(widget.locationLatLong?["lat"] ?? 1,
+                                      widget.locationLatLong?["long"] ?? 1),
                               initialZoom: 20,
                             ),
                             children: [
@@ -102,7 +115,19 @@ class _LocationPickerWidgetState extends State<LocationPickerWidget> {
                               MarkerLayer(
                                 markers: [
                                   Marker(
-                                    point: _pickedLocation!,
+                                    point: LatLng(
+                                                widget.locationLatLong?[
+                                                        "lat"] ??
+                                                    1,
+                                                widget.locationLatLong?[
+                                                        "long"] ??
+                                                    1) ==
+                                            const LatLng(1, 1)
+                                        ? _pickedLocation!
+                                        : LatLng(
+                                            widget.locationLatLong?["lat"] ?? 1,
+                                            widget.locationLatLong?["long"] ??
+                                                1),
                                     child: const Icon(
                                       Icons.location_pin,
                                       size: 40,
@@ -125,17 +150,15 @@ class _LocationPickerWidgetState extends State<LocationPickerWidget> {
                               ),
                               onPressed: () {
                                 setState(() {
-                                  _pickedLocation =
-                                      null; // Clear selected location
+                                  _pickedLocation = null;
+                                  widget.locationLatLong = null;
                                 });
                               },
                             ),
                           ),
                         ],
                       ),
-              ),
-            ),
-    
+              ))
         ],
       ),
     );

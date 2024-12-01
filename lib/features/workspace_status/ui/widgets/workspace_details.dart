@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ibm_flutter_final_project/core/helpers/extensions.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
+import 'package:ibm_flutter_final_project/core/routing/routes.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/data/model/work_space_model.dart';
 
@@ -37,8 +39,10 @@ class WorkspaceDetails extends StatelessWidget {
             horizantalSpace(8.w),
             WorkspaceButton(
               label: "edit workSpace",
-              isActive: !isAvailableActive,
-              onTap: () => toggleAvailability(false),
+              isActive: isAvailableActive,
+              onTap: () {
+                context.pushNamed(Routes.addNewWorkSpace, arguments: workspace);
+              },
             ),
           ],
         ),

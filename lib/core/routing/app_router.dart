@@ -7,7 +7,7 @@ import 'package:ibm_flutter_final_project/features/User/ui/User_screen.dart';
 import 'package:ibm_flutter_final_project/features/User/ui/edit_profile_screen.dart';
 import 'package:ibm_flutter_final_project/features/add-new-room/logic/cubit/add_new_room_cubit.dart';
 import 'package:ibm_flutter_final_project/features/add-new-room/ui/add_new_room.dart';
-import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/AddNewWorkSpaceCubit/add_new_work_space_cubit.dart';
+import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/workSpaceCubit/work_space_cubit.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/ui/add_new_worksapce.dart';
 import 'package:ibm_flutter_final_project/features/authentication/logic/sign_in_bloc/sign_in_cubit.dart';
 import 'package:ibm_flutter_final_project/features/authentication/logic/singupCubit/sign_up_cubit.dart';
@@ -51,8 +51,9 @@ class AppRouter {
         );
       case Routes.addNewWorkSpace:
         return MaterialPageRoute(
+            settings: settings,
             builder: (_) => BlocProvider(
-                  create: (_) => getIt<AddNewWorkSpaceCubit>(),
+                  create: (_) => getIt<WorkSpaceCubit>(),
                   child: AddNewWorkspace(),
                 ));
 

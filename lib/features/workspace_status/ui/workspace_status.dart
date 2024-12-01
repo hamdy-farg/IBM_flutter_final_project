@@ -10,6 +10,8 @@ import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 import 'package:ibm_flutter_final_project/core/widgets/app_text_button.dart';
 import 'package:ibm_flutter_final_project/features/User/ui/User_screen.dart';
+import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/workSpaceCubit/work_space_cubit.dart';
+import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/workSpaceCubit/work_space_state.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/logic/cubit/get_admin_work_spaces_cubit.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/logic/cubit/get_admin_work_spaces_state.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/logic/navigationBar/navigation_bar_cubit.dart';
@@ -29,6 +31,7 @@ class WorkspaceStatus extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final navigationBarCubit = getIt<NavigationBarCubit>();
+    final newWorkSpaceCubit = getIt<WorkSpaceCubit>();
 
     return Scaffold(
       body: BlocBuilder<NavigationBarCubit, NavigationBarState>(
@@ -46,6 +49,8 @@ class WorkspaceStatus extends StatelessWidget {
                   buttonText: "Add New ",
                   buttonStyle: TextStyles.font16WhiteBold,
                   onPress: () async {
+                    newWorkSpaceCubit
+                        .workSpaceStatusChange(WorkSpaceStatus.addNew);
                     context.pushNamed(Routes.addNewWorkSpace);
                   },
                 )
@@ -86,12 +91,19 @@ class WorkspaceStatus extends StatelessWidget {
 }
 
 class ExploreScreen extends StatelessWidget {
+  
   const ExploreScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final cubit = getIt<GetAdminWorkSpacesCubit>();
+    final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
+        GlobalKey<RefreshIndicatorState>();
     cubit.fetchData();
+
+    Future<void> refreshData() async {
+      cubit.fetchData();
+    }
 
     return SafeArea(
       child: Padding(
@@ -126,32 +138,34 @@ class ExploreScreen extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: BlocBuilder<GetAdminWorkSpacesCubit,
-                  GetAdminWorkSpacesInitState>(
-                bloc: cubit,
-                builder: (context, state) {
-                  if (state is GetAdminWorkSpacesLoudingState) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (state is GetAdminWorkSpacesFialierState) {
-                    return Center(
-                      child: Text(state.message),
-                    );
-                  } else if (state is GetAdminWorkSpacesSuccessState) {
-                    return SingleChildScrollView(
-                      child: Column(
+              child: RefreshIndicator(
+                key: refreshIndicatorKey,
+                onRefresh: refreshData,
+                child: BlocBuilder<GetAdminWorkSpacesCubit,
+                    GetAdminWorkSpacesInitState>(
+                  bloc: cubit,
+                  builder: (context, state) {
+                    if (state is GetAdminWorkSpacesLoudingState) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (state is GetAdminWorkSpacesFialierState) {
+                      return Center(
+                        child: Text(state.message),
+                      );
+                    } else if (state is GetAdminWorkSpacesSuccessState) {
+                      return ListView(
                         children: state.workSpaceModeList!
                             .map((workSpace) =>
                                 WorkspaceItem(workspace: workSpace))
                             .toList(),
-                      ),
-                    );
-                  } else {
-                    return const SizedBox
-                        .shrink(); // Fallback in case state is not handled
-                  }
-                },
+                      );
+                    } else {
+                      return const SizedBox
+                          .shrink(); // Fallback in case state is not handled
+                    }
+                  },
+                ),
               ),
             ),
           ],

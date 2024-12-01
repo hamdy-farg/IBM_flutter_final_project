@@ -7,15 +7,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/helpers/extensions.dart';
+import 'package:ibm_flutter_final_project/core/helpers/utils.dart';
 import 'package:ibm_flutter_final_project/core/routing/routes.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 import 'package:ibm_flutter_final_project/core/widgets/app_text_button.dart';
 import 'package:ibm_flutter_final_project/core/widgets/image_picker.dart';
 import 'package:ibm_flutter_final_project/core/widgets/location_picker.dart';
-import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/AddNewWorkSpaceCubit/add_new_work_space_cubit.dart';
-import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/AddNewWorkSpaceCubit/add_new_work_space_cubit_state.dart';
-import 'package:ibm_flutter_final_project/features/add_new_workspace/ui/widgets/textfield_with_label.dart';
+import 'package:ibm_flutter_final_project/core/widgets/textfield_with_label.dart';
+import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/workSpaceCubit/work_space_cubit.dart';
+import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/workSpaceCubit/work_space_state.dart';
+import 'package:ibm_flutter_final_project/features/workspace_status/data/model/work_space_model.dart';
+
 import '../../../../core/helpers/spacing.dart';
 
 class AddNewWorkspace extends StatelessWidget {
@@ -24,20 +27,25 @@ class AddNewWorkspace extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    final cubit = getIt<AddNewWorkSpaceCubit>();
-    cubit.clearAll();
-    FocusNode titleNode = FocusNode();
-  
-    FocusNode decriptionNode = FocusNode();
+    final cubit = getIt<WorkSpaceCubit>();
+    log("${cubit.state.workSpaceStatus}");
+    final workspace =
+        ModalRoute.of(context)?.settings.arguments as WorkSpaceModel?;
+    if (workspace != null) {
+      cubit.isEdit(workspace, context);
+    } else {
+      cubit.clearAll();
+    }
 
+    FocusNode titleNode = FocusNode();
+    FocusNode decriptionNode = FocusNode();
     return Scaffold(
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: BlocBuilder<AddNewWorkSpaceCubit, AddNewWorkSpaceState>(
+          child: BlocBuilder<WorkSpaceCubit, WorkSpaceState>(
             bloc: cubit,
             builder: (context, state) {
-              log("iamge change");
               return Stack(
                 children: [
                   Form(
@@ -46,21 +54,19 @@ class AddNewWorkspace extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          BlocListener<AddNewWorkSpaceCubit,
-                              AddNewWorkSpaceState>(
+                          BlocListener<WorkSpaceCubit, WorkSpaceState>(
                             bloc: cubit,
                             listener: (context, state) {
                               log("${state.workSpace}");
                               if (state.workSpace != null) {
                                 context.pushReplacementNamed(
                                     Routes.workspaceStatus);
+                                cubit.clearAll();
                               }
                               return;
                             },
                             child: const SizedBox(),
                           ),
-
-//!!!!!!!
                           verticalSpace(10),
                           Row(
                             children: [
@@ -84,6 +90,7 @@ class AddNewWorkspace extends StatelessWidget {
                           TextFormFieldWithLabel(
                             label: "Title",
                             hintText: "Title",
+                            controller: cubit.titleController,
                             focusNode: titleNode,
                             func: (value) {
                               cubit.titleChange(value);
@@ -103,6 +110,7 @@ class AddNewWorkspace extends StatelessWidget {
                           TextFormFieldWithLabel(
                             focusNode: decriptionNode,
                             label: "Description",
+                            controller: cubit.descriptionController,
                             hintText: "Enter workspace description",
                             func: (value) {
                               cubit.descriptionChange(value);
@@ -132,7 +140,8 @@ class AddNewWorkspace extends StatelessWidget {
                               //
                               titleNode.unfocus();
                             },
-                            selectedImage: cubit.state.imageFile,
+                            selectedImage:
+                                cubit.state.imageFile ?? cubit.state.imageLink,
                             // Use the current image from the cubit's state
                           ),
 
@@ -143,10 +152,12 @@ class AddNewWorkspace extends StatelessWidget {
                           // }),
 
                           LocationPickerWidget(
+                            locationLatLong: workspace != null
+                                ? extractLatLong(workspace.location)
+                                : null,
                             onLocationPicked: (pickedLocation) {
                               final googleMapUrl =
                                   'https://www.google.com/maps?q=${pickedLocation.latitude},${pickedLocation.longitude}';
-                              log(googleMapUrl);
 
                               cubit.locationChange(
                                   googleMapUrl); // Use cubit to save the location
@@ -186,7 +197,13 @@ class AddNewWorkspace extends StatelessWidget {
 
                                     return;
                                   }
-                                  cubit.addNewWorkSpace(cubit.state, context);
+                                  if (state.workSpaceStatus ==
+                                      WorkSpaceStatus.edit) {
+                                    cubit.editNewWorkSpace(
+                                        cubit.state, context);
+                                  } else {
+                                    cubit.addNewWorkSpace(cubit.state, context);
+                                  }
                                   // If form is valid and image is picked, submit data
                                 }
                               },

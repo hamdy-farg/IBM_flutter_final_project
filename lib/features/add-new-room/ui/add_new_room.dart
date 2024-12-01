@@ -14,7 +14,7 @@ import 'package:ibm_flutter_final_project/core/widgets/image_picker.dart';
 import 'package:ibm_flutter_final_project/core/widgets/time_picker.dart';
 import 'package:ibm_flutter_final_project/features/add-new-room/logic/cubit/add_new_room_cubit.dart';
 import 'package:ibm_flutter_final_project/features/add-new-room/logic/cubit/add_new_room_state.dart';
-import 'package:ibm_flutter_final_project/features/add_new_workspace/ui/widgets/textfield_with_label.dart';
+import 'package:ibm_flutter_final_project/core/widgets/textfield_with_label.dart';
 
 class AddNewRoom extends StatelessWidget {
   AddNewRoom({super.key});
