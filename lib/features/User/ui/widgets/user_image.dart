@@ -11,12 +11,13 @@ class UserImage extends StatelessWidget {
     return ClipRRect(
       borderRadius: const BorderRadius.all(Radius.circular(26)),
       child: SizedBox(
-          height: 132.h,
-          width: 132.w,
-          child: Image.asset(
-            image ?? 'assets/images/user profile image.jpg',
-            fit: BoxFit.cover,
-          )),
+        height: 132.h,
+        width: 132.w,
+        child: Image.network(
+          image ?? 'assets/images/user profile image.jpg',
+          fit: BoxFit.cover,
+        ),
+      ),
     );
   }
 }

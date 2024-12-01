@@ -15,6 +15,7 @@ import 'package:ibm_flutter_final_project/features/authentication/ui/reset_passw
 import 'package:ibm_flutter_final_project/features/authentication/ui/sign_in_screen.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/sign_up_screen.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/logic/cubit/get_admin_work_spaces_cubit.dart';
+import 'package:ibm_flutter_final_project/features/workspace_status/logic/navigationBar/navigation_bar_cubit.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/ui/workspace_status.dart';
 
 class AppRouter {
@@ -51,14 +52,17 @@ class AppRouter {
       case Routes.addNewWorkSpace:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                  create: (context) => getIt<AddNewWorkSpaceCubit>(),
+                  create: (_) => getIt<AddNewWorkSpaceCubit>(),
                   child: AddNewWorkspace(),
                 ));
 
       case Routes.workspaceStatus:
         return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => getIt<GetAdminWorkSpacesCubit>(),
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => getIt<GetAdminWorkSpacesCubit>()),
+              BlocProvider(create: (_) => getIt<NavigationBarCubit>())
+            ],
             child: const WorkspaceStatus(),
           ),
         );

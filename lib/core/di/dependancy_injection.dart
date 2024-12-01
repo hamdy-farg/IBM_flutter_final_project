@@ -7,6 +7,7 @@ import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/AddNe
 import 'package:ibm_flutter_final_project/features/authentication/logic/sign_in_bloc/sign_in_cubit.dart';
 import 'package:ibm_flutter_final_project/features/authentication/logic/singupCubit/sign_up_cubit.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/logic/cubit/get_admin_work_spaces_cubit.dart';
+import 'package:ibm_flutter_final_project/features/workspace_status/logic/navigationBar/navigation_bar_cubit.dart';
 
 final getIt = GetIt.instance;
 Future<void> setupGetIt() async {
@@ -15,6 +16,8 @@ Future<void> setupGetIt() async {
       () => GetAdminWorkSpacesCubit(getIt<DioConsumer>()));
   getIt.registerLazySingleton(() => AddNewWorkSpaceCubit(getIt<DioConsumer>()));
   getIt.registerLazySingleton(() => AddNewRoomCubit());
+  getIt.registerFactory(() => NavigationBarCubit());
+
   getIt.registerLazySingleton(() => SignUpCubit(getIt<DioConsumer>()));
   getIt.registerLazySingleton(() => SignInCubit(getIt<DioConsumer>()));
   getIt.registerLazySingleton(() => EditProfileCubit(getIt<DioConsumer>()));

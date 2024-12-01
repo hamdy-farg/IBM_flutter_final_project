@@ -30,13 +30,13 @@ class WorkspaceDetails extends StatelessWidget {
         Row(
           children: [
             WorkspaceButton(
-              label: "Available",
+              label: "edit rooms",
               isActive: isAvailableActive,
               onTap: () => toggleAvailability(true),
             ),
             horizantalSpace(8.w),
             WorkspaceButton(
-              label: "Hide",
+              label: "edit workSpace",
               isActive: !isAvailableActive,
               onTap: () => toggleAvailability(false),
             ),
