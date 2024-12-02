@@ -1,4 +1,3 @@
-import 'package:cherry_toast/cherry_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,10 +7,10 @@ import 'package:ibm_flutter_final_project/core/helpers/utils.dart';
 import 'package:ibm_flutter_final_project/core/routing/routes.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 import 'package:ibm_flutter_final_project/core/widgets/location_picker.dart';
-import 'package:ibm_flutter_final_project/features/roomScreen/logic/getAdminRoomsCubit/admin_rooms_cubit.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/comfortable_place_iems_button.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/comfortable_place_items.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/single_photo.dart';
+import 'package:ibm_flutter_final_project/features/roomScreen/logic/getAdminRoomsCubit/admin_rooms_cubit.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/data/model/work_space_model.dart';
 
 class AdminRoomsScreen extends StatelessWidget {
@@ -68,32 +67,39 @@ class AdminRoomsScreen extends StatelessWidget {
           ),
           BlocBuilder<AdminRoomsCubit, AdminRoomsState>(
             builder: (context, state) {
-              return (state is AdminRoomsSeuccess)
-                  ? SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          return Container(
-                            margin: EdgeInsets.symmetric(horizontal: 10.w),
-                            child: CustemConfortablePlace(
-                              index: index,
-                              itemsLength: state.roomModel.length,
-                              buttontext: "see room details",
-                              buttonHight: 30,
-                              buttonWidth: 230,
-                              buttonhasIcon: false,
-                              itemName: state.roomModel[index].title,
-                              price: "${state.roomModel[index].pricePerHour}",
-                            ),
-                          );
-                        },
-                        childCount: state.roomModel.length,
-                      ),
-                    )
-                  : (state is AdminRoomsFial)
-                      ? CherryToast.error(title: Text(state.errorMessage))
-                      : Center(
-                          child: CircularProgressIndicator(),
-                        );
+              if (state is AdminRoomsSeuccess) {
+                return SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      final room = state.roomModel[index];
+                      return Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10.w),
+                        child: SizedBox(
+                          // Constrain the height if required
+                          height: 120, // Example height
+                          child: CustemConfortablePlace(
+                            index: index,
+                            itemsLength: state.roomModel.length,
+                            buttontext: "see room details",
+                            buttonHight: 30,
+                            buttonWidth: 230,
+                            buttonhasIcon: false,
+                            itemName: room.title,
+                            location:
+                                room.imageLink, // Ensure `location` exists
+                            price: "${room.pricePerHour}",
+                          ),
+                        ),
+                      );
+                    },
+                    childCount: state.roomModel.length,
+                  ),
+                );
+              }
+              // Handle other states (e.g., loading, error)
+              return SliverToBoxAdapter(
+                child: Center(child: CircularProgressIndicator()),
+              );
             },
           ),
         ],
