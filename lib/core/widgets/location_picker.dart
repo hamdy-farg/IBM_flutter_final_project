@@ -14,11 +14,12 @@ import 'package:latlong2/latlong.dart';
 class LocationPickerWidget extends StatefulWidget {
   final void Function(LatLng) onLocationPicked;
   Map<String, double>? locationLatLong;
-
+  bool? isStatic;
   LocationPickerWidget({
     super.key,
     this.locationLatLong,
     required this.onLocationPicked,
+    this.isStatic,
   });
 
   @override
@@ -53,16 +54,18 @@ class _LocationPickerWidgetState extends State<LocationPickerWidget> {
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
         children: [
-          GestureDetector(
-            onTap: _openLocationPicker,
-            child: Center(
-              child: Text(
-                "Pick a Location",
-                style:
-                    TextStyles.font22blackMeduim, // Text style for the heading
-              ),
-            ),
-          ),
+          widget.isStatic == null
+              ? GestureDetector(
+                  onTap: _openLocationPicker,
+                  child: Center(
+                    child: Text(
+                      "Pick a Location",
+                      style: TextStyles
+                          .font22blackMeduim, // Text style for the heading
+                    ),
+                  ),
+                )
+              : SizedBox(),
           verticalSpace(12.h),
           // Spacer between widgets
 
@@ -139,23 +142,25 @@ class _LocationPickerWidgetState extends State<LocationPickerWidget> {
                             ],
                           ),
                           // Add IconButton at the top-right corner
-                          Positioned(
-                            top: 10,
-                            right: 10,
-                            child: IconButton(
-                              icon: const Icon(
-                                Icons.close,
-                                color: ColorsManager.mainBlue,
-                                size: 30,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  _pickedLocation = null;
-                                  widget.locationLatLong = null;
-                                });
-                              },
-                            ),
-                          ),
+                          widget.isStatic == null
+                              ? Positioned(
+                                  top: 10,
+                                  right: 10,
+                                  child: IconButton(
+                                    icon: const Icon(
+                                      Icons.close,
+                                      color: ColorsManager.mainBlue,
+                                      size: 30,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        _pickedLocation = null;
+                                        widget.locationLatLong = null;
+                                      });
+                                    },
+                                  ),
+                                )
+                              : SizedBox(),
                         ],
                       ),
               ))

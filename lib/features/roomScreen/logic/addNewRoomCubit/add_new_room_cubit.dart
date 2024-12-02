@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:ibm_flutter_final_project/features/add-new-room/logic/cubit/add_new_room_state.dart';
+import 'package:ibm_flutter_final_project/features/roomScreen/data/models/room_model.dart';
+import 'package:ibm_flutter_final_project/features/roomScreen/logic/addNewRoomCubit/add_new_room_state.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddNewRoomCubit extends Cubit<AddNewRoomState> {
@@ -10,33 +11,33 @@ class AddNewRoomCubit extends Cubit<AddNewRoomState> {
   }
 
   void descriptionChange(String description) {
-      emit(state.copyWith(description: description));
+    emit(state.copyWith(description: description));
   }
 
   void imageChange(XFile? image) {
     state.image = image;
 
-      emit(state.copyWith(image: image));
+    emit(state.copyWith(image: image));
   }
 
   void capacityChange(String capacity) {
-      emit(state.copyWith(capacity: capacity));
+    emit(state.copyWith(capacity: capacity));
   }
 
   void startDateChange(String startDate) {
-      emit(state.copyWith(startDate: startDate));
+    emit(state.copyWith(startDate: startDate));
   }
 
   void startTimeChange(String startTime) {
-      emit(state.copyWith(startTime: startTime));
+    emit(state.copyWith(startTime: startTime));
   }
 
   void endTimeChange(String endTime) {
-      emit(state.copyWith(endTime: endTime));
+    emit(state.copyWith(endTime: endTime));
   }
 
   void endDateChange(String endDate) {
-      emit(state.copyWith(endDate: endDate));
+    emit(state.copyWith(endDate: endDate));
   }
 
   void clearAll() {
@@ -54,5 +55,9 @@ class AddNewRoomCubit extends Cubit<AddNewRoomState> {
     emit(state.copyWith(title: null));
     state.capacity = null;
     emit(state.copyWith(capacity: null));
+  }
+
+  void AddNewRoom(RoomModel room) {
+    emit(state.copyWith())
   }
 }

@@ -28,7 +28,6 @@ class AddNewWorkspace extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = getIt<WorkSpaceCubit>();
-    log("${cubit.state.workSpaceStatus}");
     final workspace =
         ModalRoute.of(context)?.settings.arguments as WorkSpaceModel?;
     if (workspace != null) {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustemText extends StatelessWidget {
   final String? text;
@@ -10,6 +9,7 @@ class CustemText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
+      textAlign: TextAlign.center,
       text ?? "place holder",
       style: textStyle,
     );

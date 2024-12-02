@@ -30,10 +30,7 @@ class AddNewRoomState {
     String? endDate,
     String? startTime,
     String? endTime,
-  })  
-  {
-    //!
-//!!!!!!!!!!
+  }) {
     return AddNewRoomState(
         title: title ?? this.title,
         description: description ?? this.description,

@@ -6,8 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
-import 'package:ibm_flutter_final_project/features/add-new-room/logic/cubit/add_new_room_cubit.dart';
-import 'package:ibm_flutter_final_project/features/add-new-room/ui/add_new_room.dart';
+import 'package:ibm_flutter_final_project/features/roomScreen/logic/addNewRoomCubit/add_new_room_cubit.dart';
+import 'package:ibm_flutter_final_project/features/roomScreen/ui/add_new_room.dart';
 import 'package:intl/intl.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart'; // Ensure the import is correct
 

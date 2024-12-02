@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,10 +12,10 @@ import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 import 'package:ibm_flutter_final_project/core/widgets/app_text_button.dart';
 import 'package:ibm_flutter_final_project/core/widgets/date_picker.dart';
 import 'package:ibm_flutter_final_project/core/widgets/image_picker.dart';
-import 'package:ibm_flutter_final_project/core/widgets/time_picker.dart';
-import 'package:ibm_flutter_final_project/features/add-new-room/logic/cubit/add_new_room_cubit.dart';
-import 'package:ibm_flutter_final_project/features/add-new-room/logic/cubit/add_new_room_state.dart';
 import 'package:ibm_flutter_final_project/core/widgets/textfield_with_label.dart';
+import 'package:ibm_flutter_final_project/core/widgets/time_picker.dart';
+import 'package:ibm_flutter_final_project/features/roomScreen/logic/addNewRoomCubit/add_new_room_cubit.dart';
+import 'package:ibm_flutter_final_project/features/roomScreen/logic/addNewRoomCubit/add_new_room_state.dart';
 
 class AddNewRoom extends StatelessWidget {
   AddNewRoom({super.key});
@@ -175,7 +176,7 @@ class AddNewRoom extends StatelessWidget {
                         title: "End date",
                         onDatePicked: (value) {
 //!
-cubit.endDateChange(value??"");
+                          cubit.endDateChange(value ?? "");
                         },
                       ),
                       verticalSpace(15.h),
