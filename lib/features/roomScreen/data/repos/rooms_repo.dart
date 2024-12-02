@@ -16,13 +16,15 @@ class AdminRoomsRepo {
 
   Future<List<RoomModel>> fetchRooms(String WorkSpaceId) async {
     try {
+      log("enterd repo");
       String accessToken = await getAccessToken(dio);
       Map<String, dynamic> RoomsResponce = await dio.post(
           EndPoint.workSpaceRooms, accessToken,
           isFormData: true, data: {"work_space_id": WorkSpaceId});
+
       log("$RoomsResponce");
       List<RoomModel> rooms = (RoomsResponce["rooms"] as List<dynamic>)
-          .map((room) => RoomModel.fromMap(room))
+          .map((room) => RoomModel.fromApiMap(room))
           .toList();
       return rooms;
     } on ServerException catch (e) {
@@ -39,11 +41,18 @@ class AdminRoomsRepo {
           filename: room.imageFile!.name,
         );
       }
+      Map<String, dynamic> roomMap = room.toMap(multipartFile);
+      roomMap.remove("id");
       String accessToken = await getAccessToken(dio);
       Map<String, dynamic> RoomsResponce = await dio.post(
-          EndPoint.addRoom, accessToken,
-          isFormData: true, data: room.toMap(multipartFile));
-      return RoomModel.fromMap(RoomsResponce);
+        EndPoint.addRoom,
+        accessToken,
+        isFormData: true,
+        data: roomMap,
+      );
+      return RoomModel.fromApiMap(
+        RoomsResponce,
+      );
     } on ServerException catch (e) {
       rethrow;
     }

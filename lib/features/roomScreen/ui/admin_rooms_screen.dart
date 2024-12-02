@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +12,7 @@ import 'package:ibm_flutter_final_project/core/widgets/location_picker.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/comfortable_place_iems_button.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/comfortable_place_items.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/single_photo.dart';
+import 'package:ibm_flutter_final_project/features/roomScreen/logic/addNewRoomCubit/add_new_room_cubit.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/logic/getAdminRoomsCubit/admin_rooms_cubit.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/data/model/work_space_model.dart';
 
@@ -25,7 +28,8 @@ class AdminRoomsScreen extends StatelessWidget {
     return Scaffold(
       floatingActionButton: ComfortablePlaceIemsButton(
         onTap: () {
-          context.pushNamed(Routes.addNewRoom);
+          context.pushNamed(Routes.addNewRoom, arguments: workspace);
+          getIt<AddNewRoomCubit>().clearAll();
         },
         mainAxisAlignment: MainAxisAlignment.center,
         buttonWidth: 60,
@@ -66,7 +70,9 @@ class AdminRoomsScreen extends StatelessWidget {
             ),
           ),
           BlocBuilder<AdminRoomsCubit, AdminRoomsState>(
+            bloc: cubit,
             builder: (context, state) {
+              log("state");
               if (state is AdminRoomsSeuccess) {
                 return SliverList(
                   delegate: SliverChildBuilderDelegate(
@@ -95,6 +101,9 @@ class AdminRoomsScreen extends StatelessWidget {
                     childCount: state.roomModel.length,
                   ),
                 );
+              }
+              if (state is AdminRoomsFial) {
+                return SizedBox();
               }
               // Handle other states (e.g., loading, error)
               return SliverToBoxAdapter(

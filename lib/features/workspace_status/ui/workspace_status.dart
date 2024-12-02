@@ -51,6 +51,8 @@ class WorkspaceStatus extends StatelessWidget {
                   onPress: () async {
                     newWorkSpaceCubit
                         .workSpaceStatusChange(WorkSpaceStatus.addNew);
+                    newWorkSpaceCubit.clearAll();
+
                     context.pushNamed(Routes.addNewWorkSpace);
                   },
                 )

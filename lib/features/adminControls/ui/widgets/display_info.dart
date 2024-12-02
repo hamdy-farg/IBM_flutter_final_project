@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
-import 'package:ibm_flutter_final_project/features/add_new_workspace/data/model/add_new_workspace.dart';
+import 'package:ibm_flutter_final_project/features/add_new_workspace/date/models/add_new_workspace.dart';
 
 class DisplayInfo extends StatelessWidget {
   List<BookedDetails> bookedDetails = [

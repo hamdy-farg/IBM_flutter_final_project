@@ -6,10 +6,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
-import 'package:ibm_flutter_final_project/features/roomScreen/logic/addNewRoomCubit/add_new_room_cubit.dart';
-import 'package:ibm_flutter_final_project/features/roomScreen/ui/add_new_room.dart';
-import 'package:intl/intl.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart'; // Ensure the import is correct
+import 'package:ibm_flutter_final_project/features/roomScreen/logic/addNewRoomCubit/add_new_room_cubit.dart';
+import 'package:intl/intl.dart';
 
 class CustomDatePicker extends StatefulWidget {
   final Function(String?) onDatePicked;
@@ -40,13 +39,13 @@ class Custom_DatePickerState extends State<CustomDatePicker> {
     log(" ---- Start Date is ${cubit.state.startDate}");
     log(" ---- End Date is ${cubit.state.endDate}");
     final DateTime? picked = await showDatePicker(
+
       context: context,
       initialDate: widget.startingDate ?? DateTime.now(),
       firstDate: widget.startingDate ??
           DateTime.now(), // Restrict end date to start date
-      lastDate: DateTime(2025),
+      lastDate: DateTime(2026),
     );
-
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
@@ -64,16 +63,7 @@ class Custom_DatePickerState extends State<CustomDatePicker> {
       children: [
         // Start Date Button
         TextButton(
-          onPressed: () => cubit.state.startDate != null
-              ? _selectDate(context)
-              :      CherryToast.error(
-        toastDuration: const Duration(seconds: 3),
-        animationDuration: const Duration(seconds: 1),
-        title: Text(
-         "Please Select end Date First",
-          style: const TextStyle(color: ColorsManager.mainBlue),
-        ),
-      ).show(context) ,
+          onPressed: () => _selectDate(context),
           style: TextButton.styleFrom(
             backgroundColor: widget.backgroundColor ?? ColorsManager.mainBlue,
             foregroundColor: Colors.white,
@@ -91,14 +81,14 @@ class Custom_DatePickerState extends State<CustomDatePicker> {
         GestureDetector(
           onTap: () => cubit.state.startDate != null
               ? _selectDate(context)
-              :      CherryToast.error(
-        toastDuration: const Duration(seconds: 3),
-        animationDuration: const Duration(seconds: 1),
-        title: Text(
-         "Please Select end Date First",
-          style: const TextStyle(color: ColorsManager.mainBlue),
-        ),
-      ).show(context) ,
+              : CherryToast.error(
+                  toastDuration: const Duration(seconds: 3),
+                  animationDuration: const Duration(seconds: 1),
+                  title: Text(
+                    "Please Select end Date First",
+                    style: const TextStyle(color: ColorsManager.mainBlue),
+                  ),
+                ).show(context),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(

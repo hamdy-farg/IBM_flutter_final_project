@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:ibm_flutter_final_project/core/networks/dio_consumer.dart';
 import 'package:ibm_flutter_final_project/core/networks/dio_exceptions.dart';
@@ -13,8 +15,10 @@ class AdminRoomsCubit extends Cubit<AdminRoomsState> {
   void fetchRooms(String workSpaceId) async {
     emit(AdminRoomsLoading());
     try {
+      log("begen to go to repo");
       List<RoomModel> rooms =
           await AdminRoomsRepo(dio: dio).fetchRooms(workSpaceId);
+      log("rooms${rooms}");
       emit(AdminRoomsSeuccess(roomModel: rooms));
     } on ServerException catch (e) {
       emit(AdminRoomsFial(errorMessage: e.errorModel.message));

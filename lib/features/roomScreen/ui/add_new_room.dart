@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cherry_toast/cherry_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,8 +15,10 @@ import 'package:ibm_flutter_final_project/core/widgets/date_picker.dart';
 import 'package:ibm_flutter_final_project/core/widgets/image_picker.dart';
 import 'package:ibm_flutter_final_project/core/widgets/textfield_with_label.dart';
 import 'package:ibm_flutter_final_project/core/widgets/time_picker.dart';
+import 'package:ibm_flutter_final_project/features/roomScreen/data/models/room_model.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/logic/addNewRoomCubit/add_new_room_cubit.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/logic/addNewRoomCubit/add_new_room_state.dart';
+import 'package:ibm_flutter_final_project/features/workspace_status/data/model/work_space_model.dart';
 
 class AddNewRoom extends StatelessWidget {
   AddNewRoom({super.key});
@@ -24,252 +27,348 @@ class AddNewRoom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final workSpace =
+        ModalRoute.of(context)?.settings.arguments as WorkSpaceModel;
+
     final cubit = getIt<AddNewRoomCubit>();
-    cubit.clearAll();
+
     FocusNode titleNode = FocusNode();
     FocusNode capacityNode = FocusNode();
     FocusNode decriptionNode = FocusNode();
+    FocusNode pricePerHourFocusNode = FocusNode();
+
     DateTime temp = DateTime.now();
     DateTime tomorrow = temp.add(const Duration(days: 1)); // Add 1 day
 
-    cubit.clearAll();
-
     return Scaffold(
-      // appBar: AppBar(
-      //   leading: GestureDetector(
-      //       onTap: () {
-      //         context.pushReplacementNamed(Routes.addNewWorkSpace);
-      //       },
-      //       child: const Icon(Icons.arrow_back)),
-      //   backgroundColor: Colors.white,
-      //   title: const Text("New Room"),
-      // ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: BlocBuilder<AddNewRoomCubit, AddNewRoomState>(
-              bloc: cubit,
-              builder: (context, state) {
-                log("Hi HI: HI ");
-                return Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      //!!!
-                      verticalSpace(20),
-                      Row(
+        child: BlocBuilder<AddNewRoomCubit, AddNewRoomState>(
+          bloc: cubit,
+          builder: (context, state) {
+            log("buildedddd");
+            return Stack(
+              children: [
+                SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          GestureDetector(
-                              onTap: () {
-                                context.pop();
-                              },
-                              child: const Icon(
-                                Icons.arrow_back,
-                                size: 30,
-                              )),
-                          horizantalSpace(20),
-                          Text(
-                            "New ",
-                            style: TextStyles.font22blackMeduim,
+                          //!!!
+                          verticalSpace(20),
+                          Row(
+                            children: [
+                              GestureDetector(
+                                  onTap: () {
+                                    context.pop();
+                                  },
+                                  child: const Icon(
+                                    Icons.arrow_back,
+                                    size: 30,
+                                  )),
+                              horizantalSpace(20),
+                              Text(
+                                "New ",
+                                style: TextStyles.font22blackMeduim,
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      // Title Field
-                      TextFormFieldWithLabel(
-                        label: "Title",
-                        hintText: "Title",
-                        focusNode: titleNode,
-                        func: (value) {
-                          cubit.titleChange(value);
-                        },
-                        hintStyle: TextStyles.font14GreyRegular,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Title can\'t be empty';
-                          } else if (value.length <= 5) {
-                            return 'Title must be greater than 5 characters';
-                          }
-                          return null;
-                        },
-                      ),
-                      verticalSpace(10.h),
-
-                      // Description Field
-                      TextFormFieldWithLabel(
-                        focusNode: decriptionNode,
-                        label: "Description",
-                        hintText: "Enter workspace description",
-                        func: (value) {
-                          cubit.descriptionChange(value);
-                        },
-                        hintStyle: TextStyles.font14GreyRegular,
-                        minLines: 3,
-                        maxLines: 5,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Description can\'t be empty';
-                          } else if (value.split(' ').length <= 5) {
-                            return 'Description must be greater than 50 words';
-                          }
-                          return null;
-                        },
-                      ),
-                      //
-                      verticalSpace(10.h),
-                      // Image Picker
-                      CustomImagePicker(
-                        title: "Image",
-                        onImagePicked: (image) {
-                          log("$image");
-                          cubit.imageChange(image);
-                          decriptionNode.unfocus();
-                          capacityNode.unfocus();
-                          titleNode.unfocus();
-                        },
-                        selectedImage: cubit.state.image,
-                      ),
-                      verticalSpace(5),
-                      TextFormFieldWithLabel(
-                        focusNode: capacityNode,
-                        func: (value) {
-                          cubit.capacityChange(value);
-                        },
-                        inputType: TextInputType.number,
-                        textFormater: [
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
-                        label: "Capacity",
-                        hintText: "Number of Seats",
-                        suffixIcon:
-                            Row(mainAxisSize: MainAxisSize.min, children: [
-                          const Text(" Seat"),
-                          horizantalSpace(5.w),
-                          const Icon(
-                            Icons.chair,
-                            color: ColorsManager.mainBlue,
-                          ),
-                          horizantalSpace(5.w)
-                        ]),
-                      ),
-
-                      verticalSpace(10.h),
-
-                      // Start Date Picker
-                      CustomDatePicker(
-                        startingDate: DateTime.now(),
-                        title: "Start Date",
-                        onDatePicked: (value) {
-                          temp = DateTime.parse(value ?? "The value is null");
-                          tomorrow = temp.add(const Duration(days: 1));
-                          cubit.startDateChange(value ?? "Start date is null");
-                        },
-                      ),
-                      verticalSpace(20.h),
-
-                      // End Date Picker
-                      CustomDatePicker(
-                        startingDate: tomorrow,
-                        backgroundColor: ColorsManager.Inactive,
-                        textStyle: TextStyles.font15PurbleRegular,
-                        title: "End date",
-                        onDatePicked: (value) {
-//!
-                          cubit.endDateChange(value ?? "");
-                        },
-                      ),
-                      verticalSpace(15.h),
-                      Row(
-                        children: [
-                          // Start Time Picker
-                          CustomTimePicker(
-                            title: "Start Time",
-                            onTimePicked: (val) {
-                              log("Start Time: $val");
-                              cubit.startTimeChange(val ??
-                                  "Start Date is null"); // Store the start time
+                          // Title Field
+                          TextFormFieldWithLabel(
+                            label: "Title",
+                            hintText: "Title",
+                            focusNode: titleNode,
+                            func: (value) {
+                              cubit.titleChange(value);
+                            },
+                            hintStyle: TextStyles.font14GreyRegular,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Title can\'t be empty';
+                              } else if (value.length <= 5) {
+                                return 'Title must be greater than 5 characters';
+                              }
+                              return null;
                             },
                           ),
-                          horizantalSpace(10),
-                          CustomTimePicker(
+                          verticalSpace(10.h),
+
+                          // Description Field
+                          TextFormFieldWithLabel(
+                            focusNode: decriptionNode,
+                            label: "Description",
+                            hintText: "Enter workspace description",
+                            func: (value) {
+                              cubit.descriptionChange(value);
+                            },
+                            hintStyle: TextStyles.font14GreyRegular,
+                            minLines: 3,
+                            maxLines: 5,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Description can\'t be empty';
+                              } else if (value.split(' ').length <= 5) {
+                                return 'Description must be greater than 50 words';
+                              }
+                              return null;
+                            },
+                          ),
+                          //
+                          verticalSpace(10.h),
+                          // Image Picker
+                          CustomImagePicker(
+                            title: "Image",
+                            onImagePicked: (image) {
+                              cubit.imageChange(image);
+                              decriptionNode.unfocus();
+                              capacityNode.unfocus();
+                              titleNode.unfocus();
+
+                              pricePerHourFocusNode.unfocus();
+                            },
+                            selectedImage: cubit.state.image,
+                          ),
+
+                          //
+                          TextFormFieldWithLabel(
+                            focusNode: capacityNode,
+                            func: (value) {
+                              cubit.capacityChange(value);
+                            },
+                            inputType: TextInputType.number,
+                            textFormater: [
+                              FilteringTextInputFormatter.digitsOnly,
+                            ],
+                            hintText: "Number of Seats",
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "select you number of seates";
+                              }
+                              return null;
+                            },
+                            suffixIcon:
+                                Row(mainAxisSize: MainAxisSize.min, children: [
+                              Text(
+                                "Seat",
+                                style: TextStyles.font14bluebold,
+                              ),
+                              horizantalSpace(10.w),
+                              const Icon(
+                                size: 25,
+                                Icons.chair,
+                                color: ColorsManager.mainBlue,
+                              ),
+                              horizantalSpace(20.w)
+                            ]),
+                          ),
+
+                          //
+                          TextFormFieldWithLabel(
+                            focusNode: pricePerHourFocusNode,
+                            func: (value) {
+                              try {
+                                cubit.pricePerHourChange(double.parse(value));
+                              } on Exception {
+                                CherryToast.error(
+                                  title: Text("you have to Enter an number"),
+                                ).show(context);
+                              }
+                            },
+                            inputType: TextInputType.number,
+                            textFormater: [
+                              FilteringTextInputFormatter.digitsOnly,
+                            ],
+                            hintText: "Price Per Hour",
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Select your price per hour";
+                              }
+                              return null;
+                            },
+                            suffixIcon:
+                                Row(mainAxisSize: MainAxisSize.min, children: [
+                              Text(
+                                "EGP",
+                                style: TextStyles.font14bluebold,
+                              ),
+                              horizantalSpace(10.w),
+                              const Icon(
+                                size: 25,
+                                Icons.more_time_sharp,
+                                color: ColorsManager.mainBlue,
+                              ),
+                              horizantalSpace(20.w)
+                            ]),
+                          ),
+
+                          verticalSpace(10.h),
+
+                          // Start Date Picker
+                          CustomDatePicker(
+                            startingDate: DateTime.now(),
+                            title: "Start Date",
+                            onDatePicked: (value) {
+                              decriptionNode.unfocus();
+                              capacityNode.unfocus();
+                              titleNode.unfocus();
+                              pricePerHourFocusNode.unfocus();
+                              temp = DateTime.parse(value ?? "");
+                              tomorrow = temp.add(const Duration(days: 1));
+                              cubit.startDateChange(value);
+                            },
+                          ),
+                          verticalSpace(20.h),
+                          // End Date Picker
+                          CustomDatePicker(
+                            startingDate: tomorrow,
                             backgroundColor: ColorsManager.Inactive,
-                            title: "End Time",
                             textStyle: TextStyles.font15PurbleRegular,
-                            onTimePicked: (val) {
-                              cubit.endTimeChange(val ?? "");
+                            title: "End date",
+                            onDatePicked: (value) {
+                              decriptionNode.unfocus();
+                              capacityNode.unfocus();
+                              titleNode.unfocus();
+                              pricePerHourFocusNode.unfocus();
+                              cubit.endDateChange(value);
                             },
                           ),
+                          verticalSpace(15.h),
+                          Row(
+                            children: [
+                              // Start Time Picker
+                              CustomTimePicker(
+                                title: "Start Time",
+                                onTimePicked: (val) {
+                                  decriptionNode.unfocus();
+                                  capacityNode.unfocus();
+                                  titleNode.unfocus();
+                                  pricePerHourFocusNode.unfocus();
+                                  log("Start Time: $val");
+                                  cubit.startTimeChange(
+                                      val); // Store the start time
+                                },
+                              ),
+                              horizantalSpace(10),
+                              CustomTimePicker(
+                                backgroundColor: ColorsManager.Inactive,
+                                title: "End Time",
+                                textStyle: TextStyles.font15PurbleRegular,
+                                onTimePicked: (val) {
+                                  decriptionNode.unfocus();
+                                  capacityNode.unfocus();
+                                  titleNode.unfocus();
+                                  pricePerHourFocusNode.unfocus();
+                                  cubit.endTimeChange(val);
+                                },
+                              ),
+                            ],
+                          ),
+
+                          verticalSpace(10),
+                          //! validation
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 30.w),
+                            child: AppTextButton(
+                              buttonText: "Done",
+                              buttonStyle: TextStyles.font16WhiteBold,
+                              onPress: () {
+                                // Validate the form fields
+                                if (_formKey.currentState!.validate()) {
+                                  // Check if the start date is before the end date
+
+                                  if (cubit.state.startDate == null) {
+                                    CherryToast.error(
+                                            title: Text(
+                                                'Please select an start date'))
+                                        .show(context);
+                                    return;
+                                  }
+                                  if (cubit.state.endDate == null) {
+                                    CherryToast.error(
+                                            title: Text(
+                                                'Please select an end date'))
+                                        .show(context);
+                                    return;
+                                  }
+
+                                  if (cubit.state.startTime != null &&
+                                      cubit.state.endTime != null) {
+                                    DateTime startTime = DateTime.parse(
+                                        "2012-02-27 ${cubit.state.startTime!}");
+                                    DateTime endTime = DateTime.parse(
+                                        "2012-02-27 ${cubit.state.endTime!}");
+
+                                    if (startTime.isAfter(endTime)) {
+                                      CherryToast.error(
+                                              title: Text(
+                                                  'please choose start Time less than end Time '))
+                                          .show(context);
+                                      return;
+                                    }
+                                  } else {
+                                    CherryToast.error(
+                                            title: Text(
+                                                'please choose start and end time '))
+                                        .show(context);
+                                  }
+                                  log("${state.toMap()}");
+                                  cubit.AddNewRoom(
+                                      RoomModel.fromLocalMap(
+                                          state.toMap(), workSpace.id),
+                                      context);
+                                  // If form is valid, image is selected, and date/time checks pass, proceed with submission
+
+                                  // Add your data submission logic here
+                                  // For example, calling cubit.submitRoomData()
+                                }
+                              },
+                            ),
+                          )
                         ],
                       ),
-
-                      verticalSpace(10),
-                      //! validation
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 30.w),
-                        child: AppTextButton(
-                          buttonText: "Done",
-                          buttonStyle: TextStyles.font16WhiteBold,
-                          onPress: () {
-                            // Validate the form fields
-                            if (_formKey.currentState!.validate()) {
-                              // Check if the start date is before the end date
-                              if (cubit.state.endDate == null ||
-                                  cubit.state.endDate!.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content:
-                                          Text('Please select an end date')),
-                                );
-                                return;
-                              }
-
-                              if (cubit.state.startTime != null &&
-                                  cubit.state.endTime != null) {
-                                DateTime startTime =
-                                    DateTime.parse(cubit.state.startTime!);
-                                DateTime endTime =
-                                    DateTime.parse(cubit.state.endTime!);
-                                log('--------------------------------------------------------------');
-                                log("start time is  $startTime");
-                                log("start time is  $endTime");
-                                if (endTime.isBefore(startTime)) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text(
-                                            'End time cannot be before Start time')),
-                                  );
-                                  return;
-                                }
-                              }
-
-                              // If form is valid, image is selected, and date/time checks pass, proceed with submission
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Room added successfully')),
-                              );
-
-                              // Add your data submission logic here
-                              // For example, calling cubit.submitRoomData()
-                            } else {
-                              // If the form is not valid, show an error SnackBar
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text(
-                                        'Please fill out all fields correctly')),
-                              );
-                            }
-                          },
+                    ),
+                  ),
+                ),
+                state.isLoading == true
+                    ? Container(
+                        width: double.infinity,
+                        height: double.infinity,
+                        color: ColorsManager.mainBlack.withOpacity(.000001),
+                      )
+                    : const SizedBox(),
+                state.isLoading == true
+                    ? Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: ColorsManager.lightGrey.withOpacity(.5),
+                              borderRadius: BorderRadius.circular(12)),
+                          width: 150.w,
+                          height: 150.w,
+                          child:
+                              const Center(child: CircularProgressIndicator()),
                         ),
                       )
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
+                    : const SizedBox(),
+              ],
+            );
+          },
         ),
       ),
     );
   }
 }
+//  Align(
+//                   alignment: Alignment.center,
+//                   child: Container(
+//                     decoration: BoxDecoration(
+//                         color: ColorsManager.lightGrey.withOpacity(.5),
+//                         borderRadius: BorderRadius.circular(12)),
+//                     width: 150.w,
+//                     height: 150.w,
+//                     child: const Center(child: CircularProgressIndicator()),
+//                   ),
+//                 )
+//               ],

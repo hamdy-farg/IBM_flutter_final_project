@@ -32,8 +32,6 @@ class AddNewWorkspace extends StatelessWidget {
         ModalRoute.of(context)?.settings.arguments as WorkSpaceModel?;
     if (workspace != null) {
       cubit.isEdit(workspace, context);
-    } else {
-      cubit.clearAll();
     }
 
     FocusNode titleNode = FocusNode();

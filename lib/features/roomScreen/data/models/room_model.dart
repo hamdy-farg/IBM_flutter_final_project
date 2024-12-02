@@ -75,7 +75,23 @@ class RoomModel {
     };
   }
 
-  factory RoomModel.fromMap(Map<String, dynamic> map) {
+  factory RoomModel.fromLocalMap(
+      Map<String, dynamic> map, String? workSpaceId) {
+    return RoomModel(
+      id: map['id'],
+      workSpaceId: workSpaceId ?? map['work_space_id'],
+      title: map['title'],
+      description: map['description'],
+      pricePerHour: map['price_per_hour'],
+      capacity: int.parse(map['capacity']),
+      startDate: map['start_date'],
+      endDate: map['end_date'],
+      startTime: map['start_time'],
+      endTime: map['end_time'],
+      imageFile: map['image'],
+    );
+  }
+  factory RoomModel.fromApiMap(Map<String, dynamic> map) {
     return RoomModel(
       id: map['id'],
       workSpaceId: map['work_space_id'],

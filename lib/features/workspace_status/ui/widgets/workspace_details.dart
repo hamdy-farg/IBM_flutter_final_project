@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
@@ -38,9 +40,11 @@ class WorkspaceDetails extends StatelessWidget {
               label: "edit rooms",
               isActive: isAvailableActive,
               onTap: () {
+                log("enter cubit");
+                cubit.fetchRooms(workspace.id);
+
                 context.pushNamed(Routes.adminRoomsScreen,
                     arguments: workspace);
-                cubit.fetchRooms(workspace.id);
               },
             ),
             horizantalSpace(8.w),

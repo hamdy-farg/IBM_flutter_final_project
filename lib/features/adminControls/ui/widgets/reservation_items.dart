@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
-import 'package:ibm_flutter_final_project/features/add_new_workspace/data/model/add_new_workspace.dart';
+import 'package:ibm_flutter_final_project/features/add_new_workspace/date/models/add_new_workspace.dart';
 import 'package:ibm_flutter_final_project/features/adminControls/ui/widgets/custem_reservation_item.dart';
 
 class ReservationItems extends StatelessWidget {

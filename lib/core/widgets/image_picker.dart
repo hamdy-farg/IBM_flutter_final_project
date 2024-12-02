@@ -1,11 +1,8 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
-import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/workSpaceCubit/work_space_cubit.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CustomImagePicker extends StatelessWidget {
@@ -30,11 +27,12 @@ class CustomImagePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = getIt<WorkSpaceCubit>();
-    log("hi i'm image $selectedImage");
+    // final cubit = getIt<WorkSpaceCubit>();
+    // log("hi i'm image $selectedImage");
     return Column(
       children: [
-        Center(
+        Align(
+          alignment: Alignment.center,
           child: Text(
             title,
             style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
@@ -45,7 +43,7 @@ class CustomImagePicker extends StatelessWidget {
           width: 317.w,
           height: 170.h,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
             border: Border.all(color: borderColor),
           ),
           child: Center(
