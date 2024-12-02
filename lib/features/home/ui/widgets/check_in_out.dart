@@ -167,8 +167,8 @@ class _CheckInCheckoutWidgetState extends State<CheckInCheckoutWidget> {
         decoration: BoxDecoration(
           color: isSelected ? ColorsManager.mainBlue : Colors.transparent,
           border: Border.all(
-            color: isSelected ? ColorsManager.mainBlue : Colors.black,
-            width: 1,
+            color: isSelected ? ColorsManager.mainBlue : ColorsManager.mainBlack,
+            width: 0.5,
           ),
           borderRadius: BorderRadius.circular(8),
         ),
@@ -176,9 +176,10 @@ class _CheckInCheckoutWidgetState extends State<CheckInCheckoutWidget> {
           child: Text(
             hour,
             style: TextStyle(
-              color: isSelected ? Colors.white : Colors.black,
+              color: isSelected ? Colors.white : ColorsManager.mainBlack,
               fontSize: 16,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w400
+              ,
             ),
           ),
         ),

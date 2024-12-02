@@ -1,17 +1,17 @@
-import 'package:cherry_toast/cherry_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:intl/intl.dart';
-import 'package:ibm_flutter_final_project/core/theming/colors.dart'; // Ensure the import is correct
+import 'package:ibm_flutter_final_project/core/theming/colors.dart';
+import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 
 class CustomDatePicker extends StatefulWidget {
   final Function(String?) onDatePicked;
   final String? title;
   final Color? backgroundColor;
   final TextStyle? textStyle;
-  final DateTime? startingDate; // Use this to restrict the date selection
+  final DateTime? startingDate;
 
   CustomDatePicker({
     Key? key,
@@ -19,7 +19,7 @@ class CustomDatePicker extends StatefulWidget {
     this.title,
     this.backgroundColor,
     this.textStyle,
-    this.startingDate, // Ensure the starting date is passed for restrictions
+    this.startingDate,
   }) : super(key: key);
 
   @override
@@ -42,23 +42,24 @@ class Custom_DatePickerState extends State<CustomDatePicker> {
         selectedDate = picked;
       });
 
-      // Return the picked date through the callback function
-      widget.onDatePicked(DateFormat('dd-MM-yyyy').format(selectedDate!));
+      widget.onDatePicked(DateFormat('yyyy-MM-dddd').format(selectedDate!));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    String displayDate = selectedDate != null
-        ? "Current Day"
-        : "Today"; // If no date is selected, show "Today"
+    String displayDate = selectedDate == null
+        ? "Today"
+        : selectedDate!.isSameDay(DateTime.now())
+            ? "Today"
+            : "Current Day";
 
     return Container(
       width: double.infinity.w,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-           TextButton(
+          TextButton(
             onPressed: () => _selectDate(context),
             style: TextButton.styleFrom(
               backgroundColor: widget.backgroundColor ?? ColorsManager.mainBlue,
@@ -69,11 +70,10 @@ class Custom_DatePickerState extends State<CustomDatePicker> {
               ),
             ),
             child: Text(
-              displayDate, // Display either the selected date or "Today"
+              displayDate,
               style: widget.textStyle ?? TextStyle(fontSize: 16.sp),
             ),
           ),
-          // Date Display Container
           GestureDetector(
             onTap: () => _selectDate(context),
             child: Container(
@@ -85,20 +85,19 @@ class Custom_DatePickerState extends State<CustomDatePicker> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Calendar Icon
                   SvgPicture.asset('assets/svgs/Calendar.svg'),
-
                   Row(
                     children: [
                       Icon(
                         Icons.calendar_month,
                         color: ColorsManager.mainBlue,
+                        size: 20,
                       ),
                       horizantalSpace(5),
                       Text(
                         selectedDate != null
-                            ? DateFormat('dd -MM -yyyy').format(selectedDate!)
-                            : "Choose from Calendar", // Formatting the current date
+                            ? DateFormat('dd-MM-yyyy').format(selectedDate!)
+                            : "Choose from Calendar",
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -118,5 +117,12 @@ class Custom_DatePickerState extends State<CustomDatePicker> {
         ],
       ),
     );
+  }
+}
+
+// Extension to compare dates without considering time
+extension DateOnlyCompare on DateTime {
+  bool isSameDay(DateTime other) {
+    return year == other.year && month == other.month && day == other.day;
   }
 }

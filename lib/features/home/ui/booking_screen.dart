@@ -91,7 +91,7 @@ class BookingRoom extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 10, top: 15, right: 10),
+                padding: const EdgeInsets.only(left: 13, top: 15, right: 10),
                 child: Text(
                     "Paragraphs are the building blocks of papers. Many students define paragraphs in terms of length: a paragraph is a group of at least five sentences, a paragraph is half a page long, etc. In reality, though, the unity and coherence of ideas among sentences is what constitutes a paragraph.",
                     style: TextStyles.font12LightBlueRegular),
