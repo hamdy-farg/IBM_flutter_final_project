@@ -18,6 +18,7 @@ import 'package:ibm_flutter_final_project/core/widgets/time_picker.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/data/models/room_model.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/logic/addNewRoomCubit/add_new_room_cubit.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/logic/addNewRoomCubit/add_new_room_state.dart';
+import 'package:ibm_flutter_final_project/features/roomScreen/logic/getAdminRoomsCubit/admin_rooms_cubit.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/data/model/work_space_model.dart';
 
 class AddNewRoom extends StatelessWidget {
@@ -42,7 +43,14 @@ class AddNewRoom extends StatelessWidget {
 
     return Scaffold(
       body: SafeArea(
-        child: BlocBuilder<AddNewRoomCubit, AddNewRoomState>(
+        child: BlocConsumer<AddNewRoomCubit, AddNewRoomState>(
+          listener: (context, state) {
+            if (state.room != null) {
+              getIt<AdminRoomsCubit>().fetchRooms(workSpace.id);
+
+              context.pop();
+            }
+          },
           bloc: cubit,
           builder: (context, state) {
             log("buildedddd");

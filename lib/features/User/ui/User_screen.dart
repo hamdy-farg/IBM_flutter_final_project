@@ -37,7 +37,8 @@ class UserScreen extends StatelessWidget {
                   child: SizedBox(
                     height: 132.h,
                     width: 132.w,
-                    child: Image.network(
+                    child: 
+                    Image.network(
                       "${image ?? ""}?${DateTime.now().millisecondsSinceEpoch}",
                     ),
                   ),

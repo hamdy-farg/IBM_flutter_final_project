@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:cherry_toast/cherry_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -72,18 +71,19 @@ class AdminRoomsScreen extends StatelessWidget {
           BlocBuilder<AdminRoomsCubit, AdminRoomsState>(
             bloc: cubit,
             builder: (context, state) {
-              log("state");
               if (state is AdminRoomsSeuccess) {
                 return SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       final room = state.roomModel[index];
                       return Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10.w),
+                        margin: EdgeInsets.symmetric(
+                            horizontal: 10.w, vertical: 10),
                         child: SizedBox(
                           // Constrain the height if required
-                          height: 120, // Example height
+                          height: 170.h, // Example height
                           child: CustemConfortablePlace(
+                            imageLink: room.imageLink,
                             index: index,
                             itemsLength: state.roomModel.length,
                             buttontext: "see room details",
@@ -103,6 +103,8 @@ class AdminRoomsScreen extends StatelessWidget {
                 );
               }
               if (state is AdminRoomsFial) {
+                CherryToast.error(title: Text(state.errorMessage))
+                    .show(context);
                 return SizedBox();
               }
               // Handle other states (e.g., loading, error)

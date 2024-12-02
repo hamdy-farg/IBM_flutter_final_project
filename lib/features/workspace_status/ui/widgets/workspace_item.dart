@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
+import 'package:ibm_flutter_final_project/core/widgets/image_network_widget.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/data/model/work_space_model.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/ui/widgets/workspace_details.dart';
-import 'package:image_network/image_network.dart';
 
 class WorkspaceItem extends StatefulWidget {
   final WorkSpaceModel workspace;
@@ -42,29 +42,7 @@ class _WorkspaceItemState extends State<WorkspaceItem> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ImageNetwork(
-              image: imageU,
-              height: 180,
-              width: 100,
-              duration: 100,
-              curve: Curves.easeIn,
-              onPointer: true,
-              debugPrint: false,
-              fullScreen: false,
-              fitAndroidIos: BoxFit.cover,
-              fitWeb: BoxFitWeb.cover,
-              borderRadius: BorderRadius.circular(12),
-              onLoading: const CircularProgressIndicator(
-                color: Colors.indigoAccent,
-              ),
-              onError: const Icon(
-                Icons.error,
-                color: Colors.red,
-              ),
-              onTap: () {
-                debugPrint("©gabriel_patrick_souza");
-              },
-            ),
+            ImageNetworkWidget(imageLink: imageU, hight: 180, width: 100),
             horizantalSpace(16.w),
             Expanded(
               child: WorkspaceDetails(

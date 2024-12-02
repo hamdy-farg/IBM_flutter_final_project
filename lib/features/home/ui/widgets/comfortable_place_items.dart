@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
+import 'package:ibm_flutter_final_project/core/widgets/image_network_widget.dart';
 import 'package:ibm_flutter_final_project/features/home/data/model/work_spaces.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/comfortable_place_iems_button.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/favourite_icon_changer.dart';
@@ -65,18 +66,22 @@ class CustemConfortablePlace extends StatelessWidget {
   final int? itemsLength;
   final bool? buttonhasIcon;
   final int? index;
-  const CustemConfortablePlace(
-      {super.key,
-      this.price,
-      this.itemName,
-      this.imagePath,
-      this.location,
-      this.buttonHight,
-      this.buttonWidth,
-      this.buttontext,
-      this.buttonhasIcon,
-      this.itemsLength,
-      this.index});
+  final String? imageLink;
+
+  const CustemConfortablePlace({
+    super.key,
+    this.price,
+    this.itemName,
+    this.imagePath,
+    this.location,
+    this.buttonHight,
+    this.buttonWidth,
+    this.buttontext,
+    this.buttonhasIcon,
+    this.itemsLength,
+    this.index,
+    this.imageLink,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -98,18 +103,12 @@ class CustemConfortablePlace extends StatelessWidget {
           child: Row(
             children: [
               // Image Section
-              Container(
-                width: 100.w,
-                height: 92.h,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  image: DecorationImage(
-                    image: AssetImage(
-                        imagePath ?? 'assets/images/roomsnearby.jpg'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+              imageLink != null
+                  ? ImageNetworkWidget(
+                      imageLink: imageLink!, hight: 100, width: 100)
+                  : Image(
+                      image: AssetImage("assetName"),
+                    ),
               // Text and Info Section
               Expanded(
                 child: Padding(
@@ -144,11 +143,9 @@ class CustemConfortablePlace extends StatelessWidget {
           ),
         ),
         itemsLength != null && index != null && (itemsLength! - 1) == index!
-            ? verticalSpace(70
-            )
+            ? verticalSpace(70)
             : verticalSpace(10),
       ],
     );
-    ;
   }
 }

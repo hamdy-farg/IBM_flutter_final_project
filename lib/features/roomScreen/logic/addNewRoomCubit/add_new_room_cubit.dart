@@ -65,6 +65,10 @@ class AddNewRoomCubit extends Cubit<AddNewRoomState> {
     emit(state.copyWith(title: null));
     state.capacity = null;
     emit(state.copyWith(capacity: null));
+    state.isLoading = null;
+    emit(state.copyWith(isLoading: null));
+    state.message = null;
+    emit(state.copyWith(message: null));
   }
 
   void AddNewRoom(RoomModel roomModel, BuildContext context) async {
