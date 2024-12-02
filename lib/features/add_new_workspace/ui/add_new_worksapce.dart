@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
@@ -10,11 +12,13 @@ import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/AddNe
 import 'package:ibm_flutter_final_project/features/add_new_workspace/ui/widgets/image_picker.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/ui/widgets/textfield_with_label.dart';
 import 'package:ibm_flutter_final_project/features/authentication/data/repos/signup_repo.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../../../../core/helpers/spacing.dart';
 
 class AddNewWorkspace extends StatefulWidget {
   const AddNewWorkspace({super.key});
+
 
   @override
   _AddNewWorkspaceState createState() => _AddNewWorkspaceState();
@@ -27,6 +31,19 @@ class _AddNewWorkspaceState extends State<AddNewWorkspace> {
 
   @override
   Widget build(BuildContext context) {
+     LatLng extractCoordinatesFromUrl(String url) {
+    final uri = Uri.parse(url);
+
+    if (uri.pathSegments.isNotEmpty && url.contains('@')) {
+      final coordinates = url.split('@')[1].split(',');
+      final lat = double.parse(coordinates[0]);
+      final lng = double.parse(coordinates[1]);
+      return LatLng(lat, lng);
+    } else {
+      throw Exception("Invalid Google Maps URL");
+    }
+  }
+  
     final cubit = getIt<AddNewWorkSpaceCubit>();
 
     return Scaffold(
@@ -139,4 +156,5 @@ class _AddNewWorkspaceState extends State<AddNewWorkspace> {
       ),
     );
   }
+
 }

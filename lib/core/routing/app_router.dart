@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/routing/routes.dart';
+import 'package:ibm_flutter_final_project/features/User/logic/book_room/book_room_cubit.dart';
 import 'package:ibm_flutter_final_project/features/User/logic/edit_profile/edit_profile_cubit.dart';
 import 'package:ibm_flutter_final_project/features/User/ui/User_screen.dart';
 import 'package:ibm_flutter_final_project/features/User/ui/edit_profile_screen.dart';
@@ -11,6 +12,7 @@ import 'package:ibm_flutter_final_project/features/authentication/logic/singupCu
 import 'package:ibm_flutter_final_project/features/authentication/ui/reset_password.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/sign_in_screen.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/sign_up_screen.dart';
+import 'package:ibm_flutter_final_project/features/home/ui/booking_screen.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/home_screen.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/single_item_screen.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/logic/cubit/get_admin_work_spaces_cubit.dart';
@@ -32,7 +34,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => const HomeScreen(),
         );
-        case Routes.bookingScreen:
+      case Routes.bookingScreen:
         return MaterialPageRoute(
           builder: (_) => const BookingScreen(),
         );
@@ -81,6 +83,13 @@ class AppRouter {
       case Routes.singleItemScreen:
         return MaterialPageRoute(
           builder: (_) => const SingleItemScreen(),
+        );
+      case Routes.bookingRoom:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<BookRoomCubit>(),
+            child:   BookingRoom(),
+          ),
         );
 
       default:

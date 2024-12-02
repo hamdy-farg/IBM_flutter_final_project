@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
-import 'package:ibm_flutter_final_project/features/home/ui/widgets/favourite_icon_changer.dart';
 
-class BookingPhoto extends StatelessWidget {
-  const BookingPhoto({super.key});
+class BookingPhoto extends StatefulWidget {
+  BookingPhoto({super.key});
 
+  @override
+  State<BookingPhoto> createState() => _BookingPhotoState();
+}
+
+bool flag = false;
+
+class _BookingPhotoState extends State<BookingPhoto> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -52,7 +59,19 @@ class BookingPhoto extends StatelessWidget {
                   color: Colors.grey[800],
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Center(child: ColorChangingIcon()),
+                child: Center(
+                    child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      flag = !flag;
+                    });
+                  },
+                  child: Icon(
+                    Icons.bookmark_rounded,
+                    color: flag ? ColorsManager.semitRed : Colors.grey,
+                    size: 27.sp,
+                  ),
+                )),
               ),
             ),
           ],

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
-import 'package:ibm_flutter_final_project/features/home/ui/widgets/date_features.dart';
-import 'package:ibm_flutter_final_project/features/home/ui/widgets/favourite_icon_changer.dart';
+ import 'package:ibm_flutter_final_project/features/home/ui/widgets/favourite_icon_changer.dart';
 
 class SinglePhoto extends StatelessWidget {
   const SinglePhoto({super.key});
