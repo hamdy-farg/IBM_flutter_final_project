@@ -58,6 +58,6 @@ class AddNewRoomCubit extends Cubit<AddNewRoomState> {
   }
 
   void AddNewRoom(RoomModel room) {
-    emit(state.copyWith())
+    emit(state.copyWith());
   }
 }
