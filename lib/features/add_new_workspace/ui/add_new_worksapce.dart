@@ -83,6 +83,32 @@ class AddNewWorkspace extends StatelessWidget {
                                 "New ",
                                 style: TextStyles.font22blackMeduim,
                               ),
+                              const Expanded(
+                                child: SizedBox(),
+                              ),
+                              workspace != null
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        cubit.deleteNewWorkSpace(
+                                            context, workspace.id);
+                                      },
+                                      child: Container(
+                                        width: 110.h,
+                                        height: 40.w,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          color: Colors.red,
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            "Delete",
+                                            style: TextStyles.font20WhiteBold,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox()
                             ],
                           ),
 
@@ -197,10 +223,9 @@ class AddNewWorkspace extends StatelessWidget {
 
                                     return;
                                   }
-                                  if (state.workSpaceStatus ==
-                                      WorkSpaceStatus.edit) {
+                                  if (workspace != null) {
                                     cubit.editNewWorkSpace(
-                                        cubit.state, context);
+                                        cubit.state, context, workspace.id);
                                   } else {
                                     cubit.addNewWorkSpace(cubit.state, context);
                                   }

@@ -91,15 +91,14 @@ class WorkspaceStatus extends StatelessWidget {
 }
 
 class ExploreScreen extends StatelessWidget {
-  
   const ExploreScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final cubit = getIt<GetAdminWorkSpacesCubit>();
+
     final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
         GlobalKey<RefreshIndicatorState>();
-    cubit.fetchData();
 
     Future<void> refreshData() async {
       cubit.fetchData();

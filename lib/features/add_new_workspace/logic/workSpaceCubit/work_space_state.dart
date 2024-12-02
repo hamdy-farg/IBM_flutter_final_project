@@ -58,6 +58,7 @@ class WorkSpaceState {
 
   Map<String, dynamic> toMap(MultipartFile? image) {
     return <String, dynamic>{
+      
       'title': title ?? "",
       'description': description ?? "",
       'image': image ?? "",

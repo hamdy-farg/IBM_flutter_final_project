@@ -73,15 +73,39 @@ class WorkSpaceCubit extends Cubit<WorkSpaceState> {
     descriptionController.text = "";
   }
 
-  Future<void> editNewWorkSpace(
-      WorkSpaceState newWorkSpace, BuildContext context) async {
+  Future<void> deleteNewWorkSpace(
+      BuildContext context, String workSpaceId) async {
     emit(state.copyWith(isLoading: true));
     try {
       WorkSpaceState? workSpace =
-          await WorkSpaceRepo(dio: dio).editNewWorkSpace(newWorkSpace);
+          await WorkSpaceRepo(dio: dio).deleteNewWorkSpace(workSpaceId);
       state.isLoading = null;
       emit(state.copyWith(isLoading: null));
       emit(state.copyWith(workSpace: workSpace));
+      CherryToast.success(
+        title: const Text("deleted successfully"),
+      ).show(context);
+    } on ServerException catch (e) {
+      CherryToast.error(
+        title: Text(e.errorModel.message),
+      ).show(context);
+      state.isLoading = null;
+      emit(state.copyWith(isLoading: null));
+    }
+  }
+
+  Future<void> editNewWorkSpace(WorkSpaceState newWorkSpace,
+      BuildContext context, String workSpaceId) async {
+    emit(state.copyWith(isLoading: true));
+    try {
+      WorkSpaceState? workSpace = await WorkSpaceRepo(dio: dio)
+          .updateWorkSpace(newWorkSpace, workSpaceId);
+      state.isLoading = null;
+      emit(state.copyWith(isLoading: null));
+      emit(state.copyWith(workSpace: workSpace));
+      CherryToast.success(
+        title: const Text("edited successfully"),
+      ).show(context);
     } on ServerException catch (e) {
       CherryToast.error(
         title: Text(e.errorModel.message),
@@ -100,6 +124,9 @@ class WorkSpaceCubit extends Cubit<WorkSpaceState> {
       state.isLoading = null;
       emit(state.copyWith(isLoading: null));
       emit(state.copyWith(workSpace: workSpace));
+      CherryToast.success(
+        title: const Text("added successfully"),
+      ).show(context);
     } on ServerException catch (e) {
       CherryToast.error(
         title: Text(e.errorModel.message),

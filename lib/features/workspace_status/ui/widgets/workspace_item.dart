@@ -6,6 +6,7 @@ import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/data/model/work_space_model.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/ui/widgets/workspace_details.dart';
+import 'package:image_network/image_network.dart';
 
 class WorkspaceItem extends StatefulWidget {
   final WorkSpaceModel workspace;
@@ -26,6 +27,7 @@ class _WorkspaceItemState extends State<WorkspaceItem> {
 
   @override
   Widget build(BuildContext context) {
+    final imageU = widget.workspace.image;
     log(widget.workspace.image);
     return Card(
       color: Colors.white,
@@ -40,15 +42,28 @@ class _WorkspaceItemState extends State<WorkspaceItem> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 100.w,
-              height: 120.h,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: NetworkImage(widget.workspace.image),
-                ),
-              ), // just an example
+            ImageNetwork(
+              image: imageU,
+              height: 180,
+              width: 100,
+              duration: 100,
+              curve: Curves.easeIn,
+              onPointer: true,
+              debugPrint: false,
+              fullScreen: false,
+              fitAndroidIos: BoxFit.cover,
+              fitWeb: BoxFitWeb.cover,
+              borderRadius: BorderRadius.circular(12),
+              onLoading: const CircularProgressIndicator(
+                color: Colors.indigoAccent,
+              ),
+              onError: const Icon(
+                Icons.error,
+                color: Colors.red,
+              ),
+              onTap: () {
+                debugPrint("©gabriel_patrick_souza");
+              },
             ),
             horizantalSpace(16.w),
             Expanded(

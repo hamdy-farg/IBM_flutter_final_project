@@ -11,12 +11,11 @@ class WorkSpaceRepo {
   WorkSpaceRepo({
     required this.dio,
   });
-
-  Future<WorkSpaceState> getNewWorkSpace(String workSpaceId) async {
+  Future<WorkSpaceState> deleteNewWorkSpace(String workSpaceId) async {
     try {
       String accessToken = await getAccessToken(dio);
 
-      final addNewWorkspaceResponce = await dio.put(
+      final addNewWorkspaceResponce = await dio.delete(
           EndPoint.addWorkSpace, accessToken,
           data: {"work_space_id": workSpaceId}, isFormData: true);
       WorkSpaceState workSpaceData =
@@ -27,7 +26,8 @@ class WorkSpaceRepo {
     }
   }
 
-  Future<WorkSpaceState> editNewWorkSpace(WorkSpaceState workSpace) async {
+  Future<WorkSpaceState> updateWorkSpace(
+      WorkSpaceState workSpace, String workSpaceId) async {
     try {
       MultipartFile? multipartFile;
       if (workSpace.imageFile != null) {
@@ -37,10 +37,19 @@ class WorkSpaceRepo {
         );
       }
       String accessToken = await getAccessToken(dio);
+      final workSpaceMap = workSpace.toMap(multipartFile);
+      workSpaceMap["work_space_id"] = workSpaceId;
+
+      if (workSpace.title == null) {
+        workSpaceMap.remove("title");
+      }
+      if (workSpace.description == null) {
+        workSpaceMap.remove("description");
+      }
 
       final addNewWorkspaceResponce = await dio.put(
           EndPoint.addWorkSpace, accessToken,
-          data: workSpace.toMap(multipartFile), isFormData: true);
+          data: workSpaceMap, isFormData: true);
       WorkSpaceState workSpaceData =
           WorkSpaceState.fromMap(addNewWorkspaceResponce);
       return workSpaceData;
