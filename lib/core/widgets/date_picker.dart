@@ -13,7 +13,7 @@ import 'package:intl/intl.dart';
 class CustomDatePicker extends StatefulWidget {
   final Function(String?) onDatePicked;
   final String? title;
-
+  final String? oldDate;
   final Color? backgroundColor;
   final TextStyle? textStyle;
   final DateTime? startingDate; // Use this to restrict the date selection
@@ -25,6 +25,7 @@ class CustomDatePicker extends StatefulWidget {
     this.backgroundColor,
     this.textStyle,
     this.startingDate, // Ensure the starting date is passed for restrictions
+    this.oldDate,
   }) : super(key: key);
 
   @override
@@ -39,7 +40,6 @@ class Custom_DatePickerState extends State<CustomDatePicker> {
     log(" ---- Start Date is ${cubit.state.startDate}");
     log(" ---- End Date is ${cubit.state.endDate}");
     final DateTime? picked = await showDatePicker(
-
       context: context,
       initialDate: widget.startingDate ?? DateTime.now(),
       firstDate: widget.startingDate ??
@@ -105,7 +105,9 @@ class Custom_DatePickerState extends State<CustomDatePicker> {
                 Text(
                   selectedDate != null
                       ? DateFormat('yyyy-MM-dd').format(selectedDate!)
-                      : "No date Selected", // Placeholder when no date is selected
+                      : widget.oldDate != null
+                          ? widget.oldDate!
+                          : "No date Selected", // Placeholder when no date is selected
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,

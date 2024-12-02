@@ -42,6 +42,7 @@ class WorkSpaceState {
     WorkSpaceState? workSpace,
     WorkSpaceStatus? workSpaceStatus,
     WorkSpaceModel? workSpaceModel,
+    String? imageLink,
   }) {
     return WorkSpaceState(
       title: title ?? this.title,
@@ -53,12 +54,12 @@ class WorkSpaceState {
       workSpace: workSpace ?? this.workSpace,
       workSpaceStatus: workSpaceStatus ?? this.workSpaceStatus,
       workSpaceModel: workSpaceModel ?? this.workSpaceModel,
+      imageLink: imageLink ?? this.imageLink,
     );
   }
 
   Map<String, dynamic> toMap(MultipartFile? image) {
     return <String, dynamic>{
-      
       'title': title ?? "",
       'description': description ?? "",
       'image': image ?? "",

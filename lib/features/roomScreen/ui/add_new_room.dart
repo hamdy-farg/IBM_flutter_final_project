@@ -18,8 +18,6 @@ import 'package:ibm_flutter_final_project/core/widgets/time_picker.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/data/models/room_model.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/logic/addNewRoomCubit/add_new_room_cubit.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/logic/addNewRoomCubit/add_new_room_state.dart';
-import 'package:ibm_flutter_final_project/features/roomScreen/logic/getAdminRoomsCubit/admin_rooms_cubit.dart';
-import 'package:ibm_flutter_final_project/features/workspace_status/data/model/work_space_model.dart';
 
 class AddNewRoom extends StatelessWidget {
   AddNewRoom({super.key});
@@ -28,9 +26,12 @@ class AddNewRoom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final workSpace =
-        ModalRoute.of(context)?.settings.arguments as WorkSpaceModel;
+    RoomModel? roomModel =
+        ModalRoute.of(context)?.settings.arguments as RoomModel;
 
+    //
+    //!!! WorkSpaceModel? workSpace =
+    //     ModalRoute.of(context)?.settings.arguments as WorkSpaceModel;
     final cubit = getIt<AddNewRoomCubit>();
 
     FocusNode titleNode = FocusNode();
@@ -40,15 +41,15 @@ class AddNewRoom extends StatelessWidget {
 
     DateTime temp = DateTime.now();
     DateTime tomorrow = temp.add(const Duration(days: 1)); // Add 1 day
-
+    cubit.readyToEdit(roomModel);
     return Scaffold(
       body: SafeArea(
-        child: BlocConsumer<AddNewRoomCubit, AddNewRoomState>(
+        child: BlocConsumer<AddNewRoomCubit, RoomState>(
           listener: (context, state) {
             if (state.room != null) {
-              getIt<AdminRoomsCubit>().fetchRooms(workSpace.id);
+              //!! getIt<AdminRoomsCubit>().fetchRooms(workSpace.id);
 
-              context.pop();
+              // context.pop();
             }
           },
           bloc: cubit,
@@ -91,6 +92,7 @@ class AddNewRoom extends StatelessWidget {
                             func: (value) {
                               cubit.titleChange(value);
                             },
+                            controller: cubit.titleController,
                             hintStyle: TextStyles.font14GreyRegular,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -106,6 +108,7 @@ class AddNewRoom extends StatelessWidget {
                           // Description Field
                           TextFormFieldWithLabel(
                             focusNode: decriptionNode,
+                            controller: cubit.descriptionController,
                             label: "Description",
                             hintText: "Enter workspace description",
                             func: (value) {
@@ -136,7 +139,8 @@ class AddNewRoom extends StatelessWidget {
 
                               pricePerHourFocusNode.unfocus();
                             },
-                            selectedImage: cubit.state.image,
+                            selectedImage:
+                                roomModel.imageLink ?? cubit.state.image,
                           ),
 
                           //
@@ -149,6 +153,7 @@ class AddNewRoom extends StatelessWidget {
                             textFormater: [
                               FilteringTextInputFormatter.digitsOnly,
                             ],
+                            controller: cubit.capacityController,
                             hintText: "Number of Seats",
                             validator: (value) {
                               if (value!.isEmpty) {
@@ -174,6 +179,7 @@ class AddNewRoom extends StatelessWidget {
 
                           //
                           TextFormFieldWithLabel(
+                            controller: cubit.pricePerHourController,
                             focusNode: pricePerHourFocusNode,
                             func: (value) {
                               try {
@@ -215,6 +221,8 @@ class AddNewRoom extends StatelessWidget {
 
                           // Start Date Picker
                           CustomDatePicker(
+                            oldDate:
+                                roomModel != null ? roomModel.startDate : null,
                             startingDate: DateTime.now(),
                             title: "Start Date",
                             onDatePicked: (value) {
@@ -230,6 +238,8 @@ class AddNewRoom extends StatelessWidget {
                           verticalSpace(20.h),
                           // End Date Picker
                           CustomDatePicker(
+                            oldDate:
+                                roomModel != null ? roomModel.endDate : null,
                             startingDate: tomorrow,
                             backgroundColor: ColorsManager.Inactive,
                             textStyle: TextStyles.font15PurbleRegular,
@@ -247,6 +257,9 @@ class AddNewRoom extends StatelessWidget {
                             children: [
                               // Start Time Picker
                               CustomTimePicker(
+                                oldTime: roomModel != null
+                                    ? roomModel.startTime
+                                    : null,
                                 title: "Start Time",
                                 onTimePicked: (val) {
                                   decriptionNode.unfocus();
@@ -260,6 +273,9 @@ class AddNewRoom extends StatelessWidget {
                               ),
                               horizantalSpace(10),
                               CustomTimePicker(
+                                oldTime: roomModel != null
+                                    ? roomModel.endTime
+                                    : null,
                                 backgroundColor: ColorsManager.Inactive,
                                 title: "End Time",
                                 textStyle: TextStyles.font15PurbleRegular,
@@ -283,14 +299,17 @@ class AddNewRoom extends StatelessWidget {
                               buttonStyle: TextStyles.font16WhiteBold,
                               onPress: () {
                                 // Validate the form fields
+
                                 if (_formKey.currentState!.validate()) {
                                   // Check if the start date is before the end date
 
                                   if (cubit.state.startDate == null) {
-                                    CherryToast.error(
-                                            title: Text(
-                                                'Please select an start date'))
-                                        .show(context);
+                                    if (roomModel.startDate == null) {
+                                      CherryToast.error(
+                                              title: Text(
+                                                  'Please select an start date'))
+                                          .show(context);
+                                    }
                                     return;
                                   }
                                   if (cubit.state.endDate == null) {
@@ -322,10 +341,11 @@ class AddNewRoom extends StatelessWidget {
                                         .show(context);
                                   }
                                   log("${state.toMap()}");
-                                  cubit.AddNewRoom(
-                                      RoomModel.fromLocalMap(
-                                          state.toMap(), workSpace.id),
-                                      context);
+                                  //!!!!! cubit.AddNewRoom(
+                                  //     RoomModel.fromLocalMap(
+                                  //         state.toMap(), workSpace.id),
+                                  //!!!     context);
+
                                   // If form is valid, image is selected, and date/time checks pass, proceed with submission
 
                                   // Add your data submission logic here

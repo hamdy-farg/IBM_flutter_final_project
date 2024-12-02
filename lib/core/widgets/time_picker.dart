@@ -4,11 +4,13 @@ import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart'; // Ensure the import is correct
 
 class CustomTimePicker extends StatefulWidget {
-  final Function(String?) onTimePicked; // Callback function to send the picked time
+  final Function(String?)
+      onTimePicked; // Callback function to send the picked time
   final String? title;
   final Color? backgroundColor; // Optional background color for the button
   final TextStyle? textStyle;
   final TimeOfDay? startingTime;
+  final String? oldTime;
 
   // Constructor accepting the callback, backgroundColor, and title
   CustomTimePicker({
@@ -18,6 +20,7 @@ class CustomTimePicker extends StatefulWidget {
     this.backgroundColor,
     this.textStyle,
     this.startingTime,
+    this.oldTime,
   }) : super(key: key);
 
   @override
@@ -91,7 +94,9 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
                 Text(
                   selectedTime != null
                       ? "${selectedTime!.hour.toString().padLeft(2, '0')}:00" // Display only the hour (HH:00)
-                      : "HH:00", // Placeholder if no time is selected
+                      : widget.oldTime != null
+                          ? widget.oldTime ?? ""
+                          : "HH:00", // Placeholder if no time is selected
                 ),
               ],
             ),

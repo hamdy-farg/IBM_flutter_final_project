@@ -61,7 +61,7 @@ class RoomModel {
 
   Map<String, dynamic> toMap(MultipartFile? imageFile) {
     return <String, dynamic>{
-      'id': id,
+      'room_id': id,
       'work_space_id': workSpaceId,
       'title': title,
       'description': description,

@@ -1,7 +1,7 @@
 import 'package:ibm_flutter_final_project/features/roomScreen/data/models/room_model.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddNewRoomState {
+class RoomState {
   //  8
   String? title;
   String? description;
@@ -18,7 +18,7 @@ class AddNewRoomState {
 
   RoomModel? room;
 
-  AddNewRoomState({
+  RoomState({
     this.title,
     this.description,
     this.image,
@@ -33,7 +33,7 @@ class AddNewRoomState {
     this.pricePerHour,
   });
 
-  AddNewRoomState copyWith({
+  RoomState copyWith({
     String? title,
     String? description,
     XFile? image,
@@ -47,7 +47,7 @@ class AddNewRoomState {
     RoomModel? room,
     double? pricePerHour,
   }) {
-    return AddNewRoomState(
+    return RoomState(
       title: title ?? this.title,
       description: description ?? this.description,
       image: image ?? this.image,
@@ -77,8 +77,8 @@ class AddNewRoomState {
     };
   }
 
-  factory AddNewRoomState.fromMap(Map<String, dynamic> map) {
-    return AddNewRoomState(
+  factory RoomState.fromMap(Map<String, dynamic> map) {
+    return RoomState(
         title: map['title'],
         description: map['description'],
         image: map['image'],

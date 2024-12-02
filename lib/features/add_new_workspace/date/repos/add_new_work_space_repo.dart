@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:ibm_flutter_final_project/core/helpers/utils.dart';
 import 'package:ibm_flutter_final_project/core/networks/dio_consumer.dart';
@@ -29,6 +31,8 @@ class WorkSpaceRepo {
   Future<WorkSpaceState> updateWorkSpace(
       WorkSpaceState workSpace, String workSpaceId) async {
     try {
+      log("image state second state${workSpace.imageFile}");
+
       MultipartFile? multipartFile;
       if (workSpace.imageFile != null) {
         multipartFile = await MultipartFile.fromFile(
@@ -36,9 +40,17 @@ class WorkSpaceRepo {
           filename: workSpace.imageFile!.name,
         );
       }
+      log("image state third state${multipartFile}");
       String accessToken = await getAccessToken(dio);
+
       final workSpaceMap = workSpace.toMap(multipartFile);
+
+      log("image state fourth state${workSpaceMap["image"]}");
+
       workSpaceMap["work_space_id"] = workSpaceId;
+      workSpaceMap
+          .removeWhere((key, value) => value == null || value == ""); //***** */
+      log("image state fifth state${workSpaceMap["image"]}");
 
       if (workSpace.title == null) {
         workSpaceMap.remove("title");
@@ -50,6 +62,7 @@ class WorkSpaceRepo {
       final addNewWorkspaceResponce = await dio.put(
           EndPoint.addWorkSpace, accessToken,
           data: workSpaceMap, isFormData: true);
+          
       WorkSpaceState workSpaceData =
           WorkSpaceState.fromMap(addNewWorkspaceResponce);
       return workSpaceData;

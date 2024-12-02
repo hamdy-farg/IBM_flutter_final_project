@@ -67,6 +67,7 @@ class CustemConfortablePlace extends StatelessWidget {
   final bool? buttonhasIcon;
   final int? index;
   final String? imageLink;
+  final void Function()? buttonOnTap;
 
   const CustemConfortablePlace({
     super.key,
@@ -81,6 +82,7 @@ class CustemConfortablePlace extends StatelessWidget {
     this.itemsLength,
     this.index,
     this.imageLink,
+    this.buttonOnTap,
   });
 
   @override
@@ -123,6 +125,7 @@ class CustemConfortablePlace extends StatelessWidget {
                         text: buttontext ?? "book",
                         buttonHight: buttonHight,
                         buttonWidth: buttonWidth,
+                        onTap: buttonOnTap,
                         hasIcon: buttonhasIcon ?? true,
                       ),
                     ],

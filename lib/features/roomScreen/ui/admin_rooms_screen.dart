@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/helpers/extensions.dart';
+import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:ibm_flutter_final_project/core/helpers/utils.dart';
 import 'package:ibm_flutter_final_project/core/routing/routes.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
@@ -53,6 +54,7 @@ class AdminRoomsScreen extends StatelessWidget {
                     children: [
                       Text("${workspace?.title}",
                           style: TextStyles.font22BlackBold),
+                      verticalSpace(10),
                       Text("Location", style: TextStyles.font22BlackBold),
                       LocationPickerWidget(
                         isStatic: true,
@@ -86,7 +88,12 @@ class AdminRoomsScreen extends StatelessWidget {
                             imageLink: room.imageLink,
                             index: index,
                             itemsLength: state.roomModel.length,
-                            buttontext: "see room details",
+                            buttontext: "edit room details",
+                            buttonOnTap: () {
+                              getIt<AddNewRoomCubit>().clearAll();
+                              context.pushNamed(Routes.addNewRoom,
+                                  arguments: state.roomModel[index]);
+                            },
                             buttonHight: 30,
                             buttonWidth: 230,
                             buttonhasIcon: false,

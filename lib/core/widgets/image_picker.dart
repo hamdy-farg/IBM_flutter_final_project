@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
+import 'package:ibm_flutter_final_project/core/widgets/image_network_widget.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CustomImagePicker extends StatelessWidget {
@@ -78,7 +79,11 @@ class CustomImagePicker extends StatelessWidget {
                                   width: double.infinity,
                                   height: double.infinity,
                                 )
-                              : Image.network((selectedImage as String)),
+                              : ImageNetworkWidget(
+                                  imageLink: (selectedImage as String),
+                                  width: 100,
+                                  hight: 100,
+                                ),
                         ),
                         Positioned(
                           top: 8.h,
@@ -86,6 +91,7 @@ class CustomImagePicker extends StatelessWidget {
                           child: IconButton(
                             onPressed: () {
                               // Reset the image by triggering the callback with null
+                              
                               onImagePicked(null);
                             },
                             icon: CircleAvatar(

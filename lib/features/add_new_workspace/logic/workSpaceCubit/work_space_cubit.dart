@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:flutter/material.dart';
@@ -20,12 +22,12 @@ class WorkSpaceCubit extends Cubit<WorkSpaceState> {
     titleController.text = workSpace.title ?? "";
     descriptionController.text = workSpace.description ?? "";
     state.imageLink = workSpace.image ?? "";
+    emit(state.copyWith(imageLink: workSpace.image));
     state.locaiton = workSpace.location;
     emit(state);
   }
 
   void titleChange(String? title) {
-    state.title = title;
     emit(state.copyWith(title: title));
   }
 
@@ -61,7 +63,10 @@ class WorkSpaceCubit extends Cubit<WorkSpaceState> {
     state.isLoading = null;
     state.errorMessage = null;
     state.workSpace = null;
+    state.imageLink = null;
+    state.imageFile = null;
     state.workSpaceModel = null;
+    emit(state.copyWith(imageFile: null));
     emit(state.copyWith(imageFile: null));
     emit(state.copyWith(locaiton: null));
     emit(state.copyWith(title: null));
@@ -98,11 +103,15 @@ class WorkSpaceCubit extends Cubit<WorkSpaceState> {
       BuildContext context, String workSpaceId) async {
     emit(state.copyWith(isLoading: true));
     try {
+      log("image state ${newWorkSpace.imageFile}");
+
       WorkSpaceState? workSpace = await WorkSpaceRepo(dio: dio)
           .updateWorkSpace(newWorkSpace, workSpaceId);
       state.isLoading = null;
+
       emit(state.copyWith(isLoading: null));
       emit(state.copyWith(workSpace: workSpace));
+
       CherryToast.success(
         title: const Text("edited successfully"),
       ).show(context);

@@ -42,9 +42,35 @@ class AdminRoomsRepo {
         );
       }
       Map<String, dynamic> roomMap = room.toMap(multipartFile);
-      roomMap.remove("id");
+      roomMap.remove("room_id");
       String accessToken = await getAccessToken(dio);
       Map<String, dynamic> RoomsResponce = await dio.post(
+        EndPoint.addRoom,
+        accessToken,
+        isFormData: true,
+        data: roomMap,
+      );
+      return RoomModel.fromApiMap(
+        RoomsResponce,
+      );
+    } on ServerException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<RoomModel> updateRoom(RoomModel room) async {
+    try {
+      MultipartFile? multipartFile;
+      if (room.imageFile != null) {
+        multipartFile = await MultipartFile.fromFile(
+          room.imageFile!.path,
+          filename: room.imageFile!.name,
+        );
+      }
+      Map<String, dynamic> roomMap = room.toMap(multipartFile);
+      roomMap.removeWhere((key, value) => value == null); //***** */
+      String accessToken = await getAccessToken(dio);
+      Map<String, dynamic> RoomsResponce = await dio.put(
         EndPoint.addRoom,
         accessToken,
         isFormData: true,
