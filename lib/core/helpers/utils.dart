@@ -7,6 +7,7 @@ import 'package:ibm_flutter_final_project/core/networks/dio_consumer.dart';
 import 'package:ibm_flutter_final_project/core/networks/dio_exceptions.dart';
 import 'package:ibm_flutter_final_project/core/routing/routes.dart';
 import 'package:ibm_flutter_final_project/features/authentication/data/repos/signup_repo.dart';
+import 'package:intl/intl.dart';
 
 void logout(BuildContext context) {
   context.pushReplacementNamed(Routes.loginScreen);
@@ -57,4 +58,60 @@ Map<String, double>? extractLatLong(String url) {
   }
 
   return null; // Return null if parsing fails
+}
+
+bool isStartDateValid(String startDate) {
+  // Normalize the date to YYYY-MM-DD format
+  List<String> parts = startDate.split('-');
+  String normalizedDate =
+      "${parts[0]}-${parts[1].padLeft(2, '0')}-${parts[2].padLeft(2, '0')}";
+
+  // Parse the start date
+  DateTime parsedStartDate = DateTime.parse(normalizedDate);
+
+  // Normalize both dates to ignore the time part
+  DateTime startDateOnly = DateTime(
+      parsedStartDate.year, parsedStartDate.month, parsedStartDate.day);
+  DateTime todayOnly = DateTime.now();
+  todayOnly = DateTime(todayOnly.year, todayOnly.month, todayOnly.day);
+
+  // Compare the dates
+  return startDateOnly.isAfter(todayOnly) ||
+      startDateOnly.isAtSameMomentAs(todayOnly);
+}
+
+int calculateEarnings(
+    {required String startTime,
+    required String endTime,
+    required int pricePerHour}) {
+  // Parse the time strings into DateTime objects
+  DateTime start = DateTime.parse('2000-01-01 $startTime');
+  DateTime end = DateTime.parse('2000-01-01 $endTime');
+
+  // Calculate the difference in hours
+  int hours = end.difference(start).inHours;
+
+  // Calculate earnings
+  int earnings = hours * pricePerHour;
+
+  return earnings;
+}
+
+List<int> extractHours(List<Map<String, String>> timeList) {
+  return timeList.expand((timeMap) {
+    int endTimeHour = int.parse(timeMap['end_time']!.split(':')[0]);
+    int startTimeHour = int.parse(timeMap['start_time']!.split(':')[0]);
+    return [endTimeHour, startTimeHour];
+  }).toList();
+}
+
+String? formatTime(String time) {
+  try {
+    final format = DateFormat("h:mm a"); // 12-hour format with AM/PM
+    final parsedTime = DateFormat("HH:mm:ss").parse(time);
+    return format.format(parsedTime); // Format into 12-hour AM/PM format
+  } on Exception catch (e) {
+    log(e.toString());
+  }
+  return null; // Parse the 24-hour format
 }
