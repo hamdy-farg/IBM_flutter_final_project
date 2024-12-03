@@ -12,6 +12,7 @@ import 'package:ibm_flutter_final_project/features/authentication/logic/singupCu
 import 'package:ibm_flutter_final_project/features/authentication/ui/reset_password.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/sign_in_screen.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/sign_up_screen.dart';
+import 'package:ibm_flutter_final_project/features/reservation_chart/Ui/data_visualization.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/booking_screen.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/home_screen.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/single_item_screen.dart';
@@ -88,8 +89,12 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => getIt<BookRoomCubit>(),
-            child:   BookingRoom(),
+            child: BookingRoom(),
           ),
+        );
+      case Routes.barChartScreen:
+        return MaterialPageRoute(
+          builder: (_) =>   BarChartScreen(),
         );
 
       default:
