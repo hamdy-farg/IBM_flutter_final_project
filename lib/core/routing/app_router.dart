@@ -17,6 +17,7 @@ import 'package:ibm_flutter_final_project/features/authentication/logic/singupCu
 import 'package:ibm_flutter_final_project/features/authentication/ui/reset_password.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/sign_in_screen.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/sign_up_screen.dart';
+import 'package:ibm_flutter_final_project/features/home/logic/homeCubit/home_cubit.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/booking_screen.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/home_screen.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/single_item_screen.dart';
@@ -40,9 +41,13 @@ class AppRouter {
       //   return MaterialPageRoute(
       //     builder: (_) => const OnboardingScreen(),
       //   );
-      case Routes.homeScreen:
+
+      case Routes.mainHomeScreen:
         return MaterialPageRoute(
-          builder: (_) => const HomeScreen(),
+          builder: (_) => BlocProvider(
+            create: (_) => getIt<HomeWorkSpaceCubit>(),
+            child: const MainScreen(),
+          ),
         );
       case Routes.bookingScreen:
         return MaterialPageRoute(
@@ -51,10 +56,7 @@ class AppRouter {
             child: const BookingScreen(),
           ),
         );
-      case Routes.workspaceStatus:
-        return MaterialPageRoute(
-          builder: (_) => const WorkspaceStatus(),
-        );
+
       case Routes.bookedDeatilsScreen:
         return MaterialPageRoute(
           settings: settings,

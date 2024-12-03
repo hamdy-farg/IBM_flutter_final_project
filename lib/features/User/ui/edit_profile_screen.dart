@@ -151,8 +151,9 @@ class EditProfileScreen extends StatelessWidget {
                       alignment: Alignment.center,
                       child: Container(
                         decoration: BoxDecoration(
-                            color: ColorsManager.lightGrey.withOpacity(.5),
-                            borderRadius: BorderRadius.circular(12)),
+                          color: ColorsManager.lightGrey.withOpacity(.5),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                         width: 150.w,
                         height: 150.w,
                         child: const Center(child: CircularProgressIndicator()),

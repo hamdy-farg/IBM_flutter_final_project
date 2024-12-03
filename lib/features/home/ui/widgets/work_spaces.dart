@@ -1,46 +1,27 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ibm_flutter_final_project/features/home/data/model/work_spaces.dart';
-import 'package:ibm_flutter_final_project/features/home/ui/single_item_screen.dart';
-import 'package:ibm_flutter_final_project/features/home/ui/widgets/favourite_icon_changer.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/sliding_widget.dart';
-import 'package:ibm_flutter_final_project/features/home/ui/widgets/work_spaces.dart';
+import 'package:ibm_flutter_final_project/features/workspace_status/data/model/work_space_model.dart';
 
 class WorkSpaces extends StatelessWidget {
-  final List<WorkSpacess> workSpaces = [
-    WorkSpacess(
-        itemName: 'Titen Office Center',
-        imagePath: '',
-        location: 'cairo ,nacer city'),
-    WorkSpacess(
-        itemName: 'Titen Office Center',
-        imagePath: '',
-        location: 'cairo ,nacer city'),
-    WorkSpacess(
-        itemName: 'Titen Office Center',
-        imagePath: '',
-        location: 'cairo ,nacer city'),
-    WorkSpacess(
-        itemName: 'Titen Office Center',
-        imagePath: '',
-        location: 'cairo ,nacer city'),
-    WorkSpacess(
-        itemName: 'Titen Office Center',
-        imagePath: '',
-        location: 'cairo ,nacer city'),
-  ];
+  List<WorkSpaceModel> workSpaceList;
+  WorkSpaces({
+    Key? key,
+    required this.workSpaceList,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 198.h,
       child: ListView.builder(
-        itemCount: workSpaces.length,
+        itemCount: workSpaceList.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          final entry = workSpaces[index];
+          final entry = workSpaceList[index];
           return SlidingWidget(
-            itemName: entry.itemName ?? 'Titen Office Center',
+            itemName: entry.title ?? 'Titen Office Center',
             location: entry.location ?? 'cairo ,nacer city',
           );
         },

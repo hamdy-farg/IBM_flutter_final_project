@@ -9,7 +9,9 @@ class Routes {
   static const String userScreen = '/userScreen';
   static const String editProfile = '/editProfile';
   static const String addNewRoom = '/AddNewRoom';
-  static const String homeScreen = '/homeScreen';
+  // static const String homeScreen = '/homeScreen';
+  static const String mainHomeScreen = '/mainHomeScreen';
+
   static const String singleItemScreen = '/singleItemScreen';
   static const String bookingScreen = '/bookingScreen';
   static const String adminRoomsScreen = '/adminRoomsScreen';

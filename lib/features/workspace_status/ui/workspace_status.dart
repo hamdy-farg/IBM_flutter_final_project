@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -41,9 +43,12 @@ class WorkspaceStatus extends StatelessWidget {
       body: BlocBuilder<NavigationBarCubit, NavigationBarState>(
         bloc: navigationBarCubit,
         builder: (context, state) {
+          log("nav changed -----------------------------");
+
           return BlocBuilder<BookingsCubit, BookingsState>(
             bloc: bookingCubit,
             builder: (context, state) {
+              log("changed -----------------------------");
               return Stack(
                 children: [
                   NavigationBarWidgets[navigationBarCubit.state.currentIndex],

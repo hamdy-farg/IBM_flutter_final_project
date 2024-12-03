@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/helpers/cach_helper.dart';
 import 'package:ibm_flutter_final_project/core/routing/app_router.dart';
@@ -17,9 +18,17 @@ void main() async {
     final cubit = getIt<GetAdminWorkSpacesCubit>();
     await cubit.fetchData();
   } else if (loginAs == "client") {
-  } else {}
 
-  runApp(DeskApp(
-    appRouter: AppRouter(),
-  ));
+  } else {
+
+  }
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp, // Lock to portrait only
+  //   // DeviceOrientation.landscapeLeft, // Uncomment to allow landscape only
+  //   // DeviceOrientation.landscapeRight,
+  // ]).then((_) {
+    runApp(DeskApp(
+      appRouter: AppRouter(),
+    ));
+  // });
 }
