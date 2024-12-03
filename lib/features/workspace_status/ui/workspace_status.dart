@@ -12,6 +12,7 @@ import 'package:ibm_flutter_final_project/core/widgets/app_text_button.dart';
 import 'package:ibm_flutter_final_project/features/User/ui/User_screen.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/workSpaceCubit/work_space_cubit.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/workSpaceCubit/work_space_state.dart';
+import 'package:ibm_flutter_final_project/features/adminControls/ui/booking_screen.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/logic/cubit/get_admin_work_spaces_cubit.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/logic/cubit/get_admin_work_spaces_state.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/logic/navigationBar/navigation_bar_cubit.dart';
@@ -22,7 +23,7 @@ import 'package:ibm_flutter_final_project/features/workspace_status/ui/widgets/w
 List<Widget> NavigationBarWidgets = [
   const UserScreen(),
   const ExploreScreen(),
-  const SizedBox(),
+  const BookingScreen(),
 ];
 
 class WorkspaceStatus extends StatelessWidget {

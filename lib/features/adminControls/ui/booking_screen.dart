@@ -12,6 +12,7 @@ class BookingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -19,7 +20,7 @@ class BookingScreen extends StatelessWidget {
           horizantalSpace(25),
           CustemButtonAuthentication(
             text: 'Explore more',
-            width: 320.w,
+            width: 310.w,
             height: 48.h,
           ),
         ],

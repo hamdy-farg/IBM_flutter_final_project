@@ -19,6 +19,9 @@ import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/workS
 import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/workSpaceCubit/work_space_state.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/data/model/work_space_model.dart';
 
+import 'package:ibm_flutter_final_project/features/authentication/data/repos/signup_repo.dart';
+import 'package:latlong2/latlong.dart';
+
 import '../../../../core/helpers/spacing.dart';
 
 class AddNewWorkspace extends StatelessWidget {
@@ -294,4 +297,5 @@ class AddNewWorkspace extends StatelessWidget {
       ),
     );
   }
+
 }

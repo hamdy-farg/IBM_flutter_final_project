@@ -13,4 +13,6 @@ class Routes {
   static const String singleItemScreen = '/singleItemScreen';
   static const String bookingScreen = '/bookingScreen';
   static const String adminRoomsScreen = '/adminRoomsScreen';
+  static const String bookingRoom = '/BookingRoom';
+  
 }

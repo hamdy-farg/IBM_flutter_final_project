@@ -33,18 +33,15 @@ class CustemButtonAuthentication extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SizedBox(
-              width: 75.w,
-            ),
+            SizedBox(),
             CustemText(
               text: text ?? 'Sign in',
               textStyle: TextStyles.font20WhiteBold,
             ),
             Container(
-              padding: EdgeInsets.only(left: 50),
               child: Container(
-                width: 30.w,
-                height: 30.h,
+                width: 25.w,
+                height: 25.w,
                 decoration: const BoxDecoration(
                     color: Color(0xFF3D56F0),
                     borderRadius: BorderRadius.all(Radius.circular(20))),
