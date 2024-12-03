@@ -19,13 +19,13 @@ class CustomDatePicker extends StatefulWidget {
   final DateTime? startingDate; // Use this to restrict the date selection
 
   CustomDatePicker({
+    this.oldDate,
     Key? key,
     required this.onDatePicked,
     this.title,
     this.backgroundColor,
     this.textStyle,
     this.startingDate, // Ensure the starting date is passed for restrictions
-    this.oldDate,
   }) : super(key: key);
 
   @override
@@ -63,7 +63,19 @@ class Custom_DatePickerState extends State<CustomDatePicker> {
       children: [
         // Start Date Button
         TextButton(
-          onPressed: () => _selectDate(context),
+          onPressed: () =>
+              (cubit.state.startDate == null && widget.title == "Start Date") ||
+                      (cubit.state.startDate == null &&
+                          widget.title != "Start Date")
+                  ? _selectDate(context)
+                  : CherryToast.error(
+                      toastDuration: const Duration(seconds: 3),
+                      animationDuration: const Duration(seconds: 1),
+                      title: Text(
+                        "Please Select Start Date First",
+                        style: const TextStyle(color: ColorsManager.mainBlue),
+                      ),
+                    ).show(context),
           style: TextButton.styleFrom(
             backgroundColor: widget.backgroundColor ?? ColorsManager.mainBlue,
             foregroundColor: Colors.white,
@@ -79,16 +91,19 @@ class Custom_DatePickerState extends State<CustomDatePicker> {
         ),
         // Date Display Container
         GestureDetector(
-          onTap: () => cubit.state.startDate != null
-              ? _selectDate(context)
-              : CherryToast.error(
-                  toastDuration: const Duration(seconds: 3),
-                  animationDuration: const Duration(seconds: 1),
-                  title: Text(
-                    "Please Select end Date First",
-                    style: const TextStyle(color: ColorsManager.mainBlue),
-                  ),
-                ).show(context),
+          onTap: () =>
+              (cubit.state.startDate == null && widget.title == "Start Date") ||
+                      (cubit.state.startDate != null &&
+                          widget.title != "Start Date")
+                  ? _selectDate(context)
+                  : CherryToast.error(
+                      toastDuration: const Duration(seconds: 3),
+                      animationDuration: const Duration(seconds: 1),
+                      title: Text(
+                        "Please Select end Date First",
+                        style: const TextStyle(color: ColorsManager.mainBlue),
+                      ),
+                    ).show(context),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
@@ -105,9 +120,7 @@ class Custom_DatePickerState extends State<CustomDatePicker> {
                 Text(
                   selectedDate != null
                       ? DateFormat('yyyy-MM-dd').format(selectedDate!)
-                      : widget.oldDate != null
-                          ? widget.oldDate!
-                          : "No date Selected", // Placeholder when no date is selected
+                      : "No date Selected", // Placeholder when no date is selected
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,

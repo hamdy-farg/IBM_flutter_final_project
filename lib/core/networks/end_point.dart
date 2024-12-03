@@ -4,7 +4,9 @@ class EndPoint {
   static const adminWorkSpaces = "admin/workspaces";
   static const login = "login";
   static const workSpaceRooms = "workspace/rooms";
+
   static const addRoom = "room";
+  static const deleteRoom = "room";
 
   static const register = "register";
   static const editProfile = "user"; // with put request

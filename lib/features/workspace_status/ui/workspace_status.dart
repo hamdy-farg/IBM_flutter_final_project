@@ -22,7 +22,7 @@ import 'package:ibm_flutter_final_project/features/workspace_status/ui/widgets/w
 List<Widget> NavigationBarWidgets = [
   const UserScreen(),
   const ExploreScreen(),
-  const SizedBox()
+  const SizedBox(),
 ];
 
 class WorkspaceStatus extends StatelessWidget {
@@ -103,7 +103,7 @@ class ExploreScreen extends StatelessWidget {
         GlobalKey<RefreshIndicatorState>();
 
     Future<void> refreshData() async {
-      cubit.fetchData();
+      await cubit.fetchData();
     }
 
     return SafeArea(
@@ -123,9 +123,10 @@ class ExploreScreen extends StatelessWidget {
                   child: const Text(
                     "logout",
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25,
-                        color: Colors.red),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                      color: Colors.red,
+                    ),
                   ),
                 ),
               ],
@@ -151,10 +152,16 @@ class ExploreScreen extends StatelessWidget {
                         child: CircularProgressIndicator(),
                       );
                     } else if (state is GetAdminWorkSpacesFialierState) {
-                      return Center(
-                        child: Text(state.message),
+                      // Still allow refresh even in failure
+                      return ListView(
+                        children: [
+                          Center(
+                            child: Text(state.message),
+                          ),
+                        ],
                       );
                     } else if (state is GetAdminWorkSpacesSuccessState) {
+                      // Display the list of workspaces
                       return ListView(
                         children: state.workSpaceModeList!
                             .map((workSpace) =>
@@ -162,8 +169,14 @@ class ExploreScreen extends StatelessWidget {
                             .toList(),
                       );
                     } else {
-                      return const SizedBox
-                          .shrink(); // Fallback in case state is not handled
+                      // Handle unhandled states with an empty scrollable ListView
+                      return ListView(
+                        children: const [
+                          Center(
+                            child: Text('No data available'),
+                          ),
+                        ],
+                      );
                     }
                   },
                 ),

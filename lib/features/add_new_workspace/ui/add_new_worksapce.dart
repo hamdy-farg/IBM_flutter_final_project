@@ -161,7 +161,7 @@ class AddNewWorkspace extends StatelessWidget {
 
                             return CustomImagePicker(
                               title: "Image",
-                              onImagePicked: (image) {
+                              onImageSelected: (image) {
                                 // Call the cubit's imageChange method with the picked image
                                 log("$image");
                                 cubit.state.imageLink = null;

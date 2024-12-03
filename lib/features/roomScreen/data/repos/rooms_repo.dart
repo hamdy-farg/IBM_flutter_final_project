@@ -14,6 +14,19 @@ class AdminRoomsRepo {
     required this.dio,
   });
 
+  Future<String> deletRoom(String roomId) async {
+    try {
+      String accessToken = await getAccessToken(dio);
+      Map<String, dynamic> RoomsResponce = await dio.delete(
+          EndPoint.deleteRoom, accessToken,
+          isFormData: true, data: {"room_id": roomId});
+
+      return RoomsResponce["message"];
+    } on ServerException catch (e) {
+      rethrow;
+    }
+  }
+
   Future<List<RoomModel>> fetchRooms(String WorkSpaceId) async {
     try {
       log("enterd repo");
@@ -67,7 +80,9 @@ class AdminRoomsRepo {
           filename: room.imageFile!.name,
         );
       }
+
       Map<String, dynamic> roomMap = room.toMap(multipartFile);
+      log("$roomMap");
       roomMap.removeWhere((key, value) => value == null); //***** */
       String accessToken = await getAccessToken(dio);
       Map<String, dynamic> RoomsResponce = await dio.put(

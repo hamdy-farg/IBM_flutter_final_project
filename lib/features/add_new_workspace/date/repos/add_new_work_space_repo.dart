@@ -60,9 +60,12 @@ class WorkSpaceRepo {
       }
 
       final addNewWorkspaceResponce = await dio.put(
-          EndPoint.addWorkSpace, accessToken,
-          data: workSpaceMap, isFormData: true);
-          
+        EndPoint.addWorkSpace,
+        accessToken,
+        data: workSpaceMap,
+        isFormData: true,
+      );
+
       WorkSpaceState workSpaceData =
           WorkSpaceState.fromMap(addNewWorkspaceResponce);
       return workSpaceData;

@@ -11,7 +11,7 @@ class CustomImagePicker extends StatelessWidget {
   final Color borderColor;
   final Color iconColor;
   final double iconSize;
-  final Function(XFile?) onImagePicked;
+  final Function(XFile?) onImageSelected; // Renamed for clarity
   final ImageSource imageSource;
   final Object? selectedImage;
 
@@ -21,15 +21,13 @@ class CustomImagePicker extends StatelessWidget {
     this.borderColor = ColorsManager.semiWhite,
     this.iconColor = ColorsManager.mainBlue,
     this.iconSize = 55,
-    required this.onImagePicked,
+    required this.onImageSelected,
     this.imageSource = ImageSource.gallery,
     this.selectedImage,
   });
 
   @override
   Widget build(BuildContext context) {
-    // final cubit = getIt<WorkSpaceCubit>();
-    // log("hi i'm image $selectedImage");
     return Column(
       children: [
         Align(
@@ -50,12 +48,9 @@ class CustomImagePicker extends StatelessWidget {
           child: Center(
             child: GestureDetector(
               onTap: () async {
-                // Trigger the image picker logic
                 final XFile? image =
                     await ImagePicker().pickImage(source: imageSource);
-
-                // Pass the picked image to the callback
-                onImagePicked(image);
+                onImageSelected(image);
               },
               child: selectedImage == null
                   ? Icon(
@@ -63,16 +58,12 @@ class CustomImagePicker extends StatelessWidget {
                       Icons.add,
                       color: iconColor,
                     )
-                  // : Image(
-                  //     image: NetworkImage(
-                  //         "${cubit.state.workSpace?.workSpaceModel?.image}"),
-                  //   )
                   : Stack(
                       fit: StackFit.expand,
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(12),
-                          child: (selectedImage is XFile)
+                          child: selectedImage is XFile
                               ? Image.file(
                                   File((selectedImage as XFile).path),
                                   fit: BoxFit.cover,
@@ -80,7 +71,7 @@ class CustomImagePicker extends StatelessWidget {
                                   height: double.infinity,
                                 )
                               : ImageNetworkWidget(
-                                  imageLink: (selectedImage as String),
+                                  imageLink: selectedImage as String,
                                   width: 100,
                                   hight: 100,
                                 ),
@@ -90,9 +81,8 @@ class CustomImagePicker extends StatelessWidget {
                           right: 8.w,
                           child: IconButton(
                             onPressed: () {
-                              // Reset the image by triggering the callback with null
-                              
-                              onImagePicked(null);
+                              // Reset the image
+                              onImageSelected(null);
                             },
                             icon: CircleAvatar(
                               radius: 15.sp,

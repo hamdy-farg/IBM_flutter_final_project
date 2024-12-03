@@ -25,6 +25,7 @@ class AdminRoomsScreen extends StatelessWidget {
         ModalRoute.of(context)?.settings.arguments as WorkSpaceModel?;
 
     final cubit = getIt<AdminRoomsCubit>();
+    cubit.fetchRooms(workspace!.id);
     return Scaffold(
       floatingActionButton: ComfortablePlaceIemsButton(
         onTap: () {
@@ -44,22 +45,22 @@ class AdminRoomsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SinglePhoto(
-                  title: workspace?.title,
-                  imageLink: workspace?.image,
+                  title: workspace.title,
+                  imageLink: workspace.image,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("${workspace?.title}",
+                      Text("${workspace.title}",
                           style: TextStyles.font22BlackBold),
                       verticalSpace(10),
                       Text("Location", style: TextStyles.font22BlackBold),
                       LocationPickerWidget(
                         isStatic: true,
                         locationLatLong: extractLatLong(
-                          "${workspace?.location}",
+                          "${workspace.location}",
                         ),
                         onLocationPicked: (pickedLocation) {},
                       ),

@@ -15,9 +15,10 @@ class RoomState {
   String? endTime;
   bool? isLoading;
   String? message;
-
+  bool? selectedImageIsNull;
   RoomModel? room;
-
+  DateTime? tommorw;
+  bool? deleted;
   RoomState({
     this.title,
     this.description,
@@ -31,6 +32,9 @@ class RoomState {
     this.message,
     this.room,
     this.pricePerHour,
+    this.selectedImageIsNull,
+    this.tommorw,
+    this.deleted,
   });
 
   RoomState copyWith({
@@ -46,6 +50,9 @@ class RoomState {
     String? message,
     RoomModel? room,
     double? pricePerHour,
+    bool? selectedImageIsNull,
+    DateTime? tommorw,
+    bool? deleted,
   }) {
     return RoomState(
       title: title ?? this.title,
@@ -60,6 +67,9 @@ class RoomState {
       message: message ?? this.message,
       room: room ?? this.room,
       pricePerHour: pricePerHour ?? this.pricePerHour,
+      selectedImageIsNull: selectedImageIsNull ?? this.selectedImageIsNull,
+      tommorw: tommorw ?? this.tommorw,
+      deleted: deleted ?? this.deleted,
     );
   }
 

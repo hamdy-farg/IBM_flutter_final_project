@@ -18,6 +18,7 @@ import 'package:ibm_flutter_final_project/core/widgets/time_picker.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/data/models/room_model.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/logic/addNewRoomCubit/add_new_room_cubit.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/logic/addNewRoomCubit/add_new_room_state.dart';
+import 'package:ibm_flutter_final_project/features/workspace_status/data/model/work_space_model.dart';
 
 class AddNewRoom extends StatelessWidget {
   AddNewRoom({super.key});
@@ -26,13 +27,18 @@ class AddNewRoom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RoomModel? roomModel =
-        ModalRoute.of(context)?.settings.arguments as RoomModel;
-
-    //
-    //!!! WorkSpaceModel? workSpace =
-    //     ModalRoute.of(context)?.settings.arguments as WorkSpaceModel;
     final cubit = getIt<AddNewRoomCubit>();
+
+    RoomModel? roomModel;
+    WorkSpaceModel? workSpace;
+    final arguments = ModalRoute.of(context)?.settings.arguments;
+
+    if (arguments is RoomModel) {
+      roomModel = arguments;
+      cubit.readyToEdit(roomModel);
+    } else if (arguments is WorkSpaceModel) {
+      workSpace = arguments;
+    }
 
     FocusNode titleNode = FocusNode();
     FocusNode capacityNode = FocusNode();
@@ -41,15 +47,19 @@ class AddNewRoom extends StatelessWidget {
 
     DateTime temp = DateTime.now();
     DateTime tomorrow = temp.add(const Duration(days: 1)); // Add 1 day
-    cubit.readyToEdit(roomModel);
     return Scaffold(
       body: SafeArea(
         child: BlocConsumer<AddNewRoomCubit, RoomState>(
           listener: (context, state) {
             if (state.room != null) {
-              //!! getIt<AdminRoomsCubit>().fetchRooms(workSpace.id);
-
-              // context.pop();
+              context.pop();
+              // getIt<AdminRoomsCubit>()
+              //     .fetchRooms(workSpace != null ? workSpace.id : "");
+            }
+            if (state.deleted != null) {
+              context.pop();
+              // getIt<AdminRoomsCubit>()
+              //     .fetchRooms(workSpace != null ? workSpace.id : "");
             }
           },
           bloc: cubit,
@@ -82,6 +92,30 @@ class AddNewRoom extends StatelessWidget {
                                 "New ",
                                 style: TextStyles.font22blackMeduim,
                               ),
+                              Expanded(child: SizedBox()),
+                              roomModel != null
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        cubit.deleteRoom(
+                                            roomModel!.id!, context);
+                                      },
+                                      child: Container(
+                                        width: 110.h,
+                                        height: 40.w,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          color: Colors.red,
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            "Delete",
+                                            style: TextStyles.font20WhiteBold,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox()
                             ],
                           ),
                           // Title Field
@@ -131,16 +165,29 @@ class AddNewRoom extends StatelessWidget {
                           // Image Picker
                           CustomImagePicker(
                             title: "Image",
-                            onImagePicked: (image) {
+                            onImageSelected: (image) {
+                              if (image == null) {
+                                log("nulllled");
+                                cubit.selecteImageIsNullChange(true);
+                              } else {
+                                cubit.selecteImageIsNullChange(null);
+                              }
                               cubit.imageChange(image);
+
                               decriptionNode.unfocus();
                               capacityNode.unfocus();
                               titleNode.unfocus();
 
                               pricePerHourFocusNode.unfocus();
                             },
+
+                            // cubit.state.image == XFile("path")? null
+                            //
+                            //
                             selectedImage:
-                                roomModel.imageLink ?? cubit.state.image,
+                                cubit.state.selectedImageIsNull != null
+                                    ? null
+                                    : cubit.state.image ?? roomModel?.imageLink,
                           ),
 
                           //
@@ -221,8 +268,6 @@ class AddNewRoom extends StatelessWidget {
 
                           // Start Date Picker
                           CustomDatePicker(
-                            oldDate:
-                                roomModel != null ? roomModel.startDate : null,
                             startingDate: DateTime.now(),
                             title: "Start Date",
                             onDatePicked: (value) {
@@ -230,17 +275,18 @@ class AddNewRoom extends StatelessWidget {
                               capacityNode.unfocus();
                               titleNode.unfocus();
                               pricePerHourFocusNode.unfocus();
+                              log("value is ${value}");
                               temp = DateTime.parse(value ?? "");
-                              tomorrow = temp.add(const Duration(days: 1));
+                              cubit.tommorwChage(
+                                  temp.add(const Duration(days: 1)));
+
                               cubit.startDateChange(value);
                             },
                           ),
                           verticalSpace(20.h),
                           // End Date Picker
                           CustomDatePicker(
-                            oldDate:
-                                roomModel != null ? roomModel.endDate : null,
-                            startingDate: tomorrow,
+                            startingDate: cubit.state.tommorw,
                             backgroundColor: ColorsManager.Inactive,
                             textStyle: TextStyles.font15PurbleRegular,
                             title: "End date",
@@ -250,6 +296,7 @@ class AddNewRoom extends StatelessWidget {
                               titleNode.unfocus();
                               pricePerHourFocusNode.unfocus();
                               cubit.endDateChange(value);
+                              ;
                             },
                           ),
                           verticalSpace(15.h),
@@ -257,9 +304,6 @@ class AddNewRoom extends StatelessWidget {
                             children: [
                               // Start Time Picker
                               CustomTimePicker(
-                                oldTime: roomModel != null
-                                    ? roomModel.startTime
-                                    : null,
                                 title: "Start Time",
                                 onTimePicked: (val) {
                                   decriptionNode.unfocus();
@@ -273,9 +317,6 @@ class AddNewRoom extends StatelessWidget {
                               ),
                               horizantalSpace(10),
                               CustomTimePicker(
-                                oldTime: roomModel != null
-                                    ? roomModel.endTime
-                                    : null,
                                 backgroundColor: ColorsManager.Inactive,
                                 title: "End Time",
                                 textStyle: TextStyles.font15PurbleRegular,
@@ -303,48 +344,110 @@ class AddNewRoom extends StatelessWidget {
                                 if (_formKey.currentState!.validate()) {
                                   // Check if the start date is before the end date
 
-                                  if (cubit.state.startDate == null) {
-                                    if (roomModel.startDate == null) {
-                                      CherryToast.error(
+                                  if (roomModel != null) {
+                                    if (cubit.state.startDate != null ||
+                                        cubit.state.endDate != null) {
+                                      if (cubit.state.startDate == null ||
+                                          cubit.state.endDate == null) {
+                                        CherryToast.error(
+                                          title: Text(
+                                              'Please select both start and end dates'),
+                                        ).show(context);
+                                        return;
+                                      }
+                                    }
+                                    // Validate start and end times
+                                    if (cubit.state.startTime != null ||
+                                        cubit.state.endTime != null) {
+                                      // Ensure both start and end times are provided
+                                      if (cubit.state.startTime == null ||
+                                          cubit.state.endTime == null) {
+                                        CherryToast.error(
+                                          title: Text(
+                                              'Please choose both start and end times'),
+                                        ).show(context);
+                                        return;
+                                      }
+
+                                      // Parse and validate time order
+                                      DateTime startTime = DateTime.parse(
+                                          "2012-02-27 ${cubit.state.startTime!}");
+                                      DateTime endTime = DateTime.parse(
+                                          "2012-02-27 ${cubit.state.endTime!}");
+
+                                      if (startTime.isAfter(endTime)) {
+                                        CherryToast.error(
+                                          title: Text(
+                                              'Start time must be earlier than end time'),
+                                        ).show(context);
+                                        return;
+                                      }
+                                    }
+                                    cubit.editRoom(
+                                        RoomModel(
+                                            imageFile: cubit.state.image,
+                                            title: cubit.state.title,
+                                            description:
+                                                cubit.state.description,
+                                            capacity: cubit.state.capacity !=
+                                                    null
+                                                ? int.parse(
+                                                    cubit.state.capacity ?? "")
+                                                : null,
+                                            startDate: cubit.state.startDate,
+                                            endDate: cubit.state.endDate,
+                                            startTime: cubit.state.startTime,
+                                            endTime: cubit.state.endTime,
+                                            pricePerHour:
+                                                cubit.state.pricePerHour,
+                                            id: roomModel.id),
+                                        context);
+
+                                    // Validate start and end dates
+                                  } else {
+                                    if (cubit.state.startDate == null) {
+                                      return CherryToast.error(
                                               title: Text(
-                                                  'Please select an start date'))
+                                                  'Please select an end date'))
                                           .show(context);
                                     }
-                                    return;
-                                  }
-                                  if (cubit.state.endDate == null) {
-                                    CherryToast.error(
-                                            title: Text(
-                                                'Please select an end date'))
-                                        .show(context);
-                                    return;
-                                  }
-
-                                  if (cubit.state.startTime != null &&
-                                      cubit.state.endTime != null) {
-                                    DateTime startTime = DateTime.parse(
-                                        "2012-02-27 ${cubit.state.startTime!}");
-                                    DateTime endTime = DateTime.parse(
-                                        "2012-02-27 ${cubit.state.endTime!}");
-
-                                    if (startTime.isAfter(endTime)) {
+                                    if (cubit.state.endDate == null) {
                                       CherryToast.error(
                                               title: Text(
-                                                  'please choose start Time less than end Time '))
+                                                  'Please select an end date'))
                                           .show(context);
                                       return;
                                     }
-                                  } else {
-                                    CherryToast.error(
-                                            title: Text(
-                                                'please choose start and end time '))
-                                        .show(context);
+
+                                    if (cubit.state.startTime != null &&
+                                        cubit.state.endTime != null) {
+                                      DateTime startTime = DateTime.parse(
+                                          "2012-02-27 ${cubit.state.startTime!}");
+                                      DateTime endTime = DateTime.parse(
+                                          "2012-02-27 ${cubit.state.endTime!}");
+
+                                      if (startTime.isAfter(endTime)) {
+                                        CherryToast.error(
+                                                title: Text(
+                                                    'please choose start Time less than end Time '))
+                                            .show(context);
+                                        return;
+                                      }
+                                    } else {
+                                      CherryToast.error(
+                                              title: Text(
+                                                  'please choose start and end time '))
+                                          .show(context);
+                                    }
+                                    log("${state.toMap()}");
+                                    cubit.AddNewRoom(
+                                        RoomModel.fromLocalMap(
+                                            state.toMap(),
+                                            workSpace != null
+                                                ? workSpace.id
+                                                : ""),
+                                        context);
                                   }
-                                  log("${state.toMap()}");
-                                  //!!!!! cubit.AddNewRoom(
-                                  //     RoomModel.fromLocalMap(
-                                  //         state.toMap(), workSpace.id),
-                                  //!!!     context);
 
                                   // If form is valid, image is selected, and date/time checks pass, proceed with submission
 
@@ -365,7 +468,7 @@ class AddNewRoom extends StatelessWidget {
                         height: double.infinity,
                         color: ColorsManager.mainBlack.withOpacity(.000001),
                       )
-                    : const SizedBox(),
+                    : SizedBox(),
                 state.isLoading == true
                     ? Align(
                         alignment: Alignment.center,
@@ -379,7 +482,7 @@ class AddNewRoom extends StatelessWidget {
                               const Center(child: CircularProgressIndicator()),
                         ),
                       )
-                    : const SizedBox(),
+                    : SizedBox(),
               ],
             );
           },
