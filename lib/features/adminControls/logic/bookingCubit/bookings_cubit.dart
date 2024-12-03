@@ -11,7 +11,7 @@ class BookingsCubit extends Cubit<BookingsState> {
   DioConsumer dio;
   BookingsCubit(this.dio) : super(BookingsInitialState());
 
-  void getBookings() async {
+  Future<void> getBookings() async {
     emit(BookingsIsLoadingState());
     try {
       List<BookModel> bookedList = await BookingsRepo(dio).getBookings();

@@ -16,8 +16,11 @@ import 'package:ibm_flutter_final_project/features/adminControls/ui/widgets/disp
 class BookedDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    BookModel? bookModel =
-        ModalRoute.of(context)?.settings.arguments as BookModel?;
+    BookModel? bookModel;
+    final arguments = ModalRoute.of(context)?.settings.arguments;
+
+    if (arguments is BookModel)
+      bookModel = ModalRoute.of(context)?.settings.arguments as BookModel?;
     final cubit = getIt<EditBookingCubit>();
 
     return Scaffold(

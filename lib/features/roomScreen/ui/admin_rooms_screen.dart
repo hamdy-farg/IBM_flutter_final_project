@@ -21,11 +21,13 @@ class AdminRoomsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final workspace =
-        ModalRoute.of(context)?.settings.arguments as WorkSpaceModel?;
+    final arguments = ModalRoute.of(context)?.settings.arguments;
+    WorkSpaceModel? workspace;
+    if (arguments is WorkSpaceModel)
+      workspace = ModalRoute.of(context)?.settings.arguments as WorkSpaceModel?;
 
     final cubit = getIt<AdminRoomsCubit>();
-    cubit.fetchRooms(workspace!.id);
+    // await cubit.fetchRooms(workspace!.id);
     return Scaffold(
       floatingActionButton: ComfortablePlaceIemsButton(
         onTap: () {
@@ -45,22 +47,22 @@ class AdminRoomsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SinglePhoto(
-                  title: workspace.title,
-                  imageLink: workspace.image,
+                  title: workspace?.title,
+                  imageLink: workspace?.image,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("${workspace.title}",
+                      Text("${workspace?.title}",
                           style: TextStyles.font22BlackBold),
                       verticalSpace(10),
                       Text("Location", style: TextStyles.font22BlackBold),
                       LocationPickerWidget(
                         isStatic: true,
                         locationLatLong: extractLatLong(
-                          "${workspace.location}",
+                          "${workspace?.location}",
                         ),
                         onLocationPicked: (pickedLocation) {},
                       ),
@@ -84,11 +86,11 @@ class AdminRoomsScreen extends StatelessWidget {
                             horizontal: 10.w, vertical: 10),
                         child: SizedBox(
                           // Constrain the height if required
-                          height: 170.h, // Example height
+                          // height: 170.h, // Example height
                           child: CustemConfortablePlace(
                             imageLink: room.imageLink,
                             index: index,
-                            itemsLength: state.roomModel.length,
+                            itemsLength: state.roomModel.length - 1,
                             buttontext: "edit room details",
                             buttonOnTap: () {
                               getIt<AddNewRoomCubit>().clearAll();

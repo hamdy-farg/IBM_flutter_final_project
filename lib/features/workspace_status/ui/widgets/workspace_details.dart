@@ -39,9 +39,9 @@ class WorkspaceDetails extends StatelessWidget {
             WorkspaceButton(
               label: "edit rooms",
               isActive: isAvailableActive,
-              onTap: () {
+              onTap: () async {
                 log("enter cubit");
-                cubit.fetchRooms(workspace.id);
+                await cubit.fetchRooms(workspace.id);
 
                 context.pushNamed(Routes.adminRoomsScreen,
                     arguments: workspace);

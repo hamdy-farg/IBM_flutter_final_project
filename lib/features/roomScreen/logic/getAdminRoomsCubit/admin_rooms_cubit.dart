@@ -12,7 +12,7 @@ part 'admin_rooms_state.dart';
 class AdminRoomsCubit extends Cubit<AdminRoomsState> {
   DioConsumer dio;
   AdminRoomsCubit(this.dio) : super(AdminRoomsInitial());
-  void fetchRooms(String workSpaceId) async {
+  Future<void> fetchRooms(String workSpaceId) async {
     emit(AdminRoomsLoading());
     try {
       log("begen to go to repo");

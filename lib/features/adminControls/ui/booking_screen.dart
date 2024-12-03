@@ -15,7 +15,7 @@ class BookingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = getIt<BookingsCubit>();
-    cubit.getBookings();
+    // cubit.getBookings();
     return Scaffold(
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.center,

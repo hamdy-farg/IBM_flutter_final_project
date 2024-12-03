@@ -145,9 +145,9 @@ class CustemConfortablePlace extends StatelessWidget {
             ],
           ),
         ),
-        itemsLength != null && index != null && (itemsLength! - 1) == index!
-            ? verticalSpace(70)
-            : verticalSpace(10),
+        // itemsLength != null && index != null && (itemsLength! - 1) == index!
+        //     ? verticalSpace(70)
+        //     : verticalSpace(10),
       ],
     );
   }
