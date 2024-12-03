@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,6 +34,8 @@ class MainScreen extends StatelessWidget {
             BlocBuilder<NavigationBarCubit, NavigationBarState>(
           bloc: naviagtionCubit,
           builder: (context, state) {
+            log("${state} log");
+
             return BottomNavigationBar(
               backgroundColor: Colors.white,
               onTap: (value) {
@@ -92,6 +96,7 @@ class HomeScreen extends StatelessWidget {
           ),
           // this is the row for rooms near by user
           const RoomsText(),
+          
           RoomsCards(),
         ],
       ),

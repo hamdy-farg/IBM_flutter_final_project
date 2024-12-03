@@ -17,6 +17,9 @@ import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/cus
 import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/custem_textfield.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/hyper_text.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/logo_widget.dart';
+import 'package:ibm_flutter_final_project/features/home/logic/homeCubit/home_cubit.dart';
+import 'package:ibm_flutter_final_project/features/home/logic/homeRomesCubit/hoom_rooms_cubit.dart';
+import 'package:ibm_flutter_final_project/features/workspace_status/logic/cubit/get_admin_work_spaces_cubit.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -35,15 +38,22 @@ class SingInScreen extends StatelessWidget {
             padding: const EdgeInsets.all(30).h,
             child: BlocConsumer<SignInCubit, SignInState>(
                 bloc: cubit,
-                listener: (context, state) {
+                listener: (context, state) async {
                   if (state.user != null) {
                     String? role = CacheHelper.sharedPreferences
                         .getString(cacheHelperString.role);
                     if (role != null) {
                       if (role == "admin") {
+                        await getIt<GetAdminWorkSpacesCubit>().fetchData();
                         context.pushReplacementNamed(Routes.workspaceStatus);
                       } else if (role == "client") {
-                        context.pushReplacementNamed(Routes.editProfile);
+                        await getIt<HomeWorkSpaceCubit>().getWorkSpace();
+                        await getIt<HoomRoomsCubit>().getRooms();
+
+                        context.pushReplacementNamed(Routes.mainHomeScreen);
+                      } else {
+                        await getIt<HomeWorkSpaceCubit>().getWorkSpace();
+                        context.pushReplacementNamed(Routes.mainHomeScreen);
                       }
                     }
                   }

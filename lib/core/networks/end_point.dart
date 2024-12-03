@@ -12,6 +12,7 @@ class EndPoint {
   static const updateBookStatus = "book/status";
   static const deleteRoom = "room";
   static const allWorkspacce = "workspace/all";
+  static const allRooms = "rooms/all";
 
   static const register = "register";
   static const editProfile = "user"; // with put request
