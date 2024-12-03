@@ -1,63 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
-import 'package:ibm_flutter_final_project/features/add_new_workspace/date/models/add_new_workspace.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
+import 'package:ibm_flutter_final_project/features/adminControls/logic/bookingCubit/bookings_cubit.dart';
 import 'package:ibm_flutter_final_project/features/adminControls/ui/widgets/custem_reservation_item.dart';
 
 class ReservationItems extends StatelessWidget {
-  final List<AddNewWorkspaces> addNewWorkspace = [
-    AddNewWorkspaces(
-        itemName: 'Hilton San FranciscoUnion Square',
-        price: '500',
-        imagePath: '',
-        statues: 'Approved',
-        date: 'Jan 7 , 2024  ',
-        startTime: '5:00 pm',
-        endTime: ' 7:00 pm'),
-    AddNewWorkspaces(
-        itemName: 'Hilton San FranciscoUnion Square',
-        price: '500',
-        imagePath: '',
-        statues: 'Rejected',
-        date: 'Jan 7 , 2024  ',
-        startTime: '5:00 pm',
-        endTime: ' 7:00 pm'),
-    AddNewWorkspaces(
-        itemName: 'Hilton San FranciscoUnion Square',
-        price: '500',
-        imagePath: '',
-        statues: 'OnProgress',
-        date: 'Jan 7 , 2024  ',
-        startTime: '5:00 pm',
-        endTime: ' 7:00 pm'),
-    AddNewWorkspaces(
-        itemName: 'Hilton San FranciscoUnion Square',
-        price: '500',
-        imagePath: '',
-        statues: 'Approved',
-        date: 'Jan 7 , 2024  ',
-        startTime: '5:00 pm',
-        endTime: ' 7:00 pm'),
-  ];
+  final cubit = getIt<BookingsCubit>();
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: addNewWorkspace.length,
-      scrollDirection: Axis.vertical,
-      physics: const AlwaysScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        final entry = addNewWorkspace[index];
-        return Column(
-          children: [
-            CustemReservationItem(
-              itemName: entry.itemName,
-              date: entry.date,
-              startTime: entry.startTime,
-              endTime: entry.endTime,
-              price: entry.price,
-              statues: entry.statues,
-            ),
-          ],
+    return BlocBuilder<BookingsCubit, BookingsState>(
+      bloc: cubit,
+      builder: (context, state) {
+        return ListView.builder(
+          itemCount:
+              (state is BookingsSuccessState) ? (state).bookedList.length : 0,
+          scrollDirection: Axis.vertical,
+          physics: const AlwaysScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            final entry =
+                (cubit.state as BookingsSuccessState).bookedList[index];
+            return Column(
+              children: [
+                CustemReservationItem(
+                  imageLink: entry.roomImage,
+                  bookModel: entry,
+                  itemName: entry.roomTitle,
+                  date: entry.date,
+                  startTime: entry.startTime,
+                  endTime: entry.endTime,
+                  price: entry.price.toString(),
+                  statues: entry.status,
+                ),
+              ],
+            );
+          },
         );
       },
     );

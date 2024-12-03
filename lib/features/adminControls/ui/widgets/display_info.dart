@@ -1,19 +1,16 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
-import 'package:ibm_flutter_final_project/features/add_new_workspace/date/models/add_new_workspace.dart';
+import 'package:ibm_flutter_final_project/core/widgets/image_network_widget.dart';
+import 'package:ibm_flutter_final_project/features/adminControls/data/models/book.dart';
 
 class DisplayInfo extends StatelessWidget {
-  List<BookedDetails> bookedDetails = [
-    BookedDetails(
-        itemName: 'Ninja Room',
-        itemDescription: 'Workspace - Ninjago',
-        date: 'Tue, Jan 25, 2022',
-        startTime: '10:00 AM ',
-        endTime: '1:00 AM',
-        imagePath: '',
-        price: '1800')
-  ];
+  final BookModel? bookModel;
+  const DisplayInfo({
+    Key? key,
+    this.bookModel,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,27 +35,32 @@ class DisplayInfo extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  height: 201.h,
-                  width: 358.w,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/images/meeting.png"),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
+                bookModel?.roomImage != null
+                    ? ImageNetworkWidget(
+                        imageLink: bookModel!.roomImage!,
+                        hight: 201.h,
+                        width: 358.w)
+                    : Container(
+                        height: 201.h,
+                        width: 358.w,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("assets/images/meeting.png"),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    bookedDetails[0].itemName ?? "Meeting Room",
+                    bookModel?.roomTitle ?? "Meeting Room",
                     style: TextStyles.fonst18BlackBold,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Text(
-                    bookedDetails[0].itemDescription ?? "Workspace - Office",
+                    bookModel?.WorkSpaceTitle ?? "Workspace - Office",
                     style: TextStyles.font18blueBold,
                   ),
                 )
@@ -93,7 +95,7 @@ class DisplayInfo extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "${bookedDetails[0].date} , ${bookedDetails[0].startTime} \n${bookedDetails[0].date} , ${bookedDetails[0].endTime}" ??
+                  "${bookModel?.date} , ${bookModel?.startTime} \n${bookModel?.date} , ${bookModel?.endTime}" ??
                       "Tue, Jan 25, 2022, 10:00 AM \n Tue, Jan 25, 2022, 1:00 AM ",
                   style: TextStyles.font18blueBold,
                 ),
@@ -167,7 +169,7 @@ class DisplayInfo extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "${bookedDetails[0].price} EGP" ?? "1800 EGP",
+                    "${bookModel?.price} EGP" ?? "1800 EGP",
                     style: TextStyles.font18blueBold,
                   ),
                 ),

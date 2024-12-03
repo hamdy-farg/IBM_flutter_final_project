@@ -8,6 +8,9 @@ import 'package:ibm_flutter_final_project/features/User/ui/User_screen.dart';
 import 'package:ibm_flutter_final_project/features/User/ui/edit_profile_screen.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/workSpaceCubit/work_space_cubit.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/ui/add_new_worksapce.dart';
+import 'package:ibm_flutter_final_project/features/adminControls/logic/bookingCubit/bookings_cubit.dart';
+import 'package:ibm_flutter_final_project/features/adminControls/logic/cubit/booking_cubit.dart';
+import 'package:ibm_flutter_final_project/features/adminControls/ui/booked_details_screen.dart';
 import 'package:ibm_flutter_final_project/features/adminControls/ui/booking_screen.dart';
 import 'package:ibm_flutter_final_project/features/authentication/logic/sign_in_bloc/sign_in_cubit.dart';
 import 'package:ibm_flutter_final_project/features/authentication/logic/singupCubit/sign_up_cubit.dart';
@@ -43,11 +46,22 @@ class AppRouter {
         );
       case Routes.bookingScreen:
         return MaterialPageRoute(
-          builder: (_) => const BookingScreen(),
+          builder: (_) => BlocProvider(
+            create: (_) => getIt<BookingsCubit>(),
+            child: const BookingScreen(),
+          ),
         );
       case Routes.workspaceStatus:
         return MaterialPageRoute(
           builder: (_) => const WorkspaceStatus(),
+        );
+      case Routes.bookedDeatilsScreen:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => BlocProvider(
+            create: (_) => getIt<EditBookingCubit>(),
+            child: BookedDetailsScreen(),
+          ),
         );
 
       case Routes.loginScreen:
@@ -113,7 +127,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => getIt<BookRoomCubit>(),
-            child:   BookingRoom(),
+            child: BookingRoom(),
           ),
         );
 

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ibm_flutter_final_project/core/helpers/extensions.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
+import 'package:ibm_flutter_final_project/core/routing/routes.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
-import 'package:ibm_flutter_final_project/features/adminControls/ui/booked_details_screen.dart';
+import 'package:ibm_flutter_final_project/core/widgets/image_network_widget.dart';
+import 'package:ibm_flutter_final_project/features/adminControls/data/models/book.dart';
 
 class CustemReservationItem extends StatelessWidget {
+  final BookModel? bookModel;
   final String? itemName;
   final String? date;
   final String? startTime;
@@ -13,8 +17,10 @@ class CustemReservationItem extends StatelessWidget {
   final String? imagePath;
   final String? price;
   final String? statues;
+  final String? imageLink;
 
   const CustemReservationItem({
+    this.bookModel,
     super.key,
     this.itemName,
     this.imagePath,
@@ -23,6 +29,7 @@ class CustemReservationItem extends StatelessWidget {
     this.date,
     this.startTime,
     this.endTime,
+    this.imageLink,
   });
 
   @override
@@ -82,15 +89,20 @@ class CustemReservationItem extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 50),
-                        child: Container(
-                          height: 118.h,
-                          width: 118.w,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      imagePath ?? "assets/images/mone.png"))),
-                        ),
+                        child: imageLink != null
+                            ? ImageNetworkWidget(
+                                imageLink: imageLink ?? '',
+                                hight: 118.h,
+                                width: 118.w)
+                            : Container(
+                                height: 118.h,
+                                width: 118.w,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    image: DecorationImage(
+                                        image: AssetImage(imagePath ??
+                                            "assets/images/mone.png"))),
+                              ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -105,17 +117,21 @@ class CustemReservationItem extends StatelessWidget {
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.bold)),
                             ),
-                            statues == "Approved"
+                            horizantalSpace(5),
+                            statues == "approved"
                                 ? Icon(
+                                    size: 14,
                                     Icons.circle,
                                     color: Colors.green,
                                   )
-                                : statues == "Rejected"
+                                : statues == "rejected"
                                     ? Icon(
+                                        size: 14,
                                         Icons.circle,
                                         color: Colors.red,
                                       )
                                     : Icon(
+                                        size: 14,
                                         Icons.circle,
                                         color: Colors.yellow,
                                       )
@@ -130,10 +146,8 @@ class CustemReservationItem extends StatelessWidget {
                 padding: const EdgeInsets.all(5.0),
                 child: InkWell(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => BookedDetailsScreen()));
+                      context.pushNamed(Routes.bookedDeatilsScreen,
+                          arguments: bookModel);
                     },
                     child: ReservationButton()),
               )
