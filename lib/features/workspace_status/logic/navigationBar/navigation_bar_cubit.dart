@@ -26,7 +26,7 @@ class NavigationBarCubit extends Cubit<NavigationBarState> {
         await getIt<GetAdminWorkSpacesCubit>().fetchData();
       }
       await getIt<HomeWorkSpaceCubit>().getWorkSpace();
-      await getIt<HoomRoomsCubit>().getRooms();
+      await getIt<HomeRoomsCubit>().getRooms();
     } else {}
 
     emit(state.copyWith(currentIndex: currentIndex));

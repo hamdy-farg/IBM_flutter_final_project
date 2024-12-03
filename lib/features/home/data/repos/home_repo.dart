@@ -18,12 +18,11 @@ class HomeRepo {
         accessToken,
       );
 
-      List<RoomModel> roomModelList =
-          (getWorkSpaceResponce["workSpaces"] as List)
-              .map(
-                (wokSpace) => RoomModel.fromApiMap(wokSpace),
-              )
-              .toList();
+      List<RoomModel> roomModelList = (getWorkSpaceResponce["rooms"] as List)
+          .map(
+            (wokSpace) => RoomModel.fromApiMap(wokSpace),
+          )
+          .toList();
 
       return roomModelList;
     } on ServerException catch (e) {

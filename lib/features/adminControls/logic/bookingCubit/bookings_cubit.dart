@@ -14,7 +14,7 @@ class BookingsCubit extends Cubit<BookingsState> {
   Future<void> getBookings() async {
     emit(BookingsIsLoadingState());
     try {
-      List<BookModel> bookedList = await BookingsRepo(dio).getBookings();
+      List<BookModel> bookedList = await BookingsAdminRepo(dio).getBookings();
       emit(BookingsSuccessState(bookedList: bookedList));
     } on ServerException catch (e) {
       emit(BookingsFialState(erroMessage: e.errorModel.message));

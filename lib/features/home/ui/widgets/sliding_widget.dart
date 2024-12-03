@@ -1,29 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ibm_flutter_final_project/core/helpers/extensions.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
-import 'package:ibm_flutter_final_project/core/routing/routes.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
-import 'package:ibm_flutter_final_project/features/authentication/ui/sign_in_screen.dart';
-import 'package:ibm_flutter_final_project/features/home/ui/single_item_screen.dart';
+import 'package:ibm_flutter_final_project/core/theming/styles.dart';
+import 'package:ibm_flutter_final_project/core/widgets/image_network_widget.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/favourite_icon_changer.dart';
 
 class SlidingWidget extends StatelessWidget {
   final String? itemName;
   final String? imagePath;
+  final String? imageLink;
+  final void Function()? onTap;
   final String? location;
 
   const SlidingWidget(
-      {super.key, this.itemName, this.imagePath, this.location});
+      {super.key,
+      this.imageLink,
+      this.itemName,
+      this.imagePath,
+      this.location,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
-        onTap: () {
-          context.pushNamed(Routes.singleItemScreen);
-        },
+        onTap: onTap,
         child: Container(
           width: 133.33.h,
           height: 198.h,
@@ -47,17 +50,23 @@ class SlidingWidget extends StatelessWidget {
               Stack(
                 children: [
                   // Background Image
+
                   ClipRRect(
                     borderRadius: const BorderRadius.vertical(
                       top: Radius.circular(15),
                     ),
-                    child: Image.asset(
-                      imagePath ??
-                          'assets/images/workspace.jpg', // Replace with your image asset
-                      width: double.infinity,
-                      height: 140.h,
-                      fit: BoxFit.cover,
-                    ),
+                    child: imageLink != null
+                        ? ImageNetworkWidget(
+                            imageLink: imageLink!,
+                            hight: 140.h,
+                            width: double.infinity)
+                        : Image.asset(
+                            imagePath ??
+                                'assets/images/workspace.jpg', // Replace with your image asset
+                            width: double.infinity,
+                            height: 140.h,
+                            fit: BoxFit.cover,
+                          ),
                   ),
                   // Semi-transparent location container
                   Positioned(
@@ -109,15 +118,10 @@ class SlidingWidget extends StatelessWidget {
                 ],
               ),
               // Title below the image
-              Padding(
-                padding: const EdgeInsets.only(left: 15, top: 8),
-                child: Text(
-                  itemName ?? 'Titen Office Center',
-                  style: const TextStyle(
-                    color: Color(0xff2C3E50),
-                    fontSize: 12,
-                  ),
-                ),
+              Align(
+                alignment: Alignment.center,
+                child: Text(itemName ?? 'Titen  Center',
+                    style: TextStyles.font16BlackBold),
               ),
             ],
           ),

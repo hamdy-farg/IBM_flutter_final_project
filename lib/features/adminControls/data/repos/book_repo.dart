@@ -4,9 +4,9 @@ import 'package:ibm_flutter_final_project/core/networks/dio_exceptions.dart';
 import 'package:ibm_flutter_final_project/core/networks/end_point.dart';
 import 'package:ibm_flutter_final_project/features/adminControls/data/models/book.dart';
 
-class BookingsRepo {
+class BookingsAdminRepo {
   DioConsumer dio;
-  BookingsRepo(this.dio);
+  BookingsAdminRepo(this.dio);
   Future<Map<String, String>> changeSatusOfBookings(BookModel bookModel) async {
     try {
       String accessToken = await getAccessToken(dio);

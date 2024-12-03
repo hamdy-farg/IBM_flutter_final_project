@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
@@ -8,27 +9,92 @@ import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 import 'package:ibm_flutter_final_project/core/widgets/app_text_button.dart';
 import 'package:ibm_flutter_final_project/features/User/logic/book_room/book_room_cubit.dart';
-import 'package:ibm_flutter_final_project/features/home/ui/widgets/check_in_out.dart';
+import 'package:ibm_flutter_final_project/features/home/logic/availableRoomHours/available_room_hours_cubit.dart';
+import 'package:ibm_flutter_final_project/features/home/logic/bookingRoom/booking_room_cubit.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/booking_photo.dart';
+import 'package:ibm_flutter_final_project/features/home/ui/widgets/check_in_out.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/select_date.dart';
+import 'package:ibm_flutter_final_project/features/roomScreen/data/models/room_model.dart';
 import 'package:intl/intl.dart';
 
 class BookingRoom extends StatelessWidget {
   BookingRoom({super.key});
-  final cubit = getIt<BookRoomCubit>();
-  String start = "12:00:00";
-  String end = "11:00:00";
 
-  String formatTime(String time) {
-    final format = DateFormat("h:mm a"); // 12-hour format with AM/PM
-    final parsedTime =
-        DateFormat("HH:mm:ss").parse(time); // Parse the 24-hour format
-    return format.format(parsedTime); // Format into 12-hour AM/PM format
+  final cubit = getIt<BookRoomDataCubit>();
+  final Booking = getIt<BookingRoomCubit>();
+
+  bool isStartDateValid(String startDate) {
+    // Normalize the date to YYYY-MM-DD format
+    List<String> parts = startDate.split('-');
+    String normalizedDate =
+        "${parts[0]}-${parts[1].padLeft(2, '0')}-${parts[2].padLeft(2, '0')}";
+
+    // Parse the start date
+    DateTime parsedStartDate = DateTime.parse(normalizedDate);
+
+    // Normalize both dates to ignore the time part
+    DateTime startDateOnly = DateTime(
+        parsedStartDate.year, parsedStartDate.month, parsedStartDate.day);
+    DateTime todayOnly = DateTime.now();
+    todayOnly = DateTime(todayOnly.year, todayOnly.month, todayOnly.day);
+
+    // Compare the dates
+    return startDateOnly.isAfter(todayOnly) ||
+        startDateOnly.isAtSameMomentAs(todayOnly);
+  }
+
+  int calculateEarnings(
+      {required String startTime,
+      required String endTime,
+      required int pricePerHour}) {
+    // Parse the time strings into DateTime objects
+    DateTime start = DateTime.parse('2000-01-01 $startTime');
+    DateTime end = DateTime.parse('2000-01-01 $endTime');
+
+    // Calculate the difference in hours
+    int hours = end.difference(start).inHours;
+
+    // Calculate earnings
+    int earnings = hours * pricePerHour;
+
+    return earnings;
+  }
+
+  List<int> extractHours(List<Map<String, String>> timeList) {
+    return timeList.expand((timeMap) {
+      int endTimeHour = int.parse(timeMap['end_time']!.split(':')[0]);
+      int startTimeHour = int.parse(timeMap['start_time']!.split(':')[0]);
+      return [endTimeHour, startTimeHour];
+    }).toList();
+  }
+
+  String? formatTime(String time) {
+    try {
+      final format = DateFormat("h:mm a"); // 12-hour format with AM/PM
+      final parsedTime = DateFormat("HH:mm:ss").parse(time);
+      return format.format(parsedTime); // Format into 12-hour AM/PM format
+    } on Exception catch (e) {
+      log(e.toString());
+    }
+    return null; // Parse the 24-hour format
   }
 
   @override
   Widget build(BuildContext context) {
+    RoomModel? roomModel;
+    final arguments = ModalRoute.of(context)?.settings.arguments as RoomModel;
+    roomModel = arguments;
+    final getAvialableHours = getIt<AvailableRoomHoursCubit>();
     return Scaffold(
+      floatingActionButton: Container(
+        width: 350.w,
+        height: 60.h,
+        child: AppTextButton(
+          buttonText:
+              "Review Booking - EGP ${calculateEarnings(pricePerHour: roomModel.pricePerHour?.round() ?? 1, startTime: roomModel.startTime ?? "", endTime: roomModel.endTime ?? "")}",
+          buttonStyle: TextStyles.font20WhiteBold,
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -36,11 +102,15 @@ class BookingRoom extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                  height: 250, width: double.infinity, child: BookingPhoto()),
+                  height: 250,
+                  width: double.infinity,
+                  child: BookingPhoto(
+                    imageLink: roomModel.imageLink,
+                  )),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "Small Metting Room",
+                  roomModel.title ?? "Small Metting Room",
                   style: TextStyles.font22BlackBold,
                 ),
               ),
@@ -57,11 +127,45 @@ class BookingRoom extends StatelessWidget {
                     // !
 
                     Text(
-                      "${formatTime(start)} - ${formatTime(end)}",
+                      "${formatTime(roomModel.startTime ?? "")} - ${formatTime(roomModel.endTime ?? "")}",
                       style: TextStyles.font16LightGreySemiBold,
                     ),
+
+                    Expanded(child: SizedBox()),
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: 5,
+                        left: 10,
+                      ),
+                      width: 100.w,
+                      height: 50.h,
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: ColorsManager.Inactive.withOpacity(0.1),
+                            spreadRadius: 4,
+                            blurRadius: 4,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(12),
+                        color: ColorsManager.lightGrey.withOpacity(.1),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "${roomModel.pricePerHour} EGP/H",
+                          style: TextStyles.font16BlackBold,
+                        ),
+                      ),
+                    ),
+                    horizantalSpace(10)
                   ],
                 ),
+              ),
+              Text(
+                "   ${roomModel.startDate ?? ""} - ${roomModel.endDate ?? ""}",
+                style: TextStyles.font16LightGreySemiBold,
               ),
               Container(
                 margin: EdgeInsets.only(
@@ -85,7 +189,7 @@ class BookingRoom extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    "20 Seats",
+                    "${roomModel.capacity} Seats",
                     style: TextStyles.font18WhiteBold,
                   ),
                 ),
@@ -93,47 +197,48 @@ class BookingRoom extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 13, top: 15, right: 10),
                 child: Text(
-                    "Paragraphs are the building blocks of papers. Many students define paragraphs in terms of length: a paragraph is a group of at least five sentences, a paragraph is half a page long, etc. In reality, though, the unity and coherence of ideas among sentences is what constitutes a paragraph.",
+                    roomModel.description ??
+                        "Paragraphs are the building blocks of papers. Many students define paragraphs in terms of length: a paragraph is a group of at least five sentences, a paragraph is half a page long, etc. In reality, though, the unity and coherence of ideas among sentences is what constitutes a paragraph.",
                     style: TextStyles.font12LightBlueRegular),
               ),
               verticalSpace(16),
               CustomDatePicker(
-                onDatePicked: (val) {
-                  log("$val");
+                startingDate: isStartDateValid(roomModel.startDate ?? "")
+                    ? DateTime.parse(roomModel.startDate ?? "")
+                    : DateTime.now(),
+                onDatePicked: (val) async {
+                  log("room id is ${val}");
+                  await getIt<AvailableRoomHoursCubit>()
+                      .getAvailableHours(val as String, roomModel?.id ?? "");
                   cubit.selectedDateChange(val);
                 },
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 5,
-                ),
-                child: CheckInCheckoutWidget(
-                  checkInCallback: (val) {
-                    log(" checkin -- $val");
-                    cubit.checkInHourChange(val);
-                  },
-                  checkOutCallback: (val) {
-                    log(" checkout -- $val");
-                    cubit.checkOutHourChange(val);
-                  },
-                  availableHours: [
-                    //!!!! 24 =>  12  19:00:00
-                    [1, 5],
-                    [7, 10],
-                    [11, 17],
-                  ], // Time ranges for check-in and check-out
-                ),
-              ),
-              verticalSpace(10),
-              Center(
-                child: Container(
-                  width: 350.w,
-                  height: 60.h,
-                  child: AppTextButton(
-                    buttonText: "Review Booking - EGP 2000",
-                    buttonStyle: TextStyles.font20WhiteBold,
-                  ),
-                ),
+              BlocBuilder<BookingRoomCubit, BookingRoomState>(
+                builder: (context, state) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 5,
+                    ),
+                    child: CheckInCheckoutWidget(
+                      checkInCallback: (val) {
+                        log(" checkin -- $val");
+                        cubit.checkInHourChange(val);
+                      },
+                      checkOutCallback: (val) {
+                        log(" checkout -- $val");
+                        cubit.checkOutHourChange(val);
+                      },
+                      availableHours: [
+                        //!!!! 24 =>  12  19:00:00
+                        (getAvialableHours is AvailableRoomHoursSuccessState)
+                            ? extractHours((getAvialableHours.state
+                                    as AvailableRoomHoursSuccessState)
+                                .AvailableHoursList)
+                            : []
+                      ], // Time ranges for check-in and check-out
+                    ),
+                  );
+                },
               ),
             ],
           ),

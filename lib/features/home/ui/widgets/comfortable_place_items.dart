@@ -1,54 +1,43 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ibm_flutter_final_project/core/helpers/extensions.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
+import 'package:ibm_flutter_final_project/core/routing/routes.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 import 'package:ibm_flutter_final_project/core/widgets/image_network_widget.dart';
-import 'package:ibm_flutter_final_project/features/home/data/model/work_spaces.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/comfortable_place_iems_button.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/favourite_icon_changer.dart';
+import 'package:ibm_flutter_final_project/features/roomScreen/data/models/room_model.dart';
 
 class ComfortablePlaceItems extends StatelessWidget {
-  final List<ComfortablePlacesItems> comfortablePlacesItems = [
-    ComfortablePlacesItems(
-        imagePath: '',
-        itemName: 'Titen Office Center',
-        location: 'cairo ,nacer city',
-        price: '3.0'),
-    ComfortablePlacesItems(
-        imagePath: '',
-        itemName: 'Titen Office Center',
-        location: 'cairo ,nacer city',
-        price: '3.0'),
-    ComfortablePlacesItems(
-        imagePath: '',
-        itemName: 'Titen Office Center',
-        location: 'cairo ,nacer city',
-        price: '3.0'),
-    ComfortablePlacesItems(
-        imagePath: '',
-        itemName: 'Titen Office Center',
-        location: 'cairo ,nacer city',
-        price: '3.0'),
-    ComfortablePlacesItems(
-        imagePath: '',
-        itemName: 'Titen Office Center',
-        location: 'cairo ,nacer city',
-        price: '3.0'),
-  ];
+  List<RoomModel>? roomModelList;
+  void Function()? onTap;
+
+  String? location;
+
+  ComfortablePlaceItems({this.roomModelList, this.onTap, this.location});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       height: 245.h,
       child: ListView.builder(
-          itemCount: comfortablePlacesItems.length,
+          itemCount: roomModelList?.length,
           shrinkWrap: true,
           itemBuilder: (context, index) {
-            final entry = comfortablePlacesItems[index];
+            final entry = roomModelList?[index];
+            log("${entry?.endDate}");
             return CustemConfortablePlace(
-              itemName: entry.itemName,
-              location: entry.location,
-              price: entry.price,
+              buttonOnTap: onTap ??
+                  () {
+                    context.pushNamed(Routes.bookingRoom, arguments: entry);
+                  },
+              imageLink: entry?.imageLink,
+              itemName: entry?.title,
+              location: location,
+              price: entry?.pricePerHour.toString(),
             );
           }),
     );
@@ -111,6 +100,7 @@ class CustemConfortablePlace extends StatelessWidget {
                   : Image(
                       image: AssetImage("assetName"),
                     ),
+              horizantalSpace(14),
               // Text and Info Section
               Expanded(
                 child: Padding(

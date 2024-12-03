@@ -8,8 +8,11 @@ import 'package:ibm_flutter_final_project/features/adminControls/logic/bookingCu
 import 'package:ibm_flutter_final_project/features/adminControls/logic/cubit/booking_cubit.dart';
 import 'package:ibm_flutter_final_project/features/authentication/logic/sign_in_bloc/sign_in_cubit.dart';
 import 'package:ibm_flutter_final_project/features/authentication/logic/singupCubit/sign_up_cubit.dart';
+import 'package:ibm_flutter_final_project/features/home/logic/availableRoomHours/available_room_hours_cubit.dart';
+import 'package:ibm_flutter_final_project/features/home/logic/bookingRoom/booking_room_cubit.dart';
 import 'package:ibm_flutter_final_project/features/home/logic/homeCubit/home_cubit.dart';
 import 'package:ibm_flutter_final_project/features/home/logic/homeRomesCubit/hoom_rooms_cubit.dart';
+import 'package:ibm_flutter_final_project/features/home/logic/workSpaceRooms/work_space_rooms_cubit.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/logic/addNewRoomCubit/add_new_room_cubit.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/logic/getAdminRoomsCubit/admin_rooms_cubit.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/logic/cubit/get_admin_work_spaces_cubit.dart';
@@ -18,17 +21,23 @@ import 'package:ibm_flutter_final_project/features/workspace_status/logic/naviga
 final getIt = GetIt.instance;
 Future<void> setupGetIt() async {
   getIt.registerLazySingleton(() => DioConsumer(dio: Dio()));
+
   getIt.registerLazySingleton(
       () => GetAdminWorkSpacesCubit(getIt<DioConsumer>()));
   getIt.registerLazySingleton(() => WorkSpaceCubit(getIt<DioConsumer>()));
   getIt.registerLazySingleton(() => AddNewRoomCubit(getIt<DioConsumer>()));
-  getIt.registerFactory(() => NavigationBarCubit());
+  getIt.registerLazySingleton(() => BookingRoomCubit(getIt<DioConsumer>()));
 
-  getIt.registerLazySingleton(() => HoomRoomsCubit(getIt<DioConsumer>()));
+  getIt.registerFactory(() => NavigationBarCubit());
+  getIt.registerLazySingleton(() => WorkSpaceRoomsCubit(getIt<DioConsumer>()));
+  getIt.registerLazySingleton(
+      () => AvailableRoomHoursCubit(getIt<DioConsumer>()));
+
+  getIt.registerLazySingleton(() => HomeRoomsCubit(getIt<DioConsumer>()));
 
   getIt.registerLazySingleton(() => HomeWorkSpaceCubit(getIt<DioConsumer>()));
 
-  getIt.registerLazySingleton(() => BookRoomCubit());
+  getIt.registerLazySingleton(() => BookRoomDataCubit());
   getIt.registerLazySingleton(() => BookingsCubit(getIt<DioConsumer>()));
   getIt.registerLazySingleton(() => EditBookingCubit(getIt<DioConsumer>()));
 

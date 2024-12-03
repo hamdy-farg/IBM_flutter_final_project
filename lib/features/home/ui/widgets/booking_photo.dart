@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
+import 'package:ibm_flutter_final_project/core/widgets/image_network_widget.dart';
 
 class BookingPhoto extends StatefulWidget {
-  BookingPhoto({super.key});
+  String? imageLink;
+  BookingPhoto({this.imageLink, super.key});
 
   @override
   State<BookingPhoto> createState() => _BookingPhotoState();
@@ -17,14 +19,19 @@ class _BookingPhotoState extends State<BookingPhoto> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          width: double.infinity,
-          height: 222,
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/images/workspace.jpg"),
-                  fit: BoxFit.cover)),
-        ),
+        widget.imageLink != null
+            ? ImageNetworkWidget(
+                imageLink: widget.imageLink!,
+                hight: 222.h,
+                width: double.infinity)
+            : Container(
+                width: double.infinity,
+                height: 222,
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("assets/images/workspace.jpg"),
+                        fit: BoxFit.cover)),
+              ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

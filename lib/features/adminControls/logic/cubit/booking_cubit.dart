@@ -17,7 +17,7 @@ class EditBookingCubit extends Cubit<EditBookingState> {
     emit(EditBookingLoadingState());
     try {
       final editStatus =
-          await BookingsRepo(dio).changeSatusOfBookings(bookModel);
+          await BookingsAdminRepo(dio).changeSatusOfBookings(bookModel);
       getIt<BookingsCubit>().getBookings();
       emit(EditBookingSuccessState());
     } on ServerException catch (e) {

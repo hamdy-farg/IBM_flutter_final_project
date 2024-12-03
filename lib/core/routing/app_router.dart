@@ -17,7 +17,11 @@ import 'package:ibm_flutter_final_project/features/authentication/logic/singupCu
 import 'package:ibm_flutter_final_project/features/authentication/ui/reset_password.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/sign_in_screen.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/sign_up_screen.dart';
+import 'package:ibm_flutter_final_project/features/home/logic/availableRoomHours/available_room_hours_cubit.dart';
+import 'package:ibm_flutter_final_project/features/home/logic/bookingRoom/booking_room_cubit.dart';
 import 'package:ibm_flutter_final_project/features/home/logic/homeCubit/home_cubit.dart';
+import 'package:ibm_flutter_final_project/features/home/logic/homeRomesCubit/hoom_rooms_cubit.dart';
+import 'package:ibm_flutter_final_project/features/home/logic/workSpaceRooms/work_space_rooms_cubit.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/booking_screen.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/home_screen.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/single_item_screen.dart';
@@ -44,11 +48,17 @@ class AppRouter {
 
       case Routes.mainHomeScreen:
         return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (_) => getIt<HomeWorkSpaceCubit>(),
-            child: const MainScreen(),
-          ),
-        );
+            builder: (_) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                      create: (context) => getIt<HomeWorkSpaceCubit>(),
+                    ),
+                    BlocProvider(
+                      create: (context) => getIt<HomeRoomsCubit>(),
+                    ),
+                  ],
+                  child: MainScreen(),
+                ));
       case Routes.bookingScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
@@ -123,12 +133,24 @@ class AppRouter {
         );
       case Routes.singleItemScreen:
         return MaterialPageRoute(
-          builder: (_) => const SingleItemScreen(),
+          settings: settings,
+          builder: (_) => BlocProvider(
+            create: (_) => getIt<WorkSpaceRoomsCubit>(),
+            child: const SingleItemScreen(),
+          ),
         );
       case Routes.bookingRoom:
         return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => getIt<BookRoomCubit>(),
+          settings: settings,
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                  create: (context) => getIt<AvailableRoomHoursCubit>()),
+              BlocProvider(create: (context) => getIt<BookRoomDataCubit>()),
+              BlocProvider(
+                create: (context) => getIt<BookingRoomCubit>(),
+              )
+            ],
             child: BookingRoom(),
           ),
         );

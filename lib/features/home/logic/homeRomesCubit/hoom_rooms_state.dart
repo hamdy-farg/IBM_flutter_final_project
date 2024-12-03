@@ -1,24 +1,24 @@
 part of 'hoom_rooms_cubit.dart';
 
 @immutable
-sealed class HoomRoomsState {
-  const HoomRoomsState();
+sealed class HomeRoomsState {
+  const HomeRoomsState();
 }
 
-class HomeRoomInitialState extends HoomRoomsState {}
+class HomeRoomInitialState extends HomeRoomsState {}
 
-class HomeRoomLoadingState extends HoomRoomsState {}
+class HomeRoomLoadingState extends HomeRoomsState {}
 
-class HomeRoomFialState extends HoomRoomsState {
+class HomeRoomFialState extends HomeRoomsState {
   final String errorMessage;
   const HomeRoomFialState({
     required this.errorMessage,
   });
 }
 
-class HomeRoomSuccesState extends HoomRoomsState {
-  final List<RoomModel> workSpaceModelList;
+class HomeRoomSuccesState extends HomeRoomsState {
+  final List<RoomModel> roomModelList;
   const HomeRoomSuccesState({
-    required this.workSpaceModelList,
+    required this.roomModelList,
   });
 }

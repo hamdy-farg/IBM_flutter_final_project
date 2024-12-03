@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
-import 'package:intl/intl.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
-import 'package:ibm_flutter_final_project/core/theming/styles.dart';
+import 'package:intl/intl.dart';
 
 class CustomDatePicker extends StatefulWidget {
   final Function(String?) onDatePicked;
@@ -42,7 +41,7 @@ class Custom_DatePickerState extends State<CustomDatePicker> {
         selectedDate = picked;
       });
 
-      widget.onDatePicked(DateFormat('yyyy-MM-dddd').format(selectedDate!));
+      widget.onDatePicked(DateFormat('yyyy-MM-dd').format(selectedDate!));
     }
   }
 
@@ -88,11 +87,6 @@ class Custom_DatePickerState extends State<CustomDatePicker> {
                   SvgPicture.asset('assets/svgs/Calendar.svg'),
                   Row(
                     children: [
-                      Icon(
-                        Icons.calendar_month,
-                        color: ColorsManager.mainBlue,
-                        size: 20,
-                      ),
                       horizantalSpace(5),
                       Text(
                         selectedDate != null

@@ -9,6 +9,9 @@ class EndPoint {
 
   static const addRoom = "room";
   static const updateBook = "book";
+  static const userMakeBook = "book";
+  static const getAvialbleBooks = "book/available";
+
   static const updateBookStatus = "book/status";
   static const deleteRoom = "room";
   static const allWorkspacce = "workspace/all";

@@ -48,7 +48,7 @@ class SingInScreen extends StatelessWidget {
                         context.pushReplacementNamed(Routes.workspaceStatus);
                       } else if (role == "client") {
                         await getIt<HomeWorkSpaceCubit>().getWorkSpace();
-                        await getIt<HoomRoomsCubit>().getRooms();
+                        await getIt<HomeRoomsCubit>().getRooms();
 
                         context.pushReplacementNamed(Routes.mainHomeScreen);
                       } else {

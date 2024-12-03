@@ -1,22 +1,33 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
+import 'package:ibm_flutter_final_project/core/helpers/extensions.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
-import 'package:ibm_flutter_final_project/core/theming/colors.dart';
+import 'package:ibm_flutter_final_project/core/helpers/utils.dart';
+import 'package:ibm_flutter_final_project/core/routing/routes.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
+import 'package:ibm_flutter_final_project/core/widgets/location_picker.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/custem_button_authentication.dart';
+import 'package:ibm_flutter_final_project/features/home/logic/workSpaceRooms/work_space_rooms_cubit.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/comfortable_place_items.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/single_photo.dart';
+import 'package:ibm_flutter_final_project/features/workspace_status/data/model/work_space_model.dart';
 
-class SingleItemScreen extends StatefulWidget {
+class SingleItemScreen extends StatelessWidget {
   const SingleItemScreen({super.key});
 
   @override
-  State<SingleItemScreen> createState() => _SingleItemScreenState();
-}
-
-class _SingleItemScreenState extends State<SingleItemScreen> {
-  @override
   Widget build(BuildContext context) {
+    WorkSpaceModel? workSpaceModel;
+
+    final arguments = ModalRoute.of(context)?.settings.arguments;
+    if (arguments is WorkSpaceModel) {
+      workSpaceModel = arguments;
+    }
+    log("room model is ${workSpaceModel}");
     return Scaffold(
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -33,18 +44,47 @@ class _SingleItemScreenState extends State<SingleItemScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SinglePhoto(),
+            SinglePhoto(
+              imageLink: workSpaceModel != null ? workSpaceModel.image : null,
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Most Comfortable \n Place",
+                  Text(
+                      workSpaceModel != null
+                          ? " ${workSpaceModel.title} "
+                          : "Most Comfortable \n Place",
                       style: TextStyles.font22BlackBold),
-                  ComfortablePlaceItems(),
+                  Text(
+                      workSpaceModel != null
+                          ? "           ${workSpaceModel.description} "
+                          : "Most Comfortable \n Place",
+                      style: TextStyles.font16BlackBold),
                   verticalSpace(20),
                   Text("Location", style: TextStyles.font22BlackBold),
-                  verticalSpace(300)
+                  LocationPickerWidget(
+                    locationLatLong: extractLatLong(workSpaceModel!.location),
+                    onLocationPicked: (onpicker) {},
+                    isStatic: true,
+                  ),
+                  BlocBuilder<WorkSpaceRoomsCubit, WorkSpaceRoomsState>(
+                    bloc: getIt<WorkSpaceRoomsCubit>(),
+                    builder: (context, state) {
+                      return (state is WorkSpaceRoomsSuccessState)
+                          ? SizedBox(
+                              height: 400.h,
+                              child: ComfortablePlaceItems(
+                                roomModelList: state.roomModelList,
+                              ),
+                            )
+                          : (state is WorkSpaceRoomsFialState)
+                              ? Text("${state.errorMessage}")
+                              : CircularProgressIndicator();
+                    },
+                  ),
+                  verticalSpace(20),
                 ],
               ),
             )

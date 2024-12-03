@@ -7,14 +7,14 @@ import 'package:meta/meta.dart';
 
 part 'hoom_rooms_state.dart';
 
-class HoomRoomsCubit extends Cubit<HoomRoomsState> {
+class HomeRoomsCubit extends Cubit<HomeRoomsState> {
   DioConsumer dio;
-  HoomRoomsCubit(this.dio) : super(HomeRoomInitialState());
+  HomeRoomsCubit(this.dio) : super(HomeRoomInitialState());
   Future<void> getRooms() async {
     emit(HomeRoomLoadingState());
     try {
-      List<RoomModel> workSpaceList = await HomeRepo(dio).getRooms();
-      emit(HomeRoomSuccesState(workSpaceModelList: workSpaceList));
+      List<RoomModel> roomList = await HomeRepo(dio).getRooms();
+      emit(HomeRoomSuccesState(roomModelList: roomList));
     } on ServerException catch (e) {
       emit(HomeRoomFialState(errorMessage: e.errorModel.message));
     }
