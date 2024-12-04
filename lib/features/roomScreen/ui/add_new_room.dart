@@ -13,6 +13,7 @@ import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 import 'package:ibm_flutter_final_project/core/widgets/app_text_button.dart';
 import 'package:ibm_flutter_final_project/core/widgets/date_picker.dart';
 import 'package:ibm_flutter_final_project/core/widgets/image_picker.dart';
+import 'package:ibm_flutter_final_project/core/widgets/open_in_google_map.dart';
 import 'package:ibm_flutter_final_project/core/widgets/textfield_with_label.dart';
 import 'package:ibm_flutter_final_project/core/widgets/time_picker.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/data/models/room_model.dart';
@@ -118,8 +119,8 @@ class AddNewRoom extends StatelessWidget {
                                   : const SizedBox()
                             ],
                           ),
-                          // Title Field
-                          TextFormFieldWithLabel(
+  GoogleMapsButton(url: '://www.google.com/maps?q=31,31}'),
+                       TextFormFieldWithLabel(
                             label: "Title",
                             hintText: "Title",
                             focusNode: titleNode,
