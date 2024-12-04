@@ -7,11 +7,14 @@
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 <uses-permission android:name="android.permission.CAMERA"/>
 
+
     <!-- For Android 10 or higher, include this permission  -->
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
 
     <application
+      android:usesCleartextTraffic="true"
+
         android:label="ibm_flutter_final_project"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">

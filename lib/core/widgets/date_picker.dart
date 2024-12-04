@@ -79,7 +79,7 @@ class Custom_DatePickerState extends State<CustomDatePicker> {
           style: TextButton.styleFrom(
             backgroundColor: widget.backgroundColor ?? ColorsManager.mainBlue,
             foregroundColor: Colors.white,
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.r),
             ),
@@ -105,7 +105,7 @@ class Custom_DatePickerState extends State<CustomDatePicker> {
                       ),
                     ).show(context),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             decoration: BoxDecoration(
               border: Border.all(color: ColorsManager.lightGrey),
               borderRadius: BorderRadius.circular(8.r),
