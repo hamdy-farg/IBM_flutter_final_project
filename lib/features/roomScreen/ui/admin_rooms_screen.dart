@@ -9,6 +9,7 @@ import 'package:ibm_flutter_final_project/core/helpers/utils.dart';
 import 'package:ibm_flutter_final_project/core/routing/routes.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 import 'package:ibm_flutter_final_project/core/widgets/location_picker.dart';
+import 'package:ibm_flutter_final_project/core/widgets/map_luncher_button.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/comfortable_place_iems_button.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/comfortable_place_items.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/single_photo.dart';
@@ -65,6 +66,9 @@ class AdminRoomsScreen extends StatelessWidget {
                           "${workspace?.location}",
                         ),
                         onLocationPicked: (pickedLocation) {},
+                      ),
+                      urlButtonLuncher(
+                        url: workspace?.location,
                       ),
                       Text("Rooms", style: TextStyles.font22BlackBold),
                     ],

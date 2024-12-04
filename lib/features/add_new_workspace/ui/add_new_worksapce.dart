@@ -14,13 +14,11 @@ import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 import 'package:ibm_flutter_final_project/core/widgets/app_text_button.dart';
 import 'package:ibm_flutter_final_project/core/widgets/image_picker.dart';
 import 'package:ibm_flutter_final_project/core/widgets/location_picker.dart';
+import 'package:ibm_flutter_final_project/core/widgets/map_luncher_button.dart';
 import 'package:ibm_flutter_final_project/core/widgets/textfield_with_label.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/workSpaceCubit/work_space_cubit.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/workSpaceCubit/work_space_state.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/data/model/work_space_model.dart';
-
-import 'package:ibm_flutter_final_project/features/authentication/data/repos/signup_repo.dart';
-import 'package:latlong2/latlong.dart';
 
 import '../../../../core/helpers/spacing.dart';
 
@@ -203,8 +201,17 @@ class AddNewWorkspace extends StatelessWidget {
                             titleNode.unfocus();
                           },
                         ),
+                        verticalSpace(10.h),
 
-                        verticalSpace(20.h),
+                        BlocBuilder<WorkSpaceCubit, WorkSpaceState>(
+                            bloc: cubit,
+                            builder: (context, state) {
+                              return state.locaiton != null
+                                  ? urlButtonLuncher(url: state.locaiton ?? "")
+                                  : SizedBox();
+                            }),
+
+                        verticalSpace(10.h),
 
                         // Create New Workspace Button
                         Padding(
@@ -297,5 +304,4 @@ class AddNewWorkspace extends StatelessWidget {
       ),
     );
   }
-
 }

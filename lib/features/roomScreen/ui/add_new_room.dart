@@ -10,11 +10,9 @@ import 'package:ibm_flutter_final_project/core/helpers/extensions.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
-import 'package:ibm_flutter_final_project/core/widgets/map_luncher_button.dart';
 import 'package:ibm_flutter_final_project/core/widgets/app_text_button.dart';
 import 'package:ibm_flutter_final_project/core/widgets/date_picker.dart';
 import 'package:ibm_flutter_final_project/core/widgets/image_picker.dart';
-import 'package:ibm_flutter_final_project/core/widgets/open_in_google_map.dart';
 import 'package:ibm_flutter_final_project/core/widgets/textfield_with_label.dart';
 import 'package:ibm_flutter_final_project/core/widgets/time_picker.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/data/models/room_model.dart';
@@ -120,7 +118,6 @@ class AddNewRoom extends StatelessWidget {
                                   : const SizedBox()
                             ],
                           ),
-                          
 
                           TextFormFieldWithLabel(
                             label: "Title",

@@ -4,12 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
-import 'package:ibm_flutter_final_project/core/helpers/extensions.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:ibm_flutter_final_project/core/helpers/utils.dart';
-import 'package:ibm_flutter_final_project/core/routing/routes.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 import 'package:ibm_flutter_final_project/core/widgets/location_picker.dart';
+import 'package:ibm_flutter_final_project/core/widgets/map_luncher_button.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/custem_button_authentication.dart';
 import 'package:ibm_flutter_final_project/features/home/logic/workSpaceRooms/work_space_rooms_cubit.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/comfortable_place_items.dart';
@@ -69,6 +68,8 @@ class SingleItemScreen extends StatelessWidget {
                     onLocationPicked: (onpicker) {},
                     isStatic: true,
                   ),
+                  verticalSpace(10),
+                  urlButtonLuncher(url: workSpaceModel.location),
                   BlocBuilder<WorkSpaceRoomsCubit, WorkSpaceRoomsState>(
                     bloc: getIt<WorkSpaceRoomsCubit>(),
                     builder: (context, state) {

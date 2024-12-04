@@ -19,7 +19,7 @@ class LocationFetcher extends StatelessWidget {
     final coordinates = extractCoordinates(mapUrl);
 
     return FutureBuilder<String>(
-      future: getLocationName(coordinates),
+      future:  getLocationName(coordinates),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();

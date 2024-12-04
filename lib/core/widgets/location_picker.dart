@@ -16,10 +16,9 @@ class LocationPickerWidget extends StatefulWidget {
   Map<String, double>? locationLatLong;
   bool? isStatic;
   LocationPickerWidget({
-    super.key,
+    this.isStatic,
     this.locationLatLong,
     required this.onLocationPicked,
-    this.isStatic,
   });
 
   @override
@@ -154,6 +153,8 @@ class _LocationPickerWidgetState extends State<LocationPickerWidget> {
                                     ),
                                     onPressed: () {
                                       setState(() {
+                                        getIt<WorkSpaceCubit>()
+                                            .locationChange(null);
                                         _pickedLocation = null;
                                         widget.locationLatLong = null;
                                       });

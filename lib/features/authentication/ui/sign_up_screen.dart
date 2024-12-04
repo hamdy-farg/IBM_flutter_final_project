@@ -35,7 +35,7 @@ class SignUpScreen extends StatelessWidget {
             bloc: cubit,
             listener: (context, state) {
               if (state.user != null) {
-                context.pushReplacementNamed(Routes.addNewWorkSpace);
+                context.pushReplacementNamed(Routes.loginScreen);
               }
             },
             builder: (context, state) {

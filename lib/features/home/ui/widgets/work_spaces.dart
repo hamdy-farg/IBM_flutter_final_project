@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
@@ -24,6 +26,7 @@ class WorkSpaces extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           final entry = workSpaceList[index];
+          log(entry.location);
           return SlidingWidget(
             onTap: () async {
               await getIt<WorkSpaceRoomsCubit>().getWorkSpaceRooms(entry.id);
