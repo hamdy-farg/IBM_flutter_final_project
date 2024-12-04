@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cherry_toast/cherry_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,6 +38,9 @@ class BookedDetailsScreen extends StatelessWidget {
           listener: (context, state) {
             if (state is EditBookingSuccessState) {
               context.pop();
+              CherryToast.success(
+                title: Text("your booking edit successfully"),
+              ).show(context);
             }
             // TODO: implement listener
           },

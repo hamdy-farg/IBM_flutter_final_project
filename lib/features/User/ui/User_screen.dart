@@ -42,7 +42,22 @@ class UserScreen extends StatelessWidget {
             verticalSpace(20),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [],
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    logout(context);
+                    context.pushReplacementNamed(Routes.loginScreen);
+                  },
+                  child: const Text(
+                    "  logout",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
+              ],
             ),
             BlocBuilder<EditProfileCubit, EditProfileState>(
               bloc: cubit,
@@ -64,20 +79,6 @@ class UserScreen extends StatelessWidget {
                       textStyle: TextStyles.font24BlackSemiBold,
                     ),
                     verticalSpace(10),
-                    GestureDetector(
-                      onTap: () {
-                        logout(context);
-                        context.pushReplacementNamed(Routes.loginScreen);
-                      },
-                      child: const Text(
-                        "logout",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25,
-                          color: Colors.red,
-                        ),
-                      ),
-                    ),
                     CustemText(
                       text: CacheHelper.sharedPreferences
                           .getString(cacheHelperString.email),

@@ -15,36 +15,46 @@ class BookingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = getIt<BookingsCubit>();
-    // cubit.getBookings();
+    final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
+        GlobalKey<RefreshIndicatorState>();
+
+    Future<void> refreshData() async {
+      await cubit.getBookings();
+    }
+
+    // cubit.getBooking`s();
     return Scaffold(
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          horizantalSpace(25),
-          CustemButtonAuthentication(
-            text: 'Explore more',
-            width: 310.w,
-            height: 48.h,
-          ),
-        ],
-      ),
-      appBar: AppBar(
-        backgroundColor: ColorsManager.mainWhite,
-        title: Text(
-          "My Booking",
-          style: TextStyles.font18blackbold,
+        floatingActionButton: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            horizantalSpace(25),
+            CustemButtonAuthentication(
+              text: 'Explore more',
+              width: 310.w,
+              height: 48.h,
+            ),
+          ],
         ),
-        centerTitle: true,
-      ),
-      body: Column(
-        children: [
-          SearchBarTop(), // Non-scrollable header
-          Expanded(
-            child: ReservationItems(), // Scrollable content
+        appBar: AppBar(
+          backgroundColor: ColorsManager.mainWhite,
+          title: Text(
+            "My Booking",
+            style: TextStyles.font18blackbold,
           ),
-          verticalSpace(50)
-        ],
-      ),
-    );
+          centerTitle: true,
+        ),
+        body: RefreshIndicator(
+          key: refreshIndicatorKey,
+          onRefresh: refreshData,
+          child: Column(
+            children: [
+              SearchBarTop(), // Non-scrollable header
+              Expanded(
+                child: ReservationItems(), // Scrollable content
+              ),
+              verticalSpace(50)
+            ],
+          ),
+        ));
   }
 }

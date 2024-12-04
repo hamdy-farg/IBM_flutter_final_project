@@ -47,10 +47,10 @@ class SingInScreen extends StatelessWidget {
                         await getIt<GetAdminWorkSpacesCubit>().fetchData();
                         context.pushReplacementNamed(Routes.workspaceStatus);
                       } else if (role == "client") {
+                        context.pushReplacementNamed(Routes.mainHomeScreen);
+
                         await getIt<HomeWorkSpaceCubit>().getWorkSpace();
                         await getIt<HomeRoomsCubit>().getRooms();
-
-                        context.pushReplacementNamed(Routes.mainHomeScreen);
                       } else {
                         await getIt<HomeWorkSpaceCubit>().getWorkSpace();
                         context.pushReplacementNamed(Routes.mainHomeScreen);

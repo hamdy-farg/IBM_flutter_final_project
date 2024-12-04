@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/helpers/extensions.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
-import 'package:ibm_flutter_final_project/core/helpers/utils.dart';
 import 'package:ibm_flutter_final_project/core/routing/routes.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
@@ -45,38 +44,7 @@ class WorkspaceStatus extends StatelessWidget {
         builder: (context, state) {
           log("nav changed -----------------------------");
 
-          return BlocBuilder<BookingsCubit, BookingsState>(
-            bloc: bookingCubit,
-            builder: (context, state) {
-              log("changed -----------------------------");
-              return Stack(
-                children: [
-                  NavigationBarWidgets[navigationBarCubit.state.currentIndex],
-                  (state is BookingsIsLoadingState)
-                      ? Container(
-                          width: double.infinity,
-                          height: double.infinity,
-                          color: ColorsManager.mainBlack.withOpacity(.000001),
-                        )
-                      : const SizedBox(),
-                  (state is BookingsIsLoadingState)
-                      ? Align(
-                          alignment: Alignment.center,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: ColorsManager.lightGrey.withOpacity(.5),
-                                borderRadius: BorderRadius.circular(12)),
-                            width: 150.w,
-                            height: 150.w,
-                            child: const Center(
-                                child: CircularProgressIndicator()),
-                          ),
-                        )
-                      : const SizedBox(),
-                ],
-              );
-            },
-          );
+          return NavigationBarWidgets[navigationBarCubit.state.currentIndex];
         },
       ),
       floatingActionButton: BlocBuilder<NavigationBarCubit, NavigationBarState>(
@@ -156,25 +124,6 @@ class ExploreScreen extends StatelessWidget {
                 Column(
                   children: [
                     verticalSpace(20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            logout(context);
-                            context.pushReplacementNamed(Routes.loginScreen);
-                          },
-                          child: const Text(
-                            "logout",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
                     const SearchingBar(),
                     Align(
                       alignment: AlignmentDirectional.centerStart,

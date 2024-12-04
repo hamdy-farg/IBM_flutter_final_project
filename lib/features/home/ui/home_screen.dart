@@ -7,7 +7,6 @@ import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/features/User/ui/User_screen.dart';
-import 'package:ibm_flutter_final_project/features/adminControls/ui/booking_screen.dart';
 import 'package:ibm_flutter_final_project/features/home/logic/homeCubit/home_cubit.dart';
 import 'package:ibm_flutter_final_project/features/home/logic/homeRomesCubit/hoom_rooms_cubit.dart';
 import 'package:ibm_flutter_final_project/features/home/logic/workSpaceRooms/work_space_rooms_cubit.dart';
@@ -27,7 +26,7 @@ class MainScreen extends StatelessWidget {
     List<Widget> navigationsScreens = [
       UserScreen(),
       HomeScreen(),
-      BookingScreen(),
+      SizedBox(),
     ];
 
     final naviagtionCubit = getIt<NavigationBarCubit>();
