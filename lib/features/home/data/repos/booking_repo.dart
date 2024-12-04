@@ -12,10 +12,8 @@ class BookingUserRepo {
       String accessToken = await getAccessToken(dio);
 
       Map<String, dynamic> getWorkSpaceResponce = await dio.post(
-        EndPoint.userMakeBook,
-        accessToken,
-        data: booking.toMap(),
-      );
+          EndPoint.userMakeBook, accessToken,
+          data: booking.toMap(), isFormData: true);
 
       UserBookingModel bookingResponce =
           UserBookingModel.fromMap(getWorkSpaceResponce);
@@ -25,12 +23,11 @@ class BookingUserRepo {
     }
   }
 
-  Future<List<Map<String, String>>> getAvailableBooks(
-      Map<String, String> data) async {
+  Future<List<dynamic>> getAvailableBooks(Map<String, String> data) async {
     try {
       String accessToken = await getAccessToken(dio);
 
-      List<Map<String, String>> getWorkSpaceResponce = await dio.post(
+      List<dynamic> getWorkSpaceResponce = await dio.post(
           EndPoint.getAvialbleBooks, accessToken,
           data: data, isFormData: true);
 

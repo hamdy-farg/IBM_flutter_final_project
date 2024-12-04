@@ -10,6 +10,7 @@ import 'package:ibm_flutter_final_project/features/User/ui/User_screen.dart';
 import 'package:ibm_flutter_final_project/features/adminControls/ui/booking_screen.dart';
 import 'package:ibm_flutter_final_project/features/home/logic/homeCubit/home_cubit.dart';
 import 'package:ibm_flutter_final_project/features/home/logic/homeRomesCubit/hoom_rooms_cubit.dart';
+import 'package:ibm_flutter_final_project/features/home/logic/workSpaceRooms/work_space_rooms_cubit.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/app_bar_top.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/rooms_cards.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/rooms_text.dart';
@@ -91,42 +92,76 @@ class HomeScreen extends StatelessWidget {
     return RefreshIndicator(
       key: refreshIndicatorKey,
       onRefresh: refreshData,
-      child: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        child: Column(
-          children: [
-            AppBarTop(),
-            verticalSpace(10),
-            WorkSpaceText(),
-            BlocBuilder<HomeWorkSpaceCubit, HomeWorkSpaceState>(
-              bloc: getIt<HomeWorkSpaceCubit>(),
-              builder: (context, state) {
-                return (state is HomeWorkSpaceSuccesState)
-                    ? WorkSpaces(workSpaceList: state.workSpaceModelList)
-                    : (state is HomeWorkSpaceFialState)
-                        ? Text("${state.errorMessage}")
-                        : const CircularProgressIndicator();
-              },
+      child: Stack(
+        children: [
+          SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                AppBarTop(),
+                verticalSpace(10),
+                WorkSpaceText(),
+                BlocBuilder<HomeWorkSpaceCubit, HomeWorkSpaceState>(
+                  bloc: getIt<HomeWorkSpaceCubit>(),
+                  builder: (context, state) {
+                    return (state is HomeWorkSpaceSuccesState)
+                        ? WorkSpaces(workSpaceList: state.workSpaceModelList)
+                        : (state is HomeWorkSpaceFialState)
+                            ? Text("${state.errorMessage}")
+                            : const CircularProgressIndicator();
+                  },
+                ),
+                const RoomsText(),
+                BlocBuilder<HomeRoomsCubit, HomeRoomsState>(
+                  bloc: getIt<HomeRoomsCubit>(),
+                  builder: (context, state) {
+                    return (state is HomeRoomSuccesState)
+                        ? SizedBox(
+                            height: 400
+                                .h, // Set a fixed height for scrollable content
+                            child: RoomsCards(
+                              roomModel: state.roomModelList,
+                            ),
+                          )
+                        : (state is HomeRoomFialState)
+                            ? Text("${state.errorMessage}")
+                            : const CircularProgressIndicator();
+                  },
+                ),
+              ],
             ),
-            const RoomsText(),
-            BlocBuilder<HomeRoomsCubit, HomeRoomsState>(
-              bloc: getIt<HomeRoomsCubit>(),
+          ),
+          BlocBuilder<WorkSpaceRoomsCubit, WorkSpaceRoomsState>(
+              bloc: getIt<WorkSpaceRoomsCubit>(),
               builder: (context, state) {
-                return (state is HomeRoomSuccesState)
-                    ? SizedBox(
-                        height:
-                            400.h, // Set a fixed height for scrollable content
-                        child: RoomsCards(
-                          roomModel: state.roomModelList,
-                        ),
-                      )
-                    : (state is HomeRoomFialState)
-                        ? Text("${state.errorMessage}")
-                        : const CircularProgressIndicator();
-              },
-            ),
-          ],
-        ),
+                return Stack(
+                  children: [
+                    (state is WorkSpaceRoomsLoadingState)
+                        ? Container(
+                            width: double.infinity,
+                            height: double.infinity,
+                            color: ColorsManager.mainBlack.withOpacity(.000001),
+                          )
+                        : SizedBox(),
+                    (state is WorkSpaceRoomsLoadingState)
+                        ? Align(
+                            alignment: Alignment.center,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color:
+                                      ColorsManager.lightGrey.withOpacity(.5),
+                                  borderRadius: BorderRadius.circular(12)),
+                              width: 150.w,
+                              height: 150.w,
+                              child: const Center(
+                                  child: CircularProgressIndicator()),
+                            ),
+                          )
+                        : const SizedBox()
+                  ],
+                );
+              })
+        ],
       ),
     );
   }

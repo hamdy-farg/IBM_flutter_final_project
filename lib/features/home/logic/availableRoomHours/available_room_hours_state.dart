@@ -12,7 +12,7 @@ class AvailableRoomHoursInitialState extends AvailableRoomHoursState {
 class AvailableRoomHoursLoadingState extends AvailableRoomHoursState {}
 
 class AvailableRoomHoursSuccessState extends AvailableRoomHoursState {
-  final List<Map<String, String>> AvailableHoursList;
+  final List<Map<String, dynamic>> AvailableHoursList;
   const AvailableRoomHoursSuccessState({required this.AvailableHoursList});
 }
 

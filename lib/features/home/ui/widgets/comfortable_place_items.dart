@@ -2,11 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/helpers/extensions.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:ibm_flutter_final_project/core/routing/routes.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 import 'package:ibm_flutter_final_project/core/widgets/image_network_widget.dart';
+import 'package:ibm_flutter_final_project/features/User/logic/book_room/book_room_cubit.dart';
+import 'package:ibm_flutter_final_project/features/home/logic/availableRoomHours/available_room_hours_cubit.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/comfortable_place_iems_button.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/favourite_icon_changer.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/data/models/room_model.dart';
@@ -32,6 +35,9 @@ class ComfortablePlaceItems extends StatelessWidget {
             return CustemConfortablePlace(
               buttonOnTap: onTap ??
                   () {
+                    getIt<AvailableRoomHoursCubit>().clear();
+                    getIt<BookRoomDataCubit>().clearAll();
+
                     context.pushNamed(Routes.bookingRoom, arguments: entry);
                   },
               imageLink: entry?.imageLink,

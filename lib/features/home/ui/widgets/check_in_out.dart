@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
+import 'package:ibm_flutter_final_project/features/home/logic/availableRoomHours/available_room_hours_cubit.dart';
 
 class CheckInCheckoutWidget extends StatefulWidget {
   final List<List<int>> availableHours;
@@ -116,7 +119,6 @@ class _CheckInCheckoutWidgetState extends State<CheckInCheckoutWidget> {
             }).toList(),
           ),
         ),
-         
 
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
@@ -129,25 +131,32 @@ class _CheckInCheckoutWidgetState extends State<CheckInCheckoutWidget> {
             ),
           ),
         ),
-         
 
         // Check-out Row (filtered based on selected check-in hour and within the same range)
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: filteredCheckOutHours.map((hour) {
-              return _buildHourContainer(
-                  hour, 'Check-out', selectedCheckOutHour, (selectedHour) {
-                setState(() {
-                  selectedCheckOutHour = selectedHour;
-                });
+        BlocBuilder<AvailableRoomHoursCubit, AvailableRoomHoursState>(
+            bloc: getIt<AvailableRoomHoursCubit>(),
+            builder: (context, state) {
+              return state is AvailableRoomHoursLoadingState
+                  ? Center(child: CircularProgressIndicator())
+                  : SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: filteredCheckOutHours.map((hour) {
+                          return _buildHourContainer(
+                              hour, 'Check-out', selectedCheckOutHour,
+                              (selectedHour) {
+                            setState(() {
+                              selectedCheckOutHour = selectedHour;
+                            });
 
-                // Return in 24-hour HH:mm:ss format
-                widget.checkOutCallback(convertTo24HourFormat(selectedHour));
-              });
-            }).toList(),
-          ),
-        ),
+                            // Return in 24-hour HH:mm:ss format
+                            widget.checkOutCallback(
+                                convertTo24HourFormat(selectedHour));
+                          });
+                        }).toList(),
+                      ),
+                    );
+            })
       ],
     );
   }
@@ -167,7 +176,8 @@ class _CheckInCheckoutWidgetState extends State<CheckInCheckoutWidget> {
         decoration: BoxDecoration(
           color: isSelected ? ColorsManager.mainBlue : Colors.transparent,
           border: Border.all(
-            color: isSelected ? ColorsManager.mainBlue : ColorsManager.mainBlack,
+            color:
+                isSelected ? ColorsManager.mainBlue : ColorsManager.mainBlack,
             width: 0.5,
           ),
           borderRadius: BorderRadius.circular(8),
@@ -178,8 +188,7 @@ class _CheckInCheckoutWidgetState extends State<CheckInCheckoutWidget> {
             style: TextStyle(
               color: isSelected ? Colors.white : ColorsManager.mainBlack,
               fontSize: 16,
-              fontWeight: FontWeight.w400
-              ,
+              fontWeight: FontWeight.w400,
             ),
           ),
         ),

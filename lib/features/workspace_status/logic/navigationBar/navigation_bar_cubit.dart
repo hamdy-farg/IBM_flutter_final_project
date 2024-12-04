@@ -5,8 +5,6 @@ import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/helpers/cach_helper.dart';
 import 'package:ibm_flutter_final_project/features/adminControls/logic/bookingCubit/bookings_cubit.dart';
 import 'package:ibm_flutter_final_project/features/authentication/data/repos/signup_repo.dart';
-import 'package:ibm_flutter_final_project/features/home/logic/homeCubit/home_cubit.dart';
-import 'package:ibm_flutter_final_project/features/home/logic/homeRomesCubit/hoom_rooms_cubit.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/logic/cubit/get_admin_work_spaces_cubit.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/logic/navigationBar/navigation_bar_state.dart';
 
@@ -25,8 +23,8 @@ class NavigationBarCubit extends Cubit<NavigationBarState> {
       if (role == "admin") {
         await getIt<GetAdminWorkSpacesCubit>().fetchData();
       }
-      await getIt<HomeWorkSpaceCubit>().getWorkSpace();
-      await getIt<HomeRoomsCubit>().getRooms();
+      // await getIt<HomeWorkSpaceCubit>().getWorkSpace();
+      // await getIt<HomeRoomsCubit>().getRooms();
     } else {}
 
     emit(state.copyWith(currentIndex: currentIndex));

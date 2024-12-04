@@ -84,6 +84,7 @@ int calculateEarnings(
     {required String startTime,
     required String endTime,
     required int pricePerHour}) {
+  log("${startTime} -----${endTime} -------- ${pricePerHour}");
   // Parse the time strings into DateTime objects
   DateTime start = DateTime.parse('2000-01-01 $startTime');
   DateTime end = DateTime.parse('2000-01-01 $endTime');
@@ -97,11 +98,11 @@ int calculateEarnings(
   return earnings;
 }
 
-List<int> extractHours(List<Map<String, String>> timeList) {
-  return timeList.expand((timeMap) {
-    int endTimeHour = int.parse(timeMap['end_time']!.split(':')[0]);
+List<List<int>> extractHours(List<Map<String, dynamic>> timeList) {
+  return timeList.map((timeMap) {
     int startTimeHour = int.parse(timeMap['start_time']!.split(':')[0]);
-    return [endTimeHour, startTimeHour];
+    int endTimeHour = int.parse(timeMap['end_time']!.split(':')[0]);
+    return [startTimeHour, endTimeHour];
   }).toList();
 }
 
