@@ -97,7 +97,7 @@ class AddNewRoom extends StatelessWidget {
                                   ? GestureDetector(
                                       onTap: () {
                                         cubit.deleteRoom(
-                                            roomModel!.id!, context);
+                                            roomModel ?? RoomModel(), context);
                                       },
                                       child: Container(
                                         width: 110.h,

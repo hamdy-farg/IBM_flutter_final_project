@@ -14,18 +14,21 @@ class NavigationBarCubit extends Cubit<NavigationBarState> {
     final role =
         CacheHelper.sharedPreferences.getString(cacheHelperString.role);
     if (currentIndex == 2) {
+      emit(state.copyWith(currentIndex: currentIndex));
+
       role == "admin"
           ? await getIt<BookingsCubit>().getBookings()
           : print("object");
     } else if (currentIndex == 1) {
+      emit(state.copyWith(currentIndex: currentIndex));
+
       log("current index is ${currentIndex}");
-      if (role == "admin") {
-        // await getIt<GetAdminWorkSpacesCubit>().fetchData();
-      }
+      // if (role == "admin") {
+      // await getIt<GetAdminWorkSpacesCubit>().fetchData();
+      // }
       // await getIt<HomeWorkSpaceCubit>().getWorkSpace();
       // await getIt<HomeRoomsCubit>().getRooms();
     } else {}
-
     emit(state.copyWith(currentIndex: currentIndex));
   }
 }

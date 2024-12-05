@@ -36,8 +36,8 @@ class SlidingWidget extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                 color: ColorsManager.lightGrey,
-                blurRadius: 6,
-                spreadRadius: 3,
+                blurRadius: 10,
+                spreadRadius: 0.7,
                 offset: const Offset(0, 3),
               ),
             ],
@@ -70,7 +70,7 @@ class SlidingWidget extends StatelessWidget {
                   ),
                   // Semi-transparent location container
                   Positioned(
-                    bottom: 10,
+                    bottom: 0,
                     left: 0,
                     right: 0,
                     child: Container(
@@ -79,7 +79,9 @@ class SlidingWidget extends StatelessWidget {
                       constraints: BoxConstraints(maxHeight: 30, maxWidth: 10),
                       decoration: BoxDecoration(
                         color: Colors.black87.withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(15),
+                            bottomRight: Radius.circular(15)),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
@@ -121,6 +123,7 @@ class SlidingWidget extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: Text(itemName ?? 'Titen  Center',
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyles.font16BlackBold),
               ),
             ],

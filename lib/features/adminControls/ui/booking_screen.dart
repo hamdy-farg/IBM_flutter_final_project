@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:ibm_flutter_final_project/features/adminControls/logic/bookingCubit/bookings_cubit.dart';
 import 'package:ibm_flutter_final_project/features/adminControls/ui/widgets/reservation_items.dart';
 import 'package:ibm_flutter_final_project/features/adminControls/ui/widgets/search_bar.dart';
-import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/custem_button_authentication.dart';
 
 class BookingScreen extends StatelessWidget {
   const BookingScreen({super.key});
@@ -22,29 +21,37 @@ class BookingScreen extends StatelessWidget {
 
     // cubit.getBooking`s();
     return Scaffold(
-        floatingActionButton: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        body: SafeArea(
+      child: RefreshIndicator(
+        key: refreshIndicatorKey,
+        onRefresh: refreshData,
+        child: Column(
           children: [
-            horizantalSpace(25),
-            CustemButtonAuthentication(
-              text: 'Explore more',
-              width: 310.w,
-              height: 48.h,
+            verticalSpace(20),
+            SearchBarTop(), // Non-scrollable header
+            BlocBuilder<BookingsCubit, BookingsState>(
+              bloc: cubit,
+              builder: (context, state) {
+                return Expanded(
+                    child: (state is BookingsIsLoadingState)
+                        ? Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : (state is BookingsSuccessState)
+                            ? state.bookedList.length == 0
+                                ? Center(
+                                    child: Text(
+                                        "you haven't any booking unitel now"))
+                                : ReservationItems()
+                            : Center(
+                                child: Text(""),
+                              ) // Scrollable content
+                    );
+              },
             ),
           ],
         ),
-        body: RefreshIndicator(
-          key: refreshIndicatorKey,
-          onRefresh: refreshData,
-          child: Column(
-            children: [
-              SearchBarTop(), // Non-scrollable header
-              Expanded(
-                child: ReservationItems(), // Scrollable content
-              ),
-              verticalSpace(50)
-            ],
-          ),
-        ));
+      ),
+    ));
   }
 }

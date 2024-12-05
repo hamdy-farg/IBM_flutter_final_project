@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 
 class CustemLocationWidget extends StatelessWidget {
-  const CustemLocationWidget({super.key});
+  String fullName;
+  CustemLocationWidget({required this.fullName, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class CustemLocationWidget extends StatelessWidget {
             style: TextStyles.font20WhiteBold,
           ),
           Text(
-            'Yousef',
+            '${fullName}',
             style: TextStyles.font15WhiteRegular,
           ),
         ],

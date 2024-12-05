@@ -3,11 +3,13 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/networks/dio_consumer.dart';
 import 'package:ibm_flutter_final_project/core/networks/dio_exceptions.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/data/models/room_model.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/data/repos/rooms_repo.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/logic/addNewRoomCubit/add_new_room_state.dart';
+import 'package:ibm_flutter_final_project/features/roomScreen/logic/getAdminRoomsCubit/admin_rooms_cubit.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddNewRoomCubit extends Cubit<RoomState> {
@@ -136,6 +138,7 @@ class AddNewRoomCubit extends Cubit<RoomState> {
       state.isLoading = null;
       emit(state.copyWith(isLoading: null));
       emit(state.copyWith(room: room));
+      await getIt<AdminRoomsCubit>().fetchRooms(roomModel.workSpaceId ?? "");
     } on ServerException catch (e) {
       state.isLoading = null;
       emit(state.copyWith(isLoading: null));
@@ -146,15 +149,18 @@ class AddNewRoomCubit extends Cubit<RoomState> {
     }
   }
 
-  void deleteRoom(String room_id, BuildContext context) async {
+  void deleteRoom(RoomModel roomModel, BuildContext context) async {
     emit(state.copyWith(isLoading: true));
     try {
-      String room = await AdminRoomsRepo(dio: dio).deletRoom(room_id);
+      String room =
+          await AdminRoomsRepo(dio: dio).deletRoom(roomModel.id ?? "");
       state.isLoading = null;
       emit(state.copyWith(isLoading: null));
       emit(state.copyWith(deleted: true));
-      CherryToast.error(title: Text("your room is deleted seccesfully"))
+
+      CherryToast.success(title: Text("your room is deleted seccesfully"))
           .show(context);
+      await getIt<AdminRoomsCubit>().fetchRooms(roomModel.workSpaceId ?? "");
     } on ServerException catch (e) {
       state.isLoading = null;
       emit(state.copyWith(isLoading: null));
