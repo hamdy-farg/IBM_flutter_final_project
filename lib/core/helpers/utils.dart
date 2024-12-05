@@ -1,6 +1,9 @@
 import 'dart:developer';
+import 'dart:typed_data';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:ibm_flutter_final_project/core/helpers/cach_helper.dart';
 import 'package:ibm_flutter_final_project/core/helpers/extensions.dart';
 import 'package:ibm_flutter_final_project/core/networks/dio_consumer.dart';
@@ -115,4 +118,16 @@ String? formatTime(String time) {
     log(e.toString());
   }
   return null; // Parse the 24-hour format
+}
+
+Future<MultipartFile> imageCompress(XFile image) async {
+  final Uint8List? compressedData = await FlutterImageCompress.compressWithList(
+    await image.readAsBytes(),
+    quality: 70, // Adjust quality for compression
+  );
+  MultipartFile multipartFile = await MultipartFile.fromBytes(
+    compressedData!,
+    filename: image.name,
+  );
+  return multipartFile;
 }

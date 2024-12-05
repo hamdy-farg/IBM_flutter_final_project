@@ -3,11 +3,13 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/networks/dio_consumer.dart';
 import 'package:ibm_flutter_final_project/core/networks/dio_exceptions.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/date/repos/add_new_work_space_repo.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/workSpaceCubit/work_space_state.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/data/model/work_space_model.dart';
+import 'package:ibm_flutter_final_project/features/workspace_status/logic/cubit/get_admin_work_spaces_cubit.dart';
 import 'package:image_picker/image_picker.dart';
 
 class WorkSpaceCubit extends Cubit<WorkSpaceState> {
@@ -115,10 +117,14 @@ class WorkSpaceCubit extends Cubit<WorkSpaceState> {
       CherryToast.success(
         title: const Text("edited successfully"),
       ).show(context);
+      await getIt<GetAdminWorkSpacesCubit>().fetchData();
     } on ServerException catch (e) {
       CherryToast.error(
         title: Text(e.errorModel.message),
       ).show(context);
+
+      await getIt<GetAdminWorkSpacesCubit>().fetchData();
+
       state.isLoading = null;
       emit(state.copyWith(isLoading: null));
     }
@@ -136,12 +142,16 @@ class WorkSpaceCubit extends Cubit<WorkSpaceState> {
       CherryToast.success(
         title: const Text("added successfully"),
       ).show(context);
+      await getIt<GetAdminWorkSpacesCubit>().fetchData();
     } on ServerException catch (e) {
+      log("------------------------------");
+      state.isLoading = null;
+      emit(state.copyWith(isLoading: null));
+
       CherryToast.error(
         title: Text(e.errorModel.message),
       ).show(context);
-      state.isLoading = null;
-      emit(state.copyWith(isLoading: null));
+      await getIt<GetAdminWorkSpacesCubit>().fetchData();
     }
   }
 }

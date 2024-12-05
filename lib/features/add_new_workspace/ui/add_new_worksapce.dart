@@ -219,7 +219,7 @@ class AddNewWorkspace extends StatelessWidget {
                           child: AppTextButton(
                             buttonText: "Create New Workspace",
                             buttonStyle: TextStyles.font16WhiteBold,
-                            onPress: () {
+                            onPress: () async {
                               log("Image link is end ${cubit.state.imageLink}");
 
                               if (_formKey.currentState!.validate()) {
@@ -247,10 +247,11 @@ class AddNewWorkspace extends StatelessWidget {
                                 }
 
                                 if (workspace != null) {
-                                  cubit.editNewWorkSpace(
+                                  await cubit.editNewWorkSpace(
                                       cubit.state, context, workspace.id);
                                 } else {
-                                  cubit.addNewWorkSpace(cubit.state, context);
+                                  await cubit.addNewWorkSpace(
+                                      cubit.state, context);
                                 }
                                 // If form is valid and image is picked, submit data
                               }
@@ -263,9 +264,6 @@ class AddNewWorkspace extends StatelessWidget {
                   ),
                 ),
                 BlocBuilder<WorkSpaceCubit, WorkSpaceState>(
-                    buildWhen: (prev, current) {
-                      return prev.isLoading != current.isLoading;
-                    },
                     bloc: cubit,
                     builder: (context, state) {
                       return state.isLoading == true

@@ -33,24 +33,19 @@ class WorkSpaceRepo {
     try {
       log("image state second state${workSpace.imageFile}");
 
-      MultipartFile? multipartFile;
+      MultipartFile? image;
       if (workSpace.imageFile != null) {
-        multipartFile = await MultipartFile.fromFile(
-          workSpace.imageFile!.path,
-          filename: workSpace.imageFile!.name,
-        );
+        image = await imageCompress(workSpace.imageFile!);
       }
-      log("image state third state${multipartFile}");
+      log("image state third state${image}");
       String accessToken = await getAccessToken(dio);
 
-      final workSpaceMap = workSpace.toMap(multipartFile);
-
-      log("image state fourth state${workSpaceMap["image"]}");
+      final workSpaceMap = workSpace.toMap(image);
 
       workSpaceMap["work_space_id"] = workSpaceId;
+
       workSpaceMap
           .removeWhere((key, value) => value == null || value == ""); //***** */
-      log("image state fifth state${workSpaceMap["image"]}");
 
       if (workSpace.title == null) {
         workSpaceMap.remove("title");
@@ -76,18 +71,16 @@ class WorkSpaceRepo {
 
   Future<WorkSpaceState> addNewWorkSpace(WorkSpaceState workSpace) async {
     try {
-      MultipartFile? multipartFile;
+      MultipartFile? image;
       if (workSpace.imageFile != null) {
-        multipartFile = await MultipartFile.fromFile(
-          workSpace.imageFile!.path,
-          filename: workSpace.imageFile!.name,
-        );
+        image = await imageCompress(workSpace.imageFile!);
       }
-      String accessToken = await getAccessToken(dio);
 
+      String accessToken = await getAccessToken(dio);
+      Map<String, dynamic> workspaceData = workSpace.toMap(image);
       final addNewWorkspaceResponce = await dio.post(
           EndPoint.addWorkSpace, accessToken,
-          data: workSpace.toMap(multipartFile), isFormData: true);
+          data: workspaceData, isFormData: true);
       WorkSpaceState workSpaceData =
           WorkSpaceState.fromMap(addNewWorkspaceResponce);
       return workSpaceData;

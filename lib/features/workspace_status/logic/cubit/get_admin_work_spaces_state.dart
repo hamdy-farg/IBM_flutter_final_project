@@ -1,20 +1,24 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:ibm_flutter_final_project/features/workspace_status/data/model/work_space_model.dart';
 
-class GetAdminWorkSpacesInitState {
+class GetAdminWorkSpacesState {
+  const GetAdminWorkSpacesState();
+}
+
+class GetAdminWorkSpacesInitState extends GetAdminWorkSpacesState {
   const GetAdminWorkSpacesInitState();
 }
 
-class GetAdminWorkSpacesLoudingState extends GetAdminWorkSpacesInitState {}
+class GetAdminWorkSpacesLoudingState extends GetAdminWorkSpacesState {}
 
-class GetAdminWorkSpacesSuccessState extends GetAdminWorkSpacesInitState {
-  List<WorkSpaceModel>? workSpaceModeList;
+class GetAdminWorkSpacesSuccessState extends GetAdminWorkSpacesState {
+  List<WorkSpaceModel> workSpaceModeList;
   GetAdminWorkSpacesSuccessState({
-    this.workSpaceModeList,
+    required this.workSpaceModeList,
   });
 }
 
-class GetAdminWorkSpacesFialierState extends GetAdminWorkSpacesInitState {
+class GetAdminWorkSpacesFialierState extends GetAdminWorkSpacesState {
   String message;
   GetAdminWorkSpacesFialierState({
     required this.message,

@@ -20,9 +20,8 @@ class WorkspaceButton extends StatelessWidget {
       onPressed: onTap,
       style: TextButton.styleFrom(
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-        backgroundColor: isActive
-            ? ColorsManager.mainBlue
-            : ColorsManager.Inactive,
+        backgroundColor:
+            isActive ? ColorsManager.mainBlue : ColorsManager.Inactive,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.r),
         ),
@@ -30,7 +29,7 @@ class WorkspaceButton extends StatelessWidget {
       child: Text(
         label,
         style: TextStyle(
-          fontSize: 12.sp,
+          fontSize: 10.sp,
           color: isActive ? Colors.white : Colors.black,
         ),
       ),

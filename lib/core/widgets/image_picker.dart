@@ -48,8 +48,8 @@ class CustomImagePicker extends StatelessWidget {
           child: Center(
             child: GestureDetector(
               onTap: () async {
-                final XFile? image =
-                    await ImagePicker().pickImage(source: imageSource);
+                final XFile? image = await ImagePicker()
+                    .pickImage(source: imageSource, imageQuality: 100);
                 onImageSelected(image);
               },
               child: selectedImage == null

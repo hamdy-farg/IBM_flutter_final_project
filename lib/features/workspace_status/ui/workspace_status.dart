@@ -137,9 +137,10 @@ class ExploreScreen extends StatelessWidget {
                         key: refreshIndicatorKey,
                         onRefresh: refreshData,
                         child: BlocBuilder<GetAdminWorkSpacesCubit,
-                            GetAdminWorkSpacesInitState>(
+                            GetAdminWorkSpacesState>(
                           bloc: cubit,
                           builder: (context, state) {
+                            log("rebuilded with state ${state}");
                             if (state is GetAdminWorkSpacesLoudingState) {
                               return const Center(
                                 child: CircularProgressIndicator(),

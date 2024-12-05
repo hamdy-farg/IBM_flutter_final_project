@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
-import 'package:ibm_flutter_final_project/core/theming/colors.dart';
-import 'package:ibm_flutter_final_project/core/theming/styles.dart';
 import 'package:ibm_flutter_final_project/features/adminControls/logic/bookingCubit/bookings_cubit.dart';
 import 'package:ibm_flutter_final_project/features/adminControls/ui/widgets/reservation_items.dart';
 import 'package:ibm_flutter_final_project/features/adminControls/ui/widgets/search_bar.dart';
@@ -34,14 +32,6 @@ class BookingScreen extends StatelessWidget {
               height: 48.h,
             ),
           ],
-        ),
-        appBar: AppBar(
-          backgroundColor: ColorsManager.mainWhite,
-          title: Text(
-            "My Booking",
-            style: TextStyles.font18blackbold,
-          ),
-          centerTitle: true,
         ),
         body: RefreshIndicator(
           key: refreshIndicatorKey,

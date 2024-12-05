@@ -88,7 +88,7 @@ class RoomModel {
       endDate: map['end_date'],
       startTime: map['start_time'],
       endTime: map['end_time'],
-      imageLink: map['image'],
+      imageFile: map['image'],
     );
   }
   factory RoomModel.fromApiMap(Map<String, dynamic> map) {

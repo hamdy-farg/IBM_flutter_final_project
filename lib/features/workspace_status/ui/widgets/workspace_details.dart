@@ -49,6 +49,7 @@ class WorkspaceDetails extends StatelessWidget {
             ),
             horizantalSpace(8.w),
             WorkspaceButton(
+              
               label: "edit workSpace",
               isActive: isAvailableActive,
               onTap: () {

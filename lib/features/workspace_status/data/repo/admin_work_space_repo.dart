@@ -27,7 +27,6 @@ class AdminWorkSpacesRepo {
       }
       return workSpacesList;
     } on ServerException catch (e) {
-      log("$e");
       rethrow;
     }
   }
