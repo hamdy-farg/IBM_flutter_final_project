@@ -50,6 +50,7 @@ class AdminRoomsScreen extends StatelessWidget {
                 SinglePhoto(
                   title: workspace?.title,
                   imageLink: workspace?.image,
+                  location: workspace?.location,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),

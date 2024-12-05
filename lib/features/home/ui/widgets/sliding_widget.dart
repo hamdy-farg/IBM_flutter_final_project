@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
+import 'package:ibm_flutter_final_project/core/widgets/get_area_name.dart';
 import 'package:ibm_flutter_final_project/core/widgets/image_network_widget.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/favourite_icon_changer.dart';
 
@@ -71,30 +71,30 @@ class SlidingWidget extends StatelessWidget {
                   // Semi-transparent location container
                   Positioned(
                     bottom: 10,
-                    left: 8,
+                    left: 0,
+                    right: 0,
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 4),
+                      constraints: BoxConstraints(maxHeight: 30, maxWidth: 10),
                       decoration: BoxDecoration(
                         color: Colors.black87.withOpacity(0.5),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Row(
+                        mainAxisSize: MainAxisSize.max,
                         children: [
                           Icon(
                             Icons.location_on,
                             color: Colors.white,
                             size: 16,
                           ),
-                          verticalSpace(6),
-                          Text(
-                            location ?? 'Cairo, Nasr City',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
+                          Expanded(
+                            child: getLocationText(
+                              location: location ?? "",
+                              textStyle: TextStyles.font10WhiteBold,
                             ),
-                          ),
+                          )
                         ],
                       ),
                     ),
