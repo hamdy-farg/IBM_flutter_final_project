@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
+import 'package:ibm_flutter_final_project/core/helpers/cach_helper.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:ibm_flutter_final_project/features/adminControls/logic/bookingCubit/bookings_cubit.dart';
 import 'package:ibm_flutter_final_project/features/adminControls/ui/widgets/reservation_items.dart';
 import 'package:ibm_flutter_final_project/features/adminControls/ui/widgets/search_bar.dart';
+import 'package:ibm_flutter_final_project/features/authentication/data/repos/signup_repo.dart';
 
 class BookingScreen extends StatelessWidget {
   const BookingScreen({super.key});
@@ -16,7 +18,13 @@ class BookingScreen extends StatelessWidget {
         GlobalKey<RefreshIndicatorState>();
 
     Future<void> refreshData() async {
-      await cubit.getBookings();
+      String? role =
+          CacheHelper.sharedPreferences.getString(cacheHelperString.role);
+      if (role == "admin") {
+        await cubit.getAdminBookings();
+      } else {
+        await cubit.getClientBookings();
+      }
     }
 
     // cubit.getBooking`s();

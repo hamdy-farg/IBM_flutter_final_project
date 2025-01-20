@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/helpers/extensions.dart';
+import 'package:ibm_flutter_final_project/core/helpers/local_notification_service.dart';
+import 'package:ibm_flutter_final_project/core/helpers/push_notification_service.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:ibm_flutter_final_project/core/routing/routes.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
@@ -104,6 +106,10 @@ class ExploreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future.wait([
+      LocalNotificationService.init(),
+      PushNotificationService.init(),
+    ]);
     final cubit = getIt<GetAdminWorkSpacesCubit>();
 
     final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
@@ -159,7 +165,7 @@ class ExploreScreen extends StatelessWidget {
                                 is GetAdminWorkSpacesSuccessState) {
                               // Display the list of workspaces
                               return ListView(
-                                children: state.workSpaceModeList!
+                                children: state.workSpaceModeList
                                     .map((workSpace) =>
                                         WorkspaceItem(workspace: workSpace))
                                     .toList(),

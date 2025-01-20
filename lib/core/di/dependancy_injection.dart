@@ -15,6 +15,7 @@ import 'package:ibm_flutter_final_project/features/home/logic/homeRomesCubit/hoo
 import 'package:ibm_flutter_final_project/features/home/logic/workSpaceRooms/work_space_rooms_cubit.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/logic/addNewRoomCubit/add_new_room_cubit.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/logic/getAdminRoomsCubit/admin_rooms_cubit.dart';
+import 'package:ibm_flutter_final_project/features/roomScreen/logic/getSpecifcRoom/get_specifc_room_cubit.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/logic/cubit/get_admin_work_spaces_cubit.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/logic/navigationBar/navigation_bar_cubit.dart';
 
@@ -24,6 +25,8 @@ Future<void> setupGetIt() async {
 
   getIt.registerLazySingleton(
       () => GetAdminWorkSpacesCubit(getIt<DioConsumer>()));
+  getIt.registerLazySingleton(() => GetSpecificRoomCubit(getIt<DioConsumer>()));
+
   getIt.registerLazySingleton(() => WorkSpaceCubit(getIt<DioConsumer>()));
   getIt.registerLazySingleton(() => AddNewRoomCubit(getIt<DioConsumer>()));
   getIt.registerLazySingleton(() => BookingRoomCubit(getIt<DioConsumer>()));

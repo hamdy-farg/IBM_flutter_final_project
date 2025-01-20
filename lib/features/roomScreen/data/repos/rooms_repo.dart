@@ -45,6 +45,18 @@ class AdminRoomsRepo {
     }
   }
 
+  Future<RoomModel> fetchSpecificRoom(String WorkSpaceId) async {
+    try {
+      String accessToken = await getAccessToken(dio);
+      Map<String, dynamic> RoomsResponce = await dio.get(
+          EndPoint.room, accessToken,
+          queryParameters: {"room_id": WorkSpaceId});
+      return RoomModel.fromApiMap(RoomsResponce);
+    } on ServerException catch (e) {
+      rethrow;
+    }
+  }
+
   Future<RoomModel> AddNewRooms(RoomModel room) async {
     try {
       MultipartFile? multipartFile;

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-class ErrorModel {
+ class ErrorModel {
   String message;
   int code;
   String? status;

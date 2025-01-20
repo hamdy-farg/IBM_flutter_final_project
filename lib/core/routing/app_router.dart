@@ -27,6 +27,7 @@ import 'package:ibm_flutter_final_project/features/home/ui/home_screen.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/single_item_screen.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/logic/addNewRoomCubit/add_new_room_cubit.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/logic/getAdminRoomsCubit/admin_rooms_cubit.dart';
+import 'package:ibm_flutter_final_project/features/roomScreen/logic/getSpecifcRoom/get_specifc_room_cubit.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/ui/add_new_room.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/ui/admin_rooms_screen.dart';
 import 'package:ibm_flutter_final_project/features/workspace_status/logic/cubit/get_admin_work_spaces_cubit.dart';
@@ -144,6 +145,7 @@ class AppRouter {
           settings: settings,
           builder: (_) => MultiBlocProvider(
             providers: [
+              BlocProvider(create: (context) => getIt<GetSpecificRoomCubit>()),
               BlocProvider(
                   create: (context) => getIt<AvailableRoomHoursCubit>()),
               BlocProvider(create: (context) => getIt<BookRoomDataCubit>()),

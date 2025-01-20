@@ -17,8 +17,9 @@ class NavigationBarCubit extends Cubit<NavigationBarState> {
       emit(state.copyWith(currentIndex: currentIndex));
 
       role == "admin"
-          ? await getIt<BookingsCubit>().getBookings()
-          : print("object");
+          ? await getIt<BookingsCubit>().getAdminBookings()
+          : await getIt<BookingsCubit>().getClientBookings();
+      ;
     } else if (currentIndex == 1) {
       emit(state.copyWith(currentIndex: currentIndex));
 

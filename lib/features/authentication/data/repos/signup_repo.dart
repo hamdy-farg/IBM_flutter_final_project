@@ -52,6 +52,7 @@ class cacheHelperString {
   static const fName = "fName";
   static const lName = "lName";
   static const email = "email";
+  static const fcm_token_exist = "fcm_token_exist";
 
   static const accessToken = "accessToken";
   static const refreshToken = "refreshToken";

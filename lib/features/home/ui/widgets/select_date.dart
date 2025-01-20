@@ -33,7 +33,7 @@ class Custom_DatePickerState extends State<CustomDatePicker> {
       context: context,
       initialDate: widget.startingDate ?? DateTime.now(),
       firstDate: widget.startingDate ?? DateTime.now(),
-      lastDate: DateTime(2025),
+      lastDate: DateTime(2026),
     );
 
     if (picked != null && picked != selectedDate) {

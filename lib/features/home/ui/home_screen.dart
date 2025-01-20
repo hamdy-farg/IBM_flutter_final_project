@@ -5,9 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/helpers/cach_helper.dart';
+import 'package:ibm_flutter_final_project/core/helpers/local_notification_service.dart';
+import 'package:ibm_flutter_final_project/core/helpers/push_notification_service.dart';
 import 'package:ibm_flutter_final_project/core/helpers/spacing.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/features/User/ui/User_screen.dart';
+import 'package:ibm_flutter_final_project/features/adminControls/ui/booking_screen.dart';
 import 'package:ibm_flutter_final_project/features/authentication/data/repos/signup_repo.dart';
 import 'package:ibm_flutter_final_project/features/home/logic/homeCubit/home_cubit.dart';
 import 'package:ibm_flutter_final_project/features/home/logic/homeRomesCubit/hoom_rooms_cubit.dart';
@@ -28,7 +31,7 @@ class MainScreen extends StatelessWidget {
     List<Widget> navigationsScreens = [
       UserScreen(),
       HomeScreen(),
-      SizedBox(),
+      BookingScreen(),
     ];
 
     final naviagtionCubit = getIt<NavigationBarCubit>();
@@ -65,11 +68,13 @@ class MainScreen extends StatelessWidget {
           );
         },
       ),
-      body: BlocBuilder<NavigationBarCubit, NavigationBarState>(
-        bloc: naviagtionCubit,
-        builder: (context, state) {
-          return navigationsScreens[naviagtionCubit.state.currentIndex];
-        },
+      body: SafeArea(
+        child: BlocBuilder<NavigationBarCubit, NavigationBarState>(
+          bloc: naviagtionCubit,
+          builder: (context, state) {
+            return navigationsScreens[naviagtionCubit.state.currentIndex];
+          },
+        ),
       ),
     );
   }
@@ -88,6 +93,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LocalNotificationService.init();
+    PushNotificationService.init();
     return Center(
       child: RefreshIndicator(
         key: refreshIndicatorKey,
