@@ -26,7 +26,7 @@ class RoomsCards extends StatelessWidget {
                   child: MaterialButton(
                     splashColor: Colors.transparent,
                     onPressed: () {
-                      context.pushNamed(Routes.singleItemScreen);
+                      context.pushNamed(Routes.bookingRoom, arguments: entry);
                     },
                     child: CustemRoomWidget(
                       imageLink: entry.imageLink ?? "",

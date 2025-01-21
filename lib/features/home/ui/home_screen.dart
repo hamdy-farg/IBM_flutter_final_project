@@ -175,7 +175,8 @@ class HomeScreen extends StatelessWidget {
                                 width: 150.w,
                                 height: 150.w,
                                 child: const Center(
-                                    child: CircularProgressIndicator()),
+                                  child: CircularProgressIndicator(),
+                                ),
                               ),
                             )
                           : const SizedBox()
