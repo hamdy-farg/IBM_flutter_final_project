@@ -9,7 +9,7 @@ import 'package:ibm_flutter_final_project/features/User/ui/edit_profile_screen.d
 import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/workSpaceCubit/work_space_cubit.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/ui/add_new_worksapce.dart';
 import 'package:ibm_flutter_final_project/features/adminControls/logic/bookingCubit/bookings_cubit.dart';
-import 'package:ibm_flutter_final_project/features/adminControls/logic/cubit/booking_cubit.dart';
+import 'package:ibm_flutter_final_project/features/adminControls/logic/cubit/edit_booking_cubit.dart';
 import 'package:ibm_flutter_final_project/features/adminControls/ui/booked_details_screen.dart';
 import 'package:ibm_flutter_final_project/features/adminControls/ui/booking_screen.dart';
 import 'package:ibm_flutter_final_project/features/authentication/logic/sign_in_bloc/sign_in_cubit.dart';

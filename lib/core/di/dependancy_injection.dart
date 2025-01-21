@@ -5,7 +5,7 @@ import 'package:ibm_flutter_final_project/features/User/logic/book_room/book_roo
 import 'package:ibm_flutter_final_project/features/User/logic/edit_profile/edit_profile_cubit.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/workSpaceCubit/work_space_cubit.dart';
 import 'package:ibm_flutter_final_project/features/adminControls/logic/bookingCubit/bookings_cubit.dart';
-import 'package:ibm_flutter_final_project/features/adminControls/logic/cubit/booking_cubit.dart';
+import 'package:ibm_flutter_final_project/features/adminControls/logic/cubit/edit_booking_cubit.dart';
 import 'package:ibm_flutter_final_project/features/authentication/logic/sign_in_bloc/sign_in_cubit.dart';
 import 'package:ibm_flutter_final_project/features/authentication/logic/singupCubit/sign_up_cubit.dart';
 import 'package:ibm_flutter_final_project/features/home/logic/availableRoomHours/available_room_hours_cubit.dart';

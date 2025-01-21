@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
+import 'package:ibm_flutter_final_project/features/adminControls/data/models/book.dart';
 import 'package:ibm_flutter_final_project/features/adminControls/logic/bookingCubit/bookings_cubit.dart';
 import 'package:ibm_flutter_final_project/features/adminControls/ui/widgets/custem_reservation_item.dart';
 
@@ -18,8 +19,9 @@ class ReservationItems extends StatelessWidget {
           scrollDirection: Axis.vertical,
           physics: const AlwaysScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            final entry =
+            BookModel entry =
                 (cubit.state as BookingsSuccessState).bookedList[index];
+
             return Column(
               children: [
                 CustemReservationItem(

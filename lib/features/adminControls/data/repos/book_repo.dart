@@ -17,7 +17,7 @@ class BookingsAdminRepo {
           EndPoint.deleteBooking, accessToken,
           data: {"book_id": bookModel.id}, isFormData: true);
       if (BookingsResoponce["status"] == true) {
-        return {"success": BookingsResoponce["status"]};
+        return {"success": "${BookingsResoponce["status"]}"};
       } else {
         throw ServerException(
             errorModel: ErrorModel(
@@ -39,7 +39,7 @@ class BookingsAdminRepo {
           data: {"booked_id": bookModel.id, "status": bookModel.status},
           isFormData: true);
 
-      return {"success": BookingsResoponce["status"]};
+      return {"success": "${BookingsResoponce["status"]} "};
     } on ServerException catch (e) {
       rethrow;
     }

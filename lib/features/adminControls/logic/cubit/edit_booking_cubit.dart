@@ -9,7 +9,7 @@ import 'package:ibm_flutter_final_project/features/adminControls/data/repos/book
 import 'package:ibm_flutter_final_project/features/adminControls/logic/bookingCubit/bookings_cubit.dart';
 import 'package:meta/meta.dart';
 
-part 'booking_state.dart';
+part 'edit_booking_state.dart';
 
 class EditBookingCubit extends Cubit<EditBookingState> {
   DioConsumer dio;
