@@ -1,6 +1,10 @@
 class EndPoint {
-  static const baseUrl = "https://alx-backendfinal-production.up.railway.app/";
+  static const baseUrl =
+      // "http://192.168.100.72:5000/";
+      "https://alx-backendfinal-production.up.railway.app/";
   static const baseUri = "https://alx-backendfinal-production.up.railway.app";
+
+  // "http://192.168.100.72:5000";
 
   // "https://ibm-backend-final-project-production.up.railway.app/";
   static const adminWorkSpaces = "admin/workspaces";
