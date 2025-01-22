@@ -11,17 +11,20 @@ class UserAuthModel {
   String email;
   String image;
   String role;
+  String is_confirmed;
 
-  UserAuthModel(
-      {required this.id,
-      required this.accessToken,
-      required this.refreshToken,
-      required this.fName,
-      required this.lName,
-      required this.phone,
-      required this.email,
-      required this.role,
-      required this.image});
+  UserAuthModel({
+    required this.id,
+    required this.accessToken,
+    required this.refreshToken,
+    required this.fName,
+    required this.lName,
+    required this.phone,
+    required this.email,
+    required this.role,
+    required this.image,
+    required this.is_confirmed,
+  });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -29,6 +32,7 @@ class UserAuthModel {
       'lName': lName,
       'phone': phone,
       'email': email,
+      'is_confirmed': is_confirmed,
       'role': role,
       'image': image,
       'accessToken': accessToken,
@@ -38,6 +42,7 @@ class UserAuthModel {
 
   factory UserAuthModel.fromMap(Map<String, dynamic> map) {
     return UserAuthModel(
+      is_confirmed: map["is_confirmed"],
       id: map['id'],
       fName: map['f_name'],
       lName: map['l_name'],

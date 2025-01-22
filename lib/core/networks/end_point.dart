@@ -1,11 +1,12 @@
 class EndPoint {
-  static const baseUrl = "http://192.168.100.72:5000/";
-  static const baseUri = "http://192.168.100.72:5000";
+  static const baseUrl = "http://192.168.100.119:5000/";
+  static const baseUri = "http://192.168.100.119:5000";
 
   // "https://ibm-backend-final-project-production.up.railway.app/";
   static const adminWorkSpaces = "admin/workspaces";
   static const adminBooks = "admin/books";
   static const clientBooks = "client/book";
+  static const confirm = "confirm";
 
   static const sendFCMtoken = "notification";
   static const login = "login";

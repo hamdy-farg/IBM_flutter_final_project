@@ -9,9 +9,15 @@ class CustemButtonAuthentication extends StatelessWidget {
   final double? height;
   final double? width;
   final VoidCallback? onPressed;
+  final TextStyle? textStyle;
 
   const CustemButtonAuthentication(
-      {super.key, this.text, this.onPressed, this.height, this.width});
+      {super.key,
+      this.text,
+      this.onPressed,
+      this.height,
+      this.width,
+      this.textStyle});
 
   @override
   Widget build(BuildContext context) {
@@ -36,19 +42,14 @@ class CustemButtonAuthentication extends StatelessWidget {
             SizedBox(),
             CustemText(
               text: text ?? 'Sign in',
-              textStyle: TextStyles.font20WhiteBold,
+              textStyle: textStyle ?? TextStyles.font20WhiteBold,
             ),
             Container(
-              child: Container(
-                width: 25.w,
-                height: 25.w,
-                decoration: const BoxDecoration(
-                    color: Color(0xFF3D56F0),
-                    borderRadius: BorderRadius.all(Radius.circular(20))),
-                child: const Icon(
-                  Icons.arrow_forward_rounded,
-                  color: ColorsManager.mainWhite,
-                ),
+              width: 25.w,
+              height: 25.w,
+              child: const Icon(
+                Icons.arrow_forward_rounded,
+                color: ColorsManager.mainWhite,
               ),
             ),
           ],

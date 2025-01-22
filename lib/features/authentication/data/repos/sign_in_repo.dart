@@ -27,6 +27,10 @@ class SignInRepo {
       UserAuthModel user = UserAuthModel.fromMap(responce);
       // save user data in shared if delete the user must login  again
       CacheHelper.sharedPreferences
+          .setString(cacheHelperString.is_confirmed, user.is_confirmed);
+      CacheHelper.sharedPreferences
+          .setString(cacheHelperString.role, user.role);
+      CacheHelper.sharedPreferences
           .setString(cacheHelperString.role, user.role);
       CacheHelper.sharedPreferences
           .setString(cacheHelperString.image, user.image);
@@ -49,11 +53,14 @@ class SignInRepo {
 }
 
 class cacheHelperString {
+  static const is_confirmed = "is_confirmed";
+  static const fcm_token_exist = "fcm_token_exist";
   static const role = "role";
   static const image = "image";
   static const fName = "fName";
   static const lName = "lName";
   static const email = "email";
+  static const savedDateTime = "savedDateTime";
   static const accessToken = "accessToken";
   static const refreshToken = "refreshToken";
   static const phoneNumber = "phoneNumber";

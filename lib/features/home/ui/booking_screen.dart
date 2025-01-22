@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,8 +22,8 @@ import 'package:ibm_flutter_final_project/features/home/ui/widgets/booking_photo
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/check_in_out.dart';
 import 'package:ibm_flutter_final_project/features/home/ui/widgets/select_date.dart';
 import 'package:ibm_flutter_final_project/features/roomScreen/data/models/room_model.dart';
-import 'package:ibm_flutter_final_project/features/workspace_status/logic/navigationBar/navigation_bar_cubit.dart';
 
+import 'package:ibm_flutter_final_project/features/workspace_status/logic/navigationBar/navigation_bar_cubit.dart';
 class BookingRoom extends StatelessWidget {
   BookingRoom({super.key});
 

@@ -41,22 +41,23 @@ void handleDioException(DioException e) {
         // Handle specific status codes
         switch (statusCode) {
           case 400:
-            throw createServerException("Bad request. Please check your input.",
-                code: 400, data: e.response?.data);
+            throw createServerException(
+              "Bad request. Please check your input.",
+            );
           case 401:
-            throw createServerException("Unauthorized access. Please log in.",
-                code: 401, data: e.response?.data);
+            throw createServerException(
+              "Unauthorized access. Please log in.",
+            );
           case 403:
             throw createServerException(
-                "Forbidden. You do not have permission.",
-                code: 403,
-                data: e.response?.data);
+              "Forbidden. You do not have permission.",
+            );
           case 404:
-            throw createServerException("Resource not found.",
-                code: 404, data: e.response?.data);
+            throw createServerException("Resource not found.");
           case 409:
-            throw createServerException("Conflict occurred. Please retry.",
-                code: 409, data: e.response?.data);
+            throw createServerException(
+              "Conflict occurred. Please retry.",
+            );
           case 422:
             throw createServerException(
                 "Invalid data submitted. Check your input.",
@@ -77,7 +78,6 @@ void handleDioException(DioException e) {
       throw createServerException("Unexpected error occurred. Please retry.");
   }
 }
-
 
 // void handleDioException(DioException e) {
 //   switch (e.type) {

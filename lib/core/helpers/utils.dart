@@ -9,11 +9,13 @@ import 'package:ibm_flutter_final_project/core/helpers/extensions.dart';
 import 'package:ibm_flutter_final_project/core/networks/dio_consumer.dart';
 import 'package:ibm_flutter_final_project/core/networks/dio_exceptions.dart';
 import 'package:ibm_flutter_final_project/core/routing/routes.dart';
-import 'package:ibm_flutter_final_project/features/authentication/data/repos/signup_repo.dart';
+import 'package:ibm_flutter_final_project/features/authentication/data/repos/sign_in_repo.dart';
 import 'package:intl/intl.dart';
 
 void logout(BuildContext context) {
   context.pushReplacementNamed(Routes.loginScreen);
+  log("${CacheHelper.sharedPreferences.remove(cacheHelperString.is_confirmed)}");
+  log("${CacheHelper.sharedPreferences.remove(cacheHelperString.fcm_token_exist)}");
   log("${CacheHelper.sharedPreferences.remove(cacheHelperString.role)}");
   log("${CacheHelper.sharedPreferences.remove(cacheHelperString.image)}");
   log("${CacheHelper.sharedPreferences.remove(cacheHelperString.fName)}");

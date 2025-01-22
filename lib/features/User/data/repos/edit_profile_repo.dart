@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:ibm_flutter_final_project/core/helpers/cach_helper.dart';
+import 'package:ibm_flutter_final_project/core/helpers/utils.dart';
 import 'package:ibm_flutter_final_project/core/networks/dio_consumer.dart';
 import 'package:ibm_flutter_final_project/core/networks/dio_exceptions.dart';
 import 'package:ibm_flutter_final_project/core/networks/end_point.dart';
+import 'package:ibm_flutter_final_project/core/networks/model/error_model.dart';
 import 'package:ibm_flutter_final_project/features/User/logic/edit_profile/edit_profile_state.dart';
 import 'package:ibm_flutter_final_project/features/authentication/data/repos/sign_in_repo.dart';
 
@@ -11,6 +13,35 @@ class EditProfileRepo {
   EditProfileRepo({
     required this.dio,
   });
+
+  Future<bool> verifyUser() async {
+    try {
+      String access_token = await getAccessToken(dio);
+      Map<String, dynamic> responce =
+          await dio.post(EndPoint.confirm, access_token);
+      if (responce["code"] != 200) {
+        throw ServerException(
+            errorModel: ErrorModel(
+                message: responce["message"],
+                code: responce["code"],
+                status: responce["status"]));
+      }
+
+      if (responce["message"] == "this account is confirmed before") {
+        CacheHelper.sharedPreferences
+            .setString(cacheHelperString.is_confirmed, "True");
+        throw ServerException(
+            errorModel: ErrorModel(
+                message: responce["message"],
+                code: responce["code"],
+                status: responce["status"]));
+      }
+
+      return true;
+    } on ServerException catch (e) {
+      rethrow;
+    }
+  }
 
   Future<EditProfileState> editProfile(EditProfileState profile) async {
     final refreshTokens =
@@ -45,8 +76,6 @@ class EditProfileRepo {
           .setString(cacheHelperString.image, profileResponce.imageLink ?? "");
       CacheHelper.sharedPreferences.setString(
           cacheHelperString.phoneNumber, profileResponce.phone ?? "");
-
-      
 
       return profileResponce;
     } on ServerException catch (e) {

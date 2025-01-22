@@ -3,6 +3,7 @@ import 'package:ibm_flutter_final_project/core/networks/api_consumer.dart';
 import 'package:ibm_flutter_final_project/core/networks/dio_exceptions.dart';
 import 'package:ibm_flutter_final_project/core/networks/end_point.dart';
 import 'package:ibm_flutter_final_project/features/authentication/data/models/user_auth_model.dart';
+import 'package:ibm_flutter_final_project/features/authentication/data/repos/sign_in_repo.dart';
 import 'package:ibm_flutter_final_project/features/authentication/logic/singupCubit/sign_up_state.dart';
 
 class SignupRepo {
@@ -24,6 +25,8 @@ class SignupRepo {
 
       UserAuthModel user = UserAuthModel.fromMap(responce);
       // save user data in shared if delete the user must login  again
+        CacheHelper.sharedPreferences
+          .setString(cacheHelperString.is_confirmed, user.is_confirmed);
       CacheHelper.sharedPreferences
           .setString(cacheHelperString.role, user.role);
       CacheHelper.sharedPreferences
@@ -46,14 +49,3 @@ class SignupRepo {
   }
 }
 
-class cacheHelperString {
-  static const role = "role";
-  static const image = "image";
-  static const fName = "fName";
-  static const lName = "lName";
-  static const email = "email";
-  static const fcm_token_exist = "fcm_token_exist";
-
-  static const accessToken = "accessToken";
-  static const refreshToken = "refreshToken";
-}
