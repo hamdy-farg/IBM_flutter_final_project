@@ -248,6 +248,7 @@ class BookingRoom extends StatelessWidget {
                     onDatePicked: (val) async {
                       await getIt<AvailableRoomHoursCubit>().getAvailableHours(
                           val as String, roomModel?.id ?? "");
+                          
                       cubit.selectedDateChange(val);
                     },
                   ),

@@ -27,74 +27,69 @@ class UserScreen extends StatelessWidget {
     final cubit = getIt<EditProfileCubit>();
 
     return SafeArea(
-        child: Stack(
-      children: [
-        Expanded(
-            child: Container(
-          color: ColorsManager.userGrey,
-        )),
-        ListView(
-          children: [
-            verticalSpace(10),
-            const Row(
-              children: [],
-            ),
-            verticalSpace(20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    logout(context);
-                    context.pushReplacementNamed(Routes.loginScreen);
-                  },
-                  child: const Text(
-                    "  logout",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
-                      color: Colors.red,
-                    ),
+        child: Container(
+      color: ColorsManager.userGrey,
+      child: ListView(
+        children: [
+          verticalSpace(10),
+          const Row(
+            children: [],
+          ),
+          verticalSpace(20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  logout(context);
+                  context.pushReplacementNamed(Routes.loginScreen);
+                },
+                child: const Text(
+                  "  logout",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                    color: Colors.red,
                   ),
                 ),
-              ],
-            ),
-            BlocBuilder<EditProfileCubit, EditProfileState>(
-              bloc: cubit,
-              builder: (context, state) {
-                return Column(
-                  children: [
-                    ClipRRect(
-                      borderRadius: const BorderRadius.all(Radius.circular(26)),
-                      child: SizedBox(
-                          height: 132.h,
-                          width: 132.w,
-                          child: ImageNetworkWidget(
-                              imageLink: image!, hight: 132.h, width: 132.w)),
-                    ),
-                    verticalSpace(20),
-                    CustemText(
-                      text: CacheHelper.sharedPreferences
-                          .getString(cacheHelperString.fName),
-                      textStyle: TextStyles.font24BlackSemiBold,
-                    ),
-                    verticalSpace(10),
-                    CustemText(
-                      text: CacheHelper.sharedPreferences
-                          .getString(cacheHelperString.email),
-                      textStyle: TextStyles.font14GreyRegular,
-                    ),
-                    verticalSpace(10),
-                    const EditProfileWidger(),
-                    verticalSpace(20),
-                    const CustemContainerWidget()
-                  ],
-                );
-              },
-            )
-          ],
-        ),
-      ],
+              ),
+            ],
+          ),
+          BlocBuilder<EditProfileCubit, EditProfileState>(
+            bloc: cubit,
+            builder: (context, state) {
+              return Column(
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(26)),
+                    child: SizedBox(
+                        height: 132.h,
+                        width: 132.w,
+                        child: ImageNetworkWidget(
+                            imageLink: image!, hight: 132.h, width: 132.w)),
+                  ),
+                  verticalSpace(20),
+                  CustemText(
+                    text: CacheHelper.sharedPreferences
+                        .getString(cacheHelperString.fName),
+                    textStyle: TextStyles.font24BlackSemiBold,
+                  ),
+                  verticalSpace(10),
+                  CustemText(
+                    text: CacheHelper.sharedPreferences
+                        .getString(cacheHelperString.email),
+                    textStyle: TextStyles.font14GreyRegular,
+                  ),
+                  verticalSpace(10),
+                  const EditProfileWidger(),
+                  verticalSpace(20),
+                  const CustemContainerWidget()
+                ],
+              );
+            },
+          )
+        ],
+      ),
     ));
   }
 }

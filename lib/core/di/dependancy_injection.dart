@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:ibm_flutter_final_project/core/networks/dio_consumer.dart';
 import 'package:ibm_flutter_final_project/features/User/logic/book_room/book_room_cubit.dart';
 import 'package:ibm_flutter_final_project/features/User/logic/edit_profile/edit_profile_cubit.dart';
+import 'package:ibm_flutter_final_project/features/User/logic/verify_user/verify_user_cubit.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/workSpaceCubit/work_space_cubit.dart';
 import 'package:ibm_flutter_final_project/features/adminControls/logic/bookingCubit/bookings_cubit.dart';
 import 'package:ibm_flutter_final_project/features/adminControls/logic/cubit/edit_booking_cubit.dart';
@@ -26,6 +27,7 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton(
       () => GetAdminWorkSpacesCubit(getIt<DioConsumer>()));
   getIt.registerLazySingleton(() => GetSpecificRoomCubit(getIt<DioConsumer>()));
+  getIt.registerLazySingleton(() => VerifyUserCubit(getIt<DioConsumer>()));
 
   getIt.registerLazySingleton(() => WorkSpaceCubit(getIt<DioConsumer>()));
   getIt.registerLazySingleton(() => AddNewRoomCubit(getIt<DioConsumer>()));

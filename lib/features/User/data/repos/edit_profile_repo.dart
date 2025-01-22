@@ -1,10 +1,11 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:ibm_flutter_final_project/core/helpers/cach_helper.dart';
 import 'package:ibm_flutter_final_project/core/helpers/utils.dart';
 import 'package:ibm_flutter_final_project/core/networks/dio_consumer.dart';
 import 'package:ibm_flutter_final_project/core/networks/dio_exceptions.dart';
 import 'package:ibm_flutter_final_project/core/networks/end_point.dart';
-import 'package:ibm_flutter_final_project/core/networks/model/error_model.dart';
 import 'package:ibm_flutter_final_project/features/User/logic/edit_profile/edit_profile_state.dart';
 import 'package:ibm_flutter_final_project/features/authentication/data/repos/sign_in_repo.dart';
 
@@ -16,29 +17,29 @@ class EditProfileRepo {
 
   Future<bool> verifyUser() async {
     try {
+      log("Fuck3");
+
       String access_token = await getAccessToken(dio);
       Map<String, dynamic> responce =
           await dio.post(EndPoint.confirm, access_token);
-      if (responce["code"] != 200) {
-        throw ServerException(
-            errorModel: ErrorModel(
-                message: responce["message"],
-                code: responce["code"],
-                status: responce["status"]));
-      }
+      log("Fuck2");
 
-      if (responce["message"] == "this account is confirmed before") {
-        CacheHelper.sharedPreferences
-            .setString(cacheHelperString.is_confirmed, "True");
-        throw ServerException(
-            errorModel: ErrorModel(
-                message: responce["message"],
-                code: responce["code"],
-                status: responce["status"]));
-      }
+      // if (responce["code"] != 200) {
+      //   throw ServerException(
+      //       errorModel: ErrorModel(
+      //           message: responce["message"],
+      //           code: responce["code"],
+      //           status: responce["status"]));
+      // }
 
       return true;
     } on ServerException catch (e) {
+      log("Fuck ${e.errorModel.message}");
+      if (e.errorModel.message == "Resource not found.") {
+        log("Fuck");
+        await CacheHelper.sharedPreferences
+            .setString(cacheHelperString.is_confirmed, "True");
+      }
       rethrow;
     }
   }

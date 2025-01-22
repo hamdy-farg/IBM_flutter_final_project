@@ -1,9 +1,11 @@
 import 'dart:developer';
 
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
+import 'package:ibm_flutter_final_project/core/helpers/cach_helper.dart';
 import 'package:ibm_flutter_final_project/core/helpers/utils.dart';
 import 'package:ibm_flutter_final_project/core/networks/dio_consumer.dart';
 import 'package:ibm_flutter_final_project/core/networks/end_point.dart';
+import 'package:ibm_flutter_final_project/features/authentication/data/repos/sign_in_repo.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class SocketService {
@@ -48,6 +50,35 @@ class SocketService {
       socket.emit("leave_room", {"room_id": room_id, "date": date});
     } catch (e) {
       log("Failed to leave room: $e");
+    }
+  }
+
+  void joinToVerify() {
+    print("joining");
+    final email =
+        CacheHelper.sharedPreferences.getString(cacheHelperString.email);
+    try {
+      socket.emit("join_to_verify", {"email": email});
+    } catch (e) {
+      log("Failed to leave room: $e");
+    }
+  }
+
+  void leaveToVerify() {
+    final email =
+        CacheHelper.sharedPreferences.getString(cacheHelperString.email);
+    try {
+      socket.emit("leave_to_verify", {"email": email});
+    } catch (e) {
+      log("Failed to leave room: $e");
+    }
+  }
+
+  void listenForVerifcationUpdates(Function(Map<String, dynamic>) onUpdate) {
+    try {
+      socket.on("verification_updates", (data) => onUpdate(data));
+    } catch (e) {
+      log("Failed to listen for updates: $e");
     }
   }
 

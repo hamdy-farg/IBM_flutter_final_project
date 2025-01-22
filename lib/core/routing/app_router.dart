@@ -4,6 +4,7 @@ import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/routing/routes.dart';
 import 'package:ibm_flutter_final_project/features/User/logic/book_room/book_room_cubit.dart';
 import 'package:ibm_flutter_final_project/features/User/logic/edit_profile/edit_profile_cubit.dart';
+import 'package:ibm_flutter_final_project/features/User/logic/verify_user/verify_user_cubit.dart';
 import 'package:ibm_flutter_final_project/features/User/ui/User_screen.dart';
 import 'package:ibm_flutter_final_project/features/User/ui/edit_profile_screen.dart';
 import 'package:ibm_flutter_final_project/features/add_new_workspace/logic/workSpaceCubit/work_space_cubit.dart';
@@ -115,7 +116,10 @@ class AppRouter {
         );
       case Routes.userScreen:
         return MaterialPageRoute(
-          builder: (_) => const UserScreen(),
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<VerifyUserCubit>(),
+            child: const UserScreen(),
+          ),
         );
       case Routes.editProfile:
         return MaterialPageRoute(

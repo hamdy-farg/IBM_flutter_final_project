@@ -36,7 +36,7 @@ void handleDioException(DioException e) {
 
     case DioExceptionType.badResponse:
       if (e.response != null) {
-        int statusCode = e.response!.statusCode ?? 500;
+        int statusCode = e.response?.statusCode ?? 500;
 
         // Handle specific status codes
         switch (statusCode) {

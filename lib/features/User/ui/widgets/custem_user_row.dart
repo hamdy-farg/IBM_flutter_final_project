@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ibm_flutter_final_project/core/di/dependancy_injection.dart';
 import 'package:ibm_flutter_final_project/core/helpers/cach_helper.dart';
-import 'package:ibm_flutter_final_project/core/networks/dio_consumer.dart';
 import 'package:ibm_flutter_final_project/core/theming/colors.dart';
 import 'package:ibm_flutter_final_project/core/theming/styles.dart';
-import 'package:ibm_flutter_final_project/features/User/data/repos/edit_profile_repo.dart';
+import 'package:ibm_flutter_final_project/features/User/logic/verify_user/verify_user_cubit.dart';
 import 'package:ibm_flutter_final_project/features/authentication/data/repos/sign_in_repo.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/custem_button_authentication.dart';
 import 'package:ibm_flutter_final_project/features/authentication/ui/widgets/custem_text_widget.dart';
@@ -21,8 +20,10 @@ class CustemUserRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = getIt<VerifyUserCubit>();
     String? is_confirmed =
         CacheHelper.sharedPreferences.getString(cacheHelperString.is_confirmed);
+    log("rebuilded 2");
     return InkWell(
       splashColor: Colors.amber,
       onTap: () {},
@@ -51,22 +52,23 @@ class CustemUserRow extends StatelessWidget {
               ? Expanded(
                   child: CustemText(
                     text: text ?? 'your email is verified',
-                    textStyle: TextStyles.font24Black5Meduim,
+                    textStyle: TextStyles.fonst18BlackBold,
                   ),
                 )
               : InkWell(
                   onTap: () async {
                     is_confirmed = await CacheHelper.sharedPreferences
                         .getString(cacheHelperString.is_confirmed);
-                    log("is confirmed ${is_confirmed}");
                     if (is_confirmed == "False" && text == null) {
-                      await EditProfileRepo(dio: getIt<DioConsumer>())
-                          .verifyUser();
+                      await cubit.verifiyUser();
                     }
                   },
                   child: text == null
                       ? CustemButtonAuthentication(
-                          text: 'Tap To verify',
+                          text: getIt<VerifyUserCubit>().state
+                                  is VerifyUserLoading
+                              ? "email sending ...."
+                              : 'Tap To verify',
                           textStyle: TextStyles.font14WhiteBold,
                           width: 140,
                           height: 60,
