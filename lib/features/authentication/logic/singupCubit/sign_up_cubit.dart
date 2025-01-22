@@ -31,7 +31,7 @@ class SignUpCubit extends Cubit<SignUpState> {
     emit(state.copyWith(confirmPassword: confirmPassword));
   }
 
-  void signUp(SignUpState user, context) async {
+  Future<void> signUp(SignUpState user, context) async {
     emit(state.copyWith(isLoading: true));
     try {
       UserAuthModel userResponce = await SignupRepo(dio).singUp(user);

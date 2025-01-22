@@ -121,10 +121,10 @@ class SignUpScreen extends StatelessWidget {
                         verticalSpace(30),
                         CustemButtonAuthentication(
                             text: 'Sign up',
-                            onPressed: () {
+                            onPressed: () async {
                               if (formKey.currentState!.validate()) {
                                 log("${cubit.state.lName}");
-                                cubit.signUp(cubit.state, context);
+                                await cubit.signUp(cubit.state, context);
                               }
                             }),
                         verticalSpace(40),
