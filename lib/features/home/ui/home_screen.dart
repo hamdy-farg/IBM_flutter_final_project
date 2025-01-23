@@ -95,96 +95,93 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     LocalNotificationService.init();
     PushNotificationService.init();
-    return Center(
-      child: RefreshIndicator(
-        key: refreshIndicatorKey,
-        onRefresh: refreshData,
-        child: Stack(
-          children: [
-            Container(
-              color: ColorsManager.mainBlue,
-              child: SafeArea(
-                child: Container(
-                  color: Colors.white,
-                  child: SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    child: Column(
-                      children: [
-                        AppBarTop(
-                          fullName:
-                              "${CacheHelper.sharedPreferences.getString(cacheHelperString.fName)} ${CacheHelper.sharedPreferences.getString(cacheHelperString.lName)}" ??
-                                  "",
-                        ),
-                        verticalSpace(10),
-                        WorkSpaceText(),
-                        BlocBuilder<HomeWorkSpaceCubit, HomeWorkSpaceState>(
-                          bloc: getIt<HomeWorkSpaceCubit>(),
-                          builder: (context, state) {
-                            return (state is HomeWorkSpaceSuccesState)
-                                ? WorkSpaces(
-                                    workSpaceList: state.workSpaceModelList)
-                                : (state is HomeWorkSpaceFialState)
-                                    ? Text("${state.errorMessage}")
-                                    : const CircularProgressIndicator();
-                          },
-                        ),
-                        const RoomsText(),
-                        BlocBuilder<HomeRoomsCubit, HomeRoomsState>(
-                          bloc: getIt<HomeRoomsCubit>(),
-                          builder: (context, state) {
-                            return (state is HomeRoomSuccesState)
-                                ? SizedBox(
-                                    height: 400
-                                        .h, // Set a fixed height for scrollable content
-                                    child: RoomsCards(
-                                      roomModel: state.roomModelList,
-                                    ),
-                                  )
-                                : (state is HomeRoomFialState)
-                                    ? Text("${state.errorMessage}")
-                                    : const CircularProgressIndicator();
-                          },
-                        ),
-                      ],
-                    ),
+    return RefreshIndicator(
+      key: refreshIndicatorKey,
+      onRefresh: refreshData,
+      child: Stack(
+        children: [
+          Container(
+            color: ColorsManager.mainBlue,
+            child: SafeArea(
+              child: Container(
+                color: Colors.white,
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    children: [
+                      AppBarTop(
+                        fullName:
+                            "${CacheHelper.sharedPreferences.getString(cacheHelperString.fName)} ${CacheHelper.sharedPreferences.getString(cacheHelperString.lName)}" ??
+                                "",
+                      ),
+                      verticalSpace(10),
+                      WorkSpaceText(),
+                      BlocBuilder<HomeWorkSpaceCubit, HomeWorkSpaceState>(
+                        bloc: getIt<HomeWorkSpaceCubit>(),
+                        builder: (context, state) {
+                          return (state is HomeWorkSpaceSuccesState)
+                              ? WorkSpaces(
+                                  workSpaceList: state.workSpaceModelList)
+                              : (state is HomeWorkSpaceFialState)
+                                  ? Text("${state.errorMessage}")
+                                  : const CircularProgressIndicator();
+                        },
+                      ),
+                      const RoomsText(),
+                      BlocBuilder<HomeRoomsCubit, HomeRoomsState>(
+                        bloc: getIt<HomeRoomsCubit>(),
+                        builder: (context, state) {
+                          return (state is HomeRoomSuccesState)
+                              ? SizedBox(
+                                  height: 400
+                                      .h, // Set a fixed height for scrollable content
+                                  child: RoomsCards(
+                                    roomModel: state.roomModelList,
+                                  ),
+                                )
+                              : (state is HomeRoomFialState)
+                                  ? Text("${state.errorMessage}")
+                                  : const CircularProgressIndicator();
+                        },
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
-            BlocBuilder<WorkSpaceRoomsCubit, WorkSpaceRoomsState>(
-                bloc: getIt<WorkSpaceRoomsCubit>(),
-                builder: (context, state) {
-                  return Stack(
-                    children: [
-                      (state is WorkSpaceRoomsLoadingState)
-                          ? Container(
-                              width: double.infinity,
-                              height: double.infinity,
-                              color:
-                                  ColorsManager.mainBlack.withOpacity(.000001),
-                            )
-                          : SizedBox(),
-                      (state is WorkSpaceRoomsLoadingState)
-                          ? Align(
-                              alignment: Alignment.center,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color:
-                                        ColorsManager.lightGrey.withOpacity(.5),
-                                    borderRadius: BorderRadius.circular(12)),
-                                width: 150.w,
-                                height: 150.w,
-                                child: const Center(
-                                  child: CircularProgressIndicator(),
-                                ),
+          ),
+          BlocBuilder<WorkSpaceRoomsCubit, WorkSpaceRoomsState>(
+              bloc: getIt<WorkSpaceRoomsCubit>(),
+              builder: (context, state) {
+                return Stack(
+                  children: [
+                    (state is WorkSpaceRoomsLoadingState)
+                        ? Container(
+                            width: double.infinity,
+                            height: double.infinity,
+                            color: ColorsManager.mainBlack.withOpacity(.000001),
+                          )
+                        : SizedBox(),
+                    (state is WorkSpaceRoomsLoadingState)
+                        ? Align(
+                            alignment: Alignment.center,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color:
+                                      ColorsManager.lightGrey.withOpacity(.5),
+                                  borderRadius: BorderRadius.circular(12)),
+                              width: 150.w,
+                              height: 150.w,
+                              child: const Center(
+                                child: CircularProgressIndicator(),
                               ),
-                            )
-                          : const SizedBox()
-                    ],
-                  );
-                })
-          ],
-        ),
+                            ),
+                          )
+                        : const SizedBox()
+                  ],
+                );
+              })
+        ],
       ),
     );
   }
